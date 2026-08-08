@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text.RegularExpressions;
+using Memory;
 
 namespace FS4_Flight_Tracker
 {
@@ -25,9 +26,18 @@ namespace FS4_Flight_Tracker
         private MemoryMappedViewAccessor accessor;
         private Timer timer;
 
-        // พิกัดปลายทางที่แกะได้จากไฟล์ .mme
-        private double arrivalLat = 0;
-        private double arrivalLon = 0;
+
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, out int lpNumberOfBytesRead);
+
+        const int PROCESS_VM_READ = 0x0010;
+
+
+
 
         public Form1()
         {
@@ -72,22 +82,9 @@ namespace FS4_Flight_Tracker
 
         private void timerstatusaeroflyfs4_Tick(object sender, EventArgs e)
         {
-            /*
-            Process[] p = Process.GetProcessesByName("aerofly_fs_4");
-
-            if (p.Length > 0)
-            {
-                statusaeroflyfs4.Text = "✔️ Aerofly FS 4 Connected";
-                statusaeroflyfs4.ForeColor = Color.LimeGreen;
-            }
-            else
-            {
-                statusaeroflyfs4.Text = "❌ Aerofly FS 4 Disconnected";
-                statusaeroflyfs4.ForeColor = Color.Red;
-            }
-            */
+            StatusUpdateDepatureText();
         }
-            
+
         private void InitializeSharedMemory()
         {
             try
@@ -121,7 +118,7 @@ namespace FS4_Flight_Tracker
         private void Timer_Tick(object sender, EventArgs e)
         {
 
-            LoadAircraftName();
+            //       LoadAircraftName();
 
             if (accessor == null) return;
 
@@ -138,7 +135,7 @@ namespace FS4_Flight_Tracker
 
                  */
 
-                accessor.Read<AeroflyBridgeData>(0, out AeroflyBridgeData data); 
+                accessor.Read<AeroflyBridgeData>(0, out AeroflyBridgeData data);
                 accessor.Read<AeroflyBridgeData>(16, out AeroflyBridgeData data2);
                 accessor.Read<AeroflyBridgeData>(24, out AeroflyBridgeData data3);
                 accessor.Read<AeroflyBridgeData>(10, out AeroflyBridgeData data4);
@@ -175,87 +172,83 @@ namespace FS4_Flight_Tracker
             base.OnFormClosing(e);
         }
 
-        private void FlightPlanLoaded()
-        {
-            // หาตำแหน่งโฟลเดอร์ Documents/Aerofly FS 4/main.mme
-            string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string mmeFilePath = Path.Combine(myDocs, "Aerofly FS 4", "main.mcf");
-
-            if (!File.Exists(mmeFilePath))
-            {
-                MessageBox.Show("ไม่พบไฟล์ main.mcf ของ Aerofly FS 4", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            try
-            {
-                // อ่านเนื้อหาข้อความทั้งหมดในไฟล์ .mme
-                string mmeContent = File.ReadAllText(mmeFilePath);
-
-                // แกะเอาชื่อสนามบิน
-                string departureICAO = ExtractValue(mmeContent, "departure_id");
-                string arrivalICAO = ExtractValue(mmeContent, "destination_id");
-
-                // แกะเอาพิกัด Lat/Lon ของสนามบินปลายทาง
-                double.TryParse(ExtractValue(mmeContent, "destination_lat"), out arrivalLat);
-                double.TryParse(ExtractValue(mmeContent, "destination_lon"), out arrivalLon);
-
-                // แสดงผลบนหน้าจอ WinForms
-                RouteText.Text = $"Route: {departureICAO} ➔ {arrivalICAO}";
-                DestinationCoordText.Text = $"Dest Coord: {arrivalLat:F4}, {arrivalLon:F4}";
-
-                MessageBox.Show($"โหลด Flight Plan {departureICAO} -> {arrivalICAO} เรียบร้อยแล้ว!");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("เกิดข้อผิดพลาดในการอ่านไฟล์: " + ex.Message);
-            }
-        }
-
-        // ฟังก์ชันช่วยค้นหาข้อความค่า Value จาก Tag ในไฟล์ .mme
-        private string ExtractValue(string text, string key)
-        {
-            // ใช้ Regex ค้นหาข้อความรูปแบบ name="key" value="xxx"
-            Match match = Regex.Match(text, $@"name=""{key}""\s+value=""([^""]+)""");
-            return match.Success ? match.Groups[1].Value : "";
-        }
-
         private void button1_Click(object sender, EventArgs e)
-        {
-            FlightPlanLoaded();
-        }
-
-        private void LoadNameAircraft_Click(object sender, EventArgs e)
         {
             
         }
 
-        private void LoadAircraftName()
+
+
+        private void timerreadingmemory_Tick(object sender, EventArgs e)
         {
-            string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string mcfPath = System.IO.Path.Combine(myDocs, "Aerofly FS 4", "main.mcf");
-
-            // ดึงชื่อเครื่องบินดิบจากไฟล์ .mcf (เช่น b787_9)
-            string rawAircraft = Form1.GetCurrentAircraftRaw(mcfPath);
-
-            // แปลงชื่อเป็นชื่อเต็ม
-            string fullName = ConvertAircraftName(rawAircraft);
-
-            // โยนค่าลง .Text ของ Label เพื่อแสดงผลบนหน้าจอ
-            AircraftName.Text = fullName;
+            
         }
 
-        private string ConvertAircraftName(string rawName)
+        private void LoadNameAircraft_Click(object sender, EventArgs e)
         {
-            switch (rawName)
+
+        }
+
+        private void StatusUpdateDepatureText()
+        {
+            string processName = "aerofly_fs_4";
+
+            // ตั้งค่าตาม Cheat Engine
+            int baseOffset = 0x0173BB88;
+            int[] offsets = new int[] { 0x8, 0x358, 0xC8, 0x10 }; // เรียง Offsets ตามที่โชว์ใน CE
+
+            // ดึงค่า Value ข้อความ
+            string ceValue = Form1.GetCEStringValue(processName, baseOffset, offsets , 4);
+
+            // แสดงผลบนหน้าจอ Form
+            DepartureText.Text = ceValue; // จะขึ้นข้อความเช่น "VTBD / DMK" เหมือนในตาราง CE เป๊ะๆ
+        }
+
+        // ฟังก์ชันอ่านข้อความ String จาก Pointer Path (ถอดแบบการทำงานของ Cheat Engine)
+        public static string GetCEStringValue(string processName, int baseOffset, int[] offsets, int stringLength = 32)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            if (processes.Length == 0) return "Process Not Found";
+
+            Process game = processes[0];
+            IntPtr hProcess = OpenProcess(PROCESS_VM_READ, false, game.Id);
+            if (hProcess == IntPtr.Zero) return "Access Denied (Run as Admin)";
+
+            // 1. เริ่มจาก Base Address + Base Offset
+            IntPtr currentAddress = IntPtr.Add(game.MainModule.BaseAddress, baseOffset);
+            byte[] pointerBuffer = new byte[8]; // 64-bit Pointer ใช้ 8 Bytes
+            int bytesRead;
+
+            // 2. วนลูปอ่าน Pointer ทีละ Layer
+            for (int i = 0; i < offsets.Length; i++)
             {
-                case "a319":
-                    return "Airbus A319";
-                case "a320":
-                    return "Airbus A320";
-                default:
-                    return rawName; // ถ้าไม่เจอในรายการ ให้แสดงชื่อเดิม
+                if (!ReadProcessMemory(hProcess, currentAddress, pointerBuffer, pointerBuffer.Length, out bytesRead))
+                    return "??"; // อ่านไม่ได้เหมือน CE แสดง ??
+
+                long nextAddress = BitConverter.ToInt64(pointerBuffer, 0);
+                if (nextAddress == 0) return "Null"; // Pointer หลุด
+
+                currentAddress = (IntPtr)(nextAddress + offsets[i]);
             }
+
+            // 3. อ่าน Bytes ข้อความปลายทาง
+            byte[] stringBuffer = new byte[stringLength];
+            if (ReadProcessMemory(hProcess, currentAddress, stringBuffer, stringBuffer.Length, out bytesRead))
+            {
+                // แปลง Bytes เป็น UTF-8 String
+                string text = Encoding.UTF8.GetString(stringBuffer);
+
+                // *** หัวใจสำคัญ: Cheat Engine จะตัดข้อความตรง Null Byte (\0) ตัวแรกทันที ***
+                int nullIndex = text.IndexOf('\0');
+                if (nullIndex >= 0)
+                {
+                    text = text.Substring(0, nullIndex);
+                }
+
+                return text.Trim(); // คืนค่าข้อความเหมือนช่อง Value ของ CE
+            }
+
+            return "??";
         }
     }
 }

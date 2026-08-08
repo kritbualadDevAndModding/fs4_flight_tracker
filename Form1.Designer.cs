@@ -38,11 +38,13 @@ namespace FS4_Flight_Tracker
             this.RollStatus = new System.Windows.Forms.Label();
             this.PositionStatus = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.RouteText = new System.Windows.Forms.Label();
-            this.DestinationCoordText = new System.Windows.Forms.Label();
-            this.FlightPlanLoad = new System.Windows.Forms.Button();
+            this.DepartureText = new System.Windows.Forms.Label();
+            this.ThrottlesText = new System.Windows.Forms.Label();
             this.LoadNameAircraft = new System.Windows.Forms.Button();
-            this.AircraftName = new System.Windows.Forms.Label();
+            this.FlightPlanLoad = new System.Windows.Forms.Button();
+            this.DestinationCoordText = new System.Windows.Forms.Label();
+            this.RouteText = new System.Windows.Forms.Label();
+            this.timerreadingmemory = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,7 +117,8 @@ namespace FS4_Flight_Tracker
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.AircraftName);
+            this.panel1.Controls.Add(this.DepartureText);
+            this.panel1.Controls.Add(this.ThrottlesText);
             this.panel1.Controls.Add(this.LoadNameAircraft);
             this.panel1.Controls.Add(this.FlightPlanLoad);
             this.panel1.Controls.Add(this.DestinationCoordText);
@@ -131,36 +134,25 @@ namespace FS4_Flight_Tracker
             this.panel1.Size = new System.Drawing.Size(776, 429);
             this.panel1.TabIndex = 6;
             // 
-            // RouteText
+            // DepartureText
             // 
-            this.RouteText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RouteText.Location = new System.Drawing.Point(0, 164);
-            this.RouteText.Name = "RouteText";
-            this.RouteText.Size = new System.Drawing.Size(304, 70);
-            this.RouteText.TabIndex = 6;
-            this.RouteText.Text = "ROUTE";
-            this.RouteText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DepartureText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DepartureText.Location = new System.Drawing.Point(313, 207);
+            this.DepartureText.Name = "DepartureText";
+            this.DepartureText.Size = new System.Drawing.Size(463, 70);
+            this.DepartureText.TabIndex = 11;
+            this.DepartureText.Text = "Departure Text:";
+            this.DepartureText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // DestinationCoordText
+            // ThrottlesText
             // 
-            this.DestinationCoordText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DestinationCoordText.Location = new System.Drawing.Point(0, 234);
-            this.DestinationCoordText.Name = "DestinationCoordText";
-            this.DestinationCoordText.Size = new System.Drawing.Size(304, 70);
-            this.DestinationCoordText.TabIndex = 7;
-            this.DestinationCoordText.Text = "DestinationCoord";
-            this.DestinationCoordText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // FlightPlanLoad
-            // 
-            this.FlightPlanLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.FlightPlanLoad.Location = new System.Drawing.Point(313, 383);
-            this.FlightPlanLoad.Name = "FlightPlanLoad";
-            this.FlightPlanLoad.Size = new System.Drawing.Size(148, 46);
-            this.FlightPlanLoad.TabIndex = 8;
-            this.FlightPlanLoad.Text = "FlightPlanLoad";
-            this.FlightPlanLoad.UseVisualStyleBackColor = true;
-            this.FlightPlanLoad.Click += new System.EventHandler(this.button1_Click);
+            this.ThrottlesText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ThrottlesText.Location = new System.Drawing.Point(313, 310);
+            this.ThrottlesText.Name = "ThrottlesText";
+            this.ThrottlesText.Size = new System.Drawing.Size(463, 70);
+            this.ThrottlesText.TabIndex = 10;
+            this.ThrottlesText.Text = "Throttle Text:";
+            this.ThrottlesText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // LoadNameAircraft
             // 
@@ -173,15 +165,40 @@ namespace FS4_Flight_Tracker
             this.LoadNameAircraft.UseVisualStyleBackColor = true;
             this.LoadNameAircraft.Click += new System.EventHandler(this.LoadNameAircraft_Click);
             // 
-            // AircraftName
+            // FlightPlanLoad
             // 
-            this.AircraftName.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AircraftName.Location = new System.Drawing.Point(313, 310);
-            this.AircraftName.Name = "AircraftName";
-            this.AircraftName.Size = new System.Drawing.Size(463, 70);
-            this.AircraftName.TabIndex = 10;
-            this.AircraftName.Text = "Aircraft Name:";
-            this.AircraftName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.FlightPlanLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.FlightPlanLoad.Location = new System.Drawing.Point(313, 383);
+            this.FlightPlanLoad.Name = "FlightPlanLoad";
+            this.FlightPlanLoad.Size = new System.Drawing.Size(148, 46);
+            this.FlightPlanLoad.TabIndex = 8;
+            this.FlightPlanLoad.Text = "FlightPlanLoad";
+            this.FlightPlanLoad.UseVisualStyleBackColor = true;
+            this.FlightPlanLoad.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // DestinationCoordText
+            // 
+            this.DestinationCoordText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DestinationCoordText.Location = new System.Drawing.Point(0, 234);
+            this.DestinationCoordText.Name = "DestinationCoordText";
+            this.DestinationCoordText.Size = new System.Drawing.Size(304, 70);
+            this.DestinationCoordText.TabIndex = 7;
+            this.DestinationCoordText.Text = "DestinationCoord";
+            this.DestinationCoordText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // RouteText
+            // 
+            this.RouteText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RouteText.Location = new System.Drawing.Point(0, 164);
+            this.RouteText.Name = "RouteText";
+            this.RouteText.Size = new System.Drawing.Size(304, 70);
+            this.RouteText.TabIndex = 6;
+            this.RouteText.Text = "ROUTE";
+            this.RouteText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timerreadingmemory
+            // 
+            this.timerreadingmemory.Tick += new System.EventHandler(this.timerreadingmemory_Tick);
             // 
             // Form1
             // 
@@ -212,8 +229,10 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label RouteText;
         private System.Windows.Forms.Label DestinationCoordText;
         private System.Windows.Forms.Button FlightPlanLoad;
-        private System.Windows.Forms.Label AircraftName;
+        private System.Windows.Forms.Label ThrottlesText;
         private System.Windows.Forms.Button LoadNameAircraft;
+        private System.Windows.Forms.Timer timerreadingmemory;
+        private System.Windows.Forms.Label DepartureText;
     }
 }
 
