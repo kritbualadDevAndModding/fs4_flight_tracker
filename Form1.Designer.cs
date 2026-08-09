@@ -41,11 +41,29 @@ namespace FS4_Flight_Tracker
             this.DepartureText = new System.Windows.Forms.Label();
             this.ThrottlesText = new System.Windows.Forms.Label();
             this.LoadNameAircraft = new System.Windows.Forms.Button();
-            this.FlightPlanLoad = new System.Windows.Forms.Button();
+            this.StartVolantaStyle = new System.Windows.Forms.Button();
             this.DestinationCoordText = new System.Windows.Forms.Label();
             this.RouteText = new System.Windows.Forms.Label();
             this.timerreadingmemory = new System.Windows.Forms.Timer(this.components);
+            this.panelVolantaEnabled = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panelVolantaStyle = new System.Windows.Forms.Panel();
+            this.ImageHUDVolantaStyle = new System.Windows.Forms.Panel();
+            this.Quit_Volanta = new System.Windows.Forms.Button();
+            this.ProgressBarStatus = new System.Windows.Forms.Panel();
+            this.ProgressBar = new System.Windows.Forms.Panel();
+            this.VLTA_ARR_Text = new System.Windows.Forms.Label();
+            this.VLTA_DEP_Text = new System.Windows.Forms.Label();
+            this.VLTA_ARR_Status = new System.Windows.Forms.Label();
+            this.VLTA_DEP_Status = new System.Windows.Forms.Label();
+            this.VLTA_ALT = new System.Windows.Forms.Label();
+            this.VLTA_TIME = new System.Windows.Forms.Label();
+            this.VLTA_Name_Aircraft = new System.Windows.Forms.Label();
+            this.VLTA_SPD = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.panelVolantaEnabled.SuspendLayout();
+            this.panelVolantaStyle.SuspendLayout();
+            this.ImageHUDVolantaStyle.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusaeroflyfs4
@@ -55,7 +73,7 @@ namespace FS4_Flight_Tracker
             this.statusaeroflyfs4.ForeColor = System.Drawing.Color.Red;
             this.statusaeroflyfs4.Location = new System.Drawing.Point(0, 0);
             this.statusaeroflyfs4.Name = "statusaeroflyfs4";
-            this.statusaeroflyfs4.Size = new System.Drawing.Size(776, 33);
+            this.statusaeroflyfs4.Size = new System.Drawing.Size(860, 33);
             this.statusaeroflyfs4.TabIndex = 0;
             this.statusaeroflyfs4.Text = "❌ Aerofly FS 4 Disconnected";
             this.statusaeroflyfs4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -120,7 +138,7 @@ namespace FS4_Flight_Tracker
             this.panel1.Controls.Add(this.DepartureText);
             this.panel1.Controls.Add(this.ThrottlesText);
             this.panel1.Controls.Add(this.LoadNameAircraft);
-            this.panel1.Controls.Add(this.FlightPlanLoad);
+            this.panel1.Controls.Add(this.StartVolantaStyle);
             this.panel1.Controls.Add(this.DestinationCoordText);
             this.panel1.Controls.Add(this.RouteText);
             this.panel1.Controls.Add(this.statusaeroflyfs4);
@@ -131,13 +149,13 @@ namespace FS4_Flight_Tracker
             this.panel1.Controls.Add(this.PositionStatus);
             this.panel1.Location = new System.Drawing.Point(12, 9);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(776, 429);
+            this.panel1.Size = new System.Drawing.Size(860, 446);
             this.panel1.TabIndex = 6;
             // 
             // DepartureText
             // 
             this.DepartureText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DepartureText.Location = new System.Drawing.Point(313, 207);
+            this.DepartureText.Location = new System.Drawing.Point(397, 207);
             this.DepartureText.Name = "DepartureText";
             this.DepartureText.Size = new System.Drawing.Size(463, 70);
             this.DepartureText.TabIndex = 11;
@@ -147,7 +165,7 @@ namespace FS4_Flight_Tracker
             // ThrottlesText
             // 
             this.ThrottlesText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ThrottlesText.Location = new System.Drawing.Point(313, 310);
+            this.ThrottlesText.Location = new System.Drawing.Point(397, 310);
             this.ThrottlesText.Name = "ThrottlesText";
             this.ThrottlesText.Size = new System.Drawing.Size(463, 70);
             this.ThrottlesText.TabIndex = 10;
@@ -157,7 +175,7 @@ namespace FS4_Flight_Tracker
             // LoadNameAircraft
             // 
             this.LoadNameAircraft.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.LoadNameAircraft.Location = new System.Drawing.Point(578, 383);
+            this.LoadNameAircraft.Location = new System.Drawing.Point(662, 400);
             this.LoadNameAircraft.Name = "LoadNameAircraft";
             this.LoadNameAircraft.Size = new System.Drawing.Size(198, 46);
             this.LoadNameAircraft.TabIndex = 9;
@@ -165,16 +183,16 @@ namespace FS4_Flight_Tracker
             this.LoadNameAircraft.UseVisualStyleBackColor = true;
             this.LoadNameAircraft.Click += new System.EventHandler(this.LoadNameAircraft_Click);
             // 
-            // FlightPlanLoad
+            // StartVolantaStyle
             // 
-            this.FlightPlanLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.FlightPlanLoad.Location = new System.Drawing.Point(313, 383);
-            this.FlightPlanLoad.Name = "FlightPlanLoad";
-            this.FlightPlanLoad.Size = new System.Drawing.Size(148, 46);
-            this.FlightPlanLoad.TabIndex = 8;
-            this.FlightPlanLoad.Text = "FlightPlanLoad";
-            this.FlightPlanLoad.UseVisualStyleBackColor = true;
-            this.FlightPlanLoad.Click += new System.EventHandler(this.button1_Click);
+            this.StartVolantaStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.StartVolantaStyle.Location = new System.Drawing.Point(340, 400);
+            this.StartVolantaStyle.Name = "StartVolantaStyle";
+            this.StartVolantaStyle.Size = new System.Drawing.Size(189, 46);
+            this.StartVolantaStyle.TabIndex = 8;
+            this.StartVolantaStyle.Text = "Start Volanta Style";
+            this.StartVolantaStyle.UseVisualStyleBackColor = true;
+            this.StartVolantaStyle.Click += new System.EventHandler(this.button1_Click);
             // 
             // DestinationCoordText
             // 
@@ -200,18 +218,203 @@ namespace FS4_Flight_Tracker
             // 
             this.timerreadingmemory.Tick += new System.EventHandler(this.timerreadingmemory_Tick);
             // 
+            // panelVolantaEnabled
+            // 
+            this.panelVolantaEnabled.BackColor = System.Drawing.Color.Black;
+            this.panelVolantaEnabled.Controls.Add(this.label1);
+            this.panelVolantaEnabled.Location = new System.Drawing.Point(0, -1);
+            this.panelVolantaEnabled.Name = "panelVolantaEnabled";
+            this.panelVolantaEnabled.Size = new System.Drawing.Size(884, 468);
+            this.panelVolantaEnabled.TabIndex = 12;
+            this.panelVolantaEnabled.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(884, 468);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Volanta Opened";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panelVolantaStyle
+            // 
+            this.panelVolantaStyle.BackColor = System.Drawing.Color.Lime;
+            this.panelVolantaStyle.Controls.Add(this.ImageHUDVolantaStyle);
+            this.panelVolantaStyle.Location = new System.Drawing.Point(0, 0);
+            this.panelVolantaStyle.Name = "panelVolantaStyle";
+            this.panelVolantaStyle.Size = new System.Drawing.Size(997, 594);
+            this.panelVolantaStyle.TabIndex = 14;
+            this.panelVolantaStyle.Visible = false;
+            // 
+            // ImageHUDVolantaStyle
+            // 
+            this.ImageHUDVolantaStyle.BackColor = System.Drawing.Color.Transparent;
+            this.ImageHUDVolantaStyle.BackgroundImage = global::FS4_Flight_Tracker.Properties.Resources.VolantaHUDStyle;
+            this.ImageHUDVolantaStyle.Controls.Add(this.Quit_Volanta);
+            this.ImageHUDVolantaStyle.Controls.Add(this.ProgressBarStatus);
+            this.ImageHUDVolantaStyle.Controls.Add(this.ProgressBar);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_ARR_Text);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_DEP_Text);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_ARR_Status);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_DEP_Status);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_ALT);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_TIME);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_Name_Aircraft);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_SPD);
+            this.ImageHUDVolantaStyle.Location = new System.Drawing.Point(12, 12);
+            this.ImageHUDVolantaStyle.Name = "ImageHUDVolantaStyle";
+            this.ImageHUDVolantaStyle.Size = new System.Drawing.Size(860, 446);
+            this.ImageHUDVolantaStyle.TabIndex = 13;
+            // 
+            // Quit_Volanta
+            // 
+            this.Quit_Volanta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Quit_Volanta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Quit_Volanta.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Quit_Volanta.ForeColor = System.Drawing.Color.Lime;
+            this.Quit_Volanta.Location = new System.Drawing.Point(0, 400);
+            this.Quit_Volanta.Name = "Quit_Volanta";
+            this.Quit_Volanta.Size = new System.Drawing.Size(180, 46);
+            this.Quit_Volanta.TabIndex = 14;
+            this.Quit_Volanta.Text = "Quit Volanta Style";
+            this.Quit_Volanta.UseVisualStyleBackColor = true;
+            this.Quit_Volanta.Click += new System.EventHandler(this.Quit_Volanta_Click);
+            // 
+            // ProgressBarStatus
+            // 
+            this.ProgressBarStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(66)))), ((int)(((byte)(254)))));
+            this.ProgressBarStatus.Location = new System.Drawing.Point(1, 49);
+            this.ProgressBarStatus.Name = "ProgressBarStatus";
+            this.ProgressBarStatus.Size = new System.Drawing.Size(435, 7);
+            this.ProgressBarStatus.TabIndex = 8;
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(26)))), ((int)(((byte)(49)))));
+            this.ProgressBar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ProgressBar.Location = new System.Drawing.Point(1, 49);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(860, 7);
+            this.ProgressBar.TabIndex = 9;
+            // 
+            // VLTA_ARR_Text
+            // 
+            this.VLTA_ARR_Text.BackColor = System.Drawing.Color.Transparent;
+            this.VLTA_ARR_Text.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_ARR_Text.ForeColor = System.Drawing.Color.Black;
+            this.VLTA_ARR_Text.Location = new System.Drawing.Point(539, 1);
+            this.VLTA_ARR_Text.Name = "VLTA_ARR_Text";
+            this.VLTA_ARR_Text.Size = new System.Drawing.Size(32, 41);
+            this.VLTA_ARR_Text.TabIndex = 6;
+            this.VLTA_ARR_Text.Text = "ARR";
+            this.VLTA_ARR_Text.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // VLTA_DEP_Text
+            // 
+            this.VLTA_DEP_Text.BackColor = System.Drawing.Color.Transparent;
+            this.VLTA_DEP_Text.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_DEP_Text.ForeColor = System.Drawing.Color.Black;
+            this.VLTA_DEP_Text.Location = new System.Drawing.Point(291, 0);
+            this.VLTA_DEP_Text.Name = "VLTA_DEP_Text";
+            this.VLTA_DEP_Text.Size = new System.Drawing.Size(32, 42);
+            this.VLTA_DEP_Text.TabIndex = 7;
+            this.VLTA_DEP_Text.Text = "DEP";
+            this.VLTA_DEP_Text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // VLTA_ARR_Status
+            // 
+            this.VLTA_ARR_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_ARR_Status.ForeColor = System.Drawing.Color.White;
+            this.VLTA_ARR_Status.Location = new System.Drawing.Point(447, 0);
+            this.VLTA_ARR_Status.Name = "VLTA_ARR_Status";
+            this.VLTA_ARR_Status.Size = new System.Drawing.Size(122, 42);
+            this.VLTA_ARR_Status.TabIndex = 3;
+            this.VLTA_ARR_Status.Text = "ARR";
+            this.VLTA_ARR_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // VLTA_DEP_Status
+            // 
+            this.VLTA_DEP_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_DEP_Status.ForeColor = System.Drawing.Color.White;
+            this.VLTA_DEP_Status.Location = new System.Drawing.Point(291, 0);
+            this.VLTA_DEP_Status.Name = "VLTA_DEP_Status";
+            this.VLTA_DEP_Status.Size = new System.Drawing.Size(122, 42);
+            this.VLTA_DEP_Status.TabIndex = 2;
+            this.VLTA_DEP_Status.Text = "DEP";
+            this.VLTA_DEP_Status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // VLTA_ALT
+            // 
+            this.VLTA_ALT.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_ALT.ForeColor = System.Drawing.Color.White;
+            this.VLTA_ALT.Location = new System.Drawing.Point(143, 0);
+            this.VLTA_ALT.Name = "VLTA_ALT";
+            this.VLTA_ALT.Size = new System.Drawing.Size(145, 42);
+            this.VLTA_ALT.TabIndex = 1;
+            this.VLTA_ALT.Text = "ALT: 32000ft";
+            this.VLTA_ALT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // VLTA_TIME
+            // 
+            this.VLTA_TIME.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_TIME.ForeColor = System.Drawing.Color.White;
+            this.VLTA_TIME.Location = new System.Drawing.Point(731, 0);
+            this.VLTA_TIME.Name = "VLTA_TIME";
+            this.VLTA_TIME.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.VLTA_TIME.Size = new System.Drawing.Size(123, 42);
+            this.VLTA_TIME.TabIndex = 4;
+            this.VLTA_TIME.Text = "UTC: 12:00 PM";
+            this.VLTA_TIME.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // VLTA_Name_Aircraft
+            // 
+            this.VLTA_Name_Aircraft.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_Name_Aircraft.ForeColor = System.Drawing.Color.White;
+            this.VLTA_Name_Aircraft.Location = new System.Drawing.Point(572, 1);
+            this.VLTA_Name_Aircraft.Name = "VLTA_Name_Aircraft";
+            this.VLTA_Name_Aircraft.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.VLTA_Name_Aircraft.Size = new System.Drawing.Size(152, 41);
+            this.VLTA_Name_Aircraft.TabIndex = 5;
+            this.VLTA_Name_Aircraft.Text = "Aircraft Name\r\nLivery Name";
+            this.VLTA_Name_Aircraft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // VLTA_SPD
+            // 
+            this.VLTA_SPD.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_SPD.ForeColor = System.Drawing.Color.White;
+            this.VLTA_SPD.Location = new System.Drawing.Point(12, 0);
+            this.VLTA_SPD.Name = "VLTA_SPD";
+            this.VLTA_SPD.Size = new System.Drawing.Size(125, 42);
+            this.VLTA_SPD.TabIndex = 0;
+            this.VLTA_SPD.Text = "SPD: 999kts ";
+            this.VLTA_SPD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(884, 467);
+            this.Controls.Add(this.panelVolantaStyle);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelVolantaEnabled);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "FS4 Flight Tracker";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.panel1.ResumeLayout(false);
+            this.panelVolantaEnabled.ResumeLayout(false);
+            this.panelVolantaStyle.ResumeLayout(false);
+            this.ImageHUDVolantaStyle.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -228,11 +431,26 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label RouteText;
         private System.Windows.Forms.Label DestinationCoordText;
-        private System.Windows.Forms.Button FlightPlanLoad;
+        private System.Windows.Forms.Button StartVolantaStyle;
         private System.Windows.Forms.Label ThrottlesText;
         private System.Windows.Forms.Button LoadNameAircraft;
         private System.Windows.Forms.Timer timerreadingmemory;
         private System.Windows.Forms.Label DepartureText;
+        private System.Windows.Forms.Panel panelVolantaEnabled;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panelVolantaStyle;
+        private System.Windows.Forms.Panel ImageHUDVolantaStyle;
+        private System.Windows.Forms.Panel ProgressBarStatus;
+        private System.Windows.Forms.Panel ProgressBar;
+        private System.Windows.Forms.Label VLTA_ARR_Text;
+        private System.Windows.Forms.Label VLTA_DEP_Text;
+        private System.Windows.Forms.Label VLTA_ARR_Status;
+        private System.Windows.Forms.Label VLTA_DEP_Status;
+        private System.Windows.Forms.Label VLTA_ALT;
+        private System.Windows.Forms.Label VLTA_TIME;
+        private System.Windows.Forms.Label VLTA_Name_Aircraft;
+        private System.Windows.Forms.Label VLTA_SPD;
+        private System.Windows.Forms.Button Quit_Volanta;
     }
 }
 

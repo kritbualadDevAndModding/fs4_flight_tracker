@@ -45,7 +45,6 @@ namespace FS4_Flight_Tracker
             InitializeSharedMemory();
             InitializeTelemetryTimer();
         }
-
         public static string GetCurrentAircraftRaw(string mcfFilePath)
         {
             if (!File.Exists(mcfFilePath)) return "Unknown";
@@ -83,6 +82,7 @@ namespace FS4_Flight_Tracker
         private void timerstatusaeroflyfs4_Tick(object sender, EventArgs e)
         {
             StatusUpdateDepatureText();
+            StatusUpdateArrivalText();
         }
 
         private void InitializeSharedMemory()
@@ -171,10 +171,10 @@ namespace FS4_Flight_Tracker
             mmf?.Dispose();
             base.OnFormClosing(e);
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            panel1.Visible = false;
+            panelVolantaStyle.Visible = true;
         }
 
 
@@ -201,14 +201,28 @@ namespace FS4_Flight_Tracker
             string ceValue = Form1.GetCEStringValue(processName, baseOffset, offsets , 4);
 
             // แสดงผลบนหน้าจอ Form
-            DepartureText.Text = ceValue; // จะขึ้นข้อความเช่น "VTBD / DMK" เหมือนในตาราง CE เป๊ะๆ
+            DepartureText.Text = ceValue;
+            VLTA_DEP_Status.Text = ceValue;
         }
+        private void StatusUpdateArrivalText()
+        {
+            string processName = "aerofly_fs_4";
 
+            // ตั้งค่าตาม Cheat Engine
+            int baseOffset = 0x016D8A88;
+            int[] offsets = new int[] { 0xD0 , 0x358 , 0xB0 , 0x10 , 0x100 , 0x0 }; // เรียง Offsets ตามที่โชว์ใน CE
+
+            // ดึงค่า Value ข้อความ
+            string ceValue = Form1.GetCEStringValue(processName, baseOffset, offsets, 4);
+
+            // แสดงผลบนหน้าจอ Form
+            VLTA_ARR_Status.Text = ceValue;
+        }
         // ฟังก์ชันอ่านข้อความ String จาก Pointer Path (ถอดแบบการทำงานของ Cheat Engine)
         public static string GetCEStringValue(string processName, int baseOffset, int[] offsets, int stringLength = 32)
         {
             Process[] processes = Process.GetProcessesByName(processName);
-            if (processes.Length == 0) return "Process Not Found";
+            if (processes.Length == 0) return "N/A";
 
             Process game = processes[0];
             IntPtr hProcess = OpenProcess(PROCESS_VM_READ, false, game.Id);
@@ -226,7 +240,7 @@ namespace FS4_Flight_Tracker
                     return "??"; // อ่านไม่ได้เหมือน CE แสดง ??
 
                 long nextAddress = BitConverter.ToInt64(pointerBuffer, 0);
-                if (nextAddress == 0) return "Null"; // Pointer หลุด
+                if (nextAddress == 0) return "N/A"; // Pointer หลุด
 
                 currentAddress = (IntPtr)(nextAddress + offsets[i]);
             }
@@ -249,6 +263,21 @@ namespace FS4_Flight_Tracker
             }
 
             return "??";
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Quit_Volanta_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = true;
+            panelVolantaStyle.Visible = false;
         }
     }
 }
