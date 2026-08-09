@@ -28,13 +28,17 @@ namespace FS4_Flight_Tracker
 
 
 
-        [DllImport("kernel32.dll")]
+        // Imports Windows APIs สำหรับอ่าน Process Memory
+        [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
-        [DllImport("kernel32.dll")]
-        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, out int lpNumberOfBytesRead);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, [Out] byte[] lpBuffer, int dwSize, out IntPtr lpNumberOfBytesRead);
 
-        const int PROCESS_VM_READ = 0x0010;
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool CloseHandle(IntPtr hObject);
+
+        private const int PROCESS_WM_READ = 0x0010;
 
 
 
@@ -83,6 +87,7 @@ namespace FS4_Flight_Tracker
         {
             StatusUpdateDepatureText();
             StatusUpdateArrivalText();
+            StatusUpdateAircraftNameText();
         }
 
         private void InitializeSharedMemory()
@@ -156,6 +161,11 @@ namespace FS4_Flight_Tracker
                 RollStatus.Text = "Roll\n" + $"{rollstatus:F0}";
 
                 PitchStatus.Text = "Pitch\n" + $"{pitchstatus:F0}";
+
+                // Volanta Style
+                VLTA_SPD.Text = "SPD: " + $"{speedstatus:F0}" +"kts";
+                VLTA_ALT.Text = "ALT: " + $"{altitudestatus:F0}" + "ft";
+
             }
             catch (Exception ex)
             {
@@ -218,52 +228,193 @@ namespace FS4_Flight_Tracker
             // แสดงผลบนหน้าจอ Form
             VLTA_ARR_Status.Text = ceValue;
         }
-        // ฟังก์ชันอ่านข้อความ String จาก Pointer Path (ถอดแบบการทำงานของ Cheat Engine)
-        public static string GetCEStringValue(string processName, int baseOffset, int[] offsets, int stringLength = 32)
+
+        private void StatusUpdateAircraftNameText()
+        {
+            string processName = "aerofly_fs_4";
+
+            // ตั้งค่าตาม Cheat Engine 
+            int baseOffset = 0x016D8A88;
+
+            // สำหรับชื่อเครื่องบิน
+            int[] offsets = new int[] { 0x98, 0x88, 0x1F0, 0x40, 0x10, 0x40 , 0x0 , 0xB8 , 0x388}; // เรียง Offsets ตามที่โชว์ใน CE
+            // สำหรับชื่อลายสติณกเกอร์เครื่องบิน
+            int[] offsetslivery = new int[] { 0x98, 0x38, 0x20, 0xB8, 0x208, 0x28, 0x48, 0xD0, 0x38 };
+
+
+            // ดึงค่า Value ข้อความ
+            int ceValue = Form1.GetCEIntValue(processName, baseOffset, offsets);
+
+            int ceValueLivery = Form1.GetCEIntValue(processName, baseOffset, offsetslivery);
+
+            // แสดงผลบนหน้าจอ Form
+            //      VLTA_Name_Aircraft.Text = ceValue.ToString()+"\n" + ceValueLivery.ToString();
+
+            switch (ceValue)
+            {
+                case 959525729:
+                    VLTA_Name_Aircraft.Text = "Airbus A319";
+                    break;
+
+                case 808596321:
+                    VLTA_Name_Aircraft.Text = "Airbus A320";
+                    break;
+
+                case 825373537:
+                    VLTA_Name_Aircraft.Text = "Airbus A321";
+                    break;
+
+                case 808792929:
+                    VLTA_Name_Aircraft.Text = "Airbus A350-1000";
+                    break;
+
+                case 808989537:
+                    VLTA_Name_Aircraft.Text = "Airbus A380";
+                    break;
+
+                default:
+                    VLTA_Name_Aircraft.Text = ceValue.ToString();
+                    break;
+            }
+        }
+
+
+        #region Helper Function: เดิน Pointer Chain
+        /// <summary>
+        /// คำนวณหา Memory Address สุดท้ายจาก Pointer Chain ตาม Cheat Engine
+        /// </summary>
+        private static IntPtr GetFinalAddress(IntPtr processHandle, IntPtr baseAddress, int baseOffset, int[] offsets)
+        {
+            IntPtr currentAddress = IntPtr.Add(baseAddress, baseOffset);
+            byte[] buffer = new byte[8]; // รองรับทั้ง 32-bit และ 64-bit Pointer
+            IntPtr bytesRead;
+
+            if (offsets == null || offsets.Length == 0)
+                return currentAddress;
+
+            // เดินตาม Offset ตัวที่ 0 ถึง N-2
+            for (int i = 0; i < offsets.Length - 1; i++)
+            {
+                if (!ReadProcessMemory(processHandle, currentAddress, buffer, IntPtr.Size, out bytesRead))
+                    return IntPtr.Zero;
+
+                long nextAddress = (IntPtr.Size == 8)
+                    ? BitConverter.ToInt64(buffer, 0)
+                    : BitConverter.ToInt32(buffer, 0);
+
+                currentAddress = new IntPtr(nextAddress + offsets[i]);
+            }
+
+            // อ่าน Pointer ตัวสุดท้าย แล้วบวกด้วย Offset ตัวสุดท้าย
+            if (!ReadProcessMemory(processHandle, currentAddress, buffer, IntPtr.Size, out bytesRead))
+                return IntPtr.Zero;
+
+            long finalPointer = (IntPtr.Size == 8)
+                ? BitConverter.ToInt64(buffer, 0)
+                : BitConverter.ToInt32(buffer, 0);
+
+            return new IntPtr(finalPointer + offsets[offsets.Length - 1]);
+        }
+        #endregion
+
+        #region 1. อ่านค่าเป็น 4 Bytes (Int32)
+        public static int GetCEIntValue(string processName, int baseOffset, int[] offsets)
         {
             Process[] processes = Process.GetProcessesByName(processName);
-            if (processes.Length == 0) return "N/A";
+            if (processes.Length == 0) return 0;
 
-            Process game = processes[0];
-            IntPtr hProcess = OpenProcess(PROCESS_VM_READ, false, game.Id);
-            if (hProcess == IntPtr.Zero) return "Access Denied (Run as Admin)";
+            Process process = processes[0];
+            IntPtr processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+            if (processHandle == IntPtr.Zero) return 0;
 
-            // 1. เริ่มจาก Base Address + Base Offset
-            IntPtr currentAddress = IntPtr.Add(game.MainModule.BaseAddress, baseOffset);
-            byte[] pointerBuffer = new byte[8]; // 64-bit Pointer ใช้ 8 Bytes
-            int bytesRead;
-
-            // 2. วนลูปอ่าน Pointer ทีละ Layer
-            for (int i = 0; i < offsets.Length; i++)
+            try
             {
-                if (!ReadProcessMemory(hProcess, currentAddress, pointerBuffer, pointerBuffer.Length, out bytesRead))
-                    return "??"; // อ่านไม่ได้เหมือน CE แสดง ??
+                IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
+                if (finalAddress == IntPtr.Zero) return 0;
 
-                long nextAddress = BitConverter.ToInt64(pointerBuffer, 0);
-                if (nextAddress == 0) return "N/A"; // Pointer หลุด
-
-                currentAddress = (IntPtr)(nextAddress + offsets[i]);
-            }
-
-            // 3. อ่าน Bytes ข้อความปลายทาง
-            byte[] stringBuffer = new byte[stringLength];
-            if (ReadProcessMemory(hProcess, currentAddress, stringBuffer, stringBuffer.Length, out bytesRead))
-            {
-                // แปลง Bytes เป็น UTF-8 String
-                string text = Encoding.UTF8.GetString(stringBuffer);
-
-                // *** หัวใจสำคัญ: Cheat Engine จะตัดข้อความตรง Null Byte (\0) ตัวแรกทันที ***
-                int nullIndex = text.IndexOf('\0');
-                if (nullIndex >= 0)
+                byte[] valueBuffer = new byte[4]; // 4 Bytesสำหรับ Int32
+                IntPtr bytesRead;
+                if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 4, out bytesRead))
                 {
-                    text = text.Substring(0, nullIndex);
+                    return BitConverter.ToInt32(valueBuffer, 0);
                 }
 
-                return text.Trim(); // คืนค่าข้อความเหมือนช่อง Value ของ CE
+                return 0;
             }
-
-            return "??";
+            finally
+            {
+                CloseHandle(processHandle);
+            }
         }
+        #endregion
+
+        #region 2. อ่านค่าเป็น String (ข้อความ)
+        public static string GetCEStringValue(string processName, int baseOffset, int[] offsets, int stringLength = 32, Encoding encoding = null)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            if (processes.Length == 0) return string.Empty;
+
+            Process process = processes[0];
+            IntPtr processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+            if (processHandle == IntPtr.Zero) return string.Empty;
+
+            try
+            {
+                IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
+                if (finalAddress == IntPtr.Zero) return string.Empty;
+
+                byte[] stringBuffer = new byte[stringLength];
+                IntPtr bytesRead;
+
+                if (ReadProcessMemory(processHandle, finalAddress, stringBuffer, stringLength, out bytesRead))
+                {
+                    if (encoding == null) encoding = Encoding.UTF8;
+
+                    // แปลง Byte Array เป็น String และตัด Null Terminator ('\0') ออก
+                    string result = encoding.GetString(stringBuffer);
+                    int nullIndex = result.IndexOf('\0');
+                    return nullIndex >= 0 ? result.Substring(0, nullIndex) : result;
+                }
+
+                return string.Empty;
+            }
+            finally
+            {
+                CloseHandle(processHandle);
+            }
+        }
+        #endregion
+
+        #region 3. อ่านค่าเป็น Float (ทศนิยม 4 Bytes) - แถมเผื่อไว้
+        public static float GetCEFloatValue(string processName, int baseOffset, int[] offsets)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            if (processes.Length == 0) return 0f;
+
+            Process process = processes[0];
+            IntPtr processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+            if (processHandle == IntPtr.Zero) return 0f;
+
+            try
+            {
+                IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
+                if (finalAddress == IntPtr.Zero) return 0f;
+
+                byte[] valueBuffer = new byte[4];
+                IntPtr bytesRead;
+                if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 4, out bytesRead))
+                {
+                    return BitConverter.ToSingle(valueBuffer, 0);
+                }
+
+                return 0f;
+            }
+            finally
+            {
+                CloseHandle(processHandle);
+            }
+        }
+        #endregion
         private void Form1_Load(object sender, EventArgs e)
         {
 
