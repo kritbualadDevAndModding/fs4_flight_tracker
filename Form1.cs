@@ -385,7 +385,7 @@ namespace FS4_Flight_Tracker
                     break;
 
                 case 8028334204837785458:
-                    aircraftliveryname = "Royan Jordanian";
+                    aircraftliveryname = "Royal Jordanian";
                     break;
 
                 case 8244227710998114162:
@@ -440,7 +440,6 @@ namespace FS4_Flight_Tracker
 
 
                 // Airbus A320 / A320 neo
-
                 case 8318832826298885473:
                     aircraftliveryname = "Aegean";
                     break;
@@ -637,7 +636,6 @@ namespace FS4_Flight_Tracker
                     aircraftliveryname = "Malta";
                     break;
 
-
                 case 8315183577523449710:
                     aircraftliveryname = "Northwest";
                     break;
@@ -663,7 +661,7 @@ namespace FS4_Flight_Tracker
                     break;
 
                 case 8319122075502731635:
-                    aircraftliveryname = "SAS";
+                    aircraftliveryname = "Scandinavian Airlines";
                     break;
                     
                 case 8319122079629665139:
@@ -737,9 +735,175 @@ namespace FS4_Flight_Tracker
                 case 7310021012563323255:
                     aircraftliveryname = "Wizz Air";
                     break;
+
+                // Airbus A321 / A321 XLR
+
+                case 7022085309369313633:
+                    aircraftliveryname = "Air Busan";
+                    break;
+
+                case 7020655948548172129:
+                    aircraftliveryname = "Air Canada";
+                    break;
+                    
+                case 7953764261056112993:
+                    aircraftliveryname = "Air Transat";
+                    break;
+
+                case 7953745543621604193:
+                    aircraftliveryname = "Asiana";
+                    break;
+
+                case 7592913319521840995:
+                    aircraftliveryname = "Condor";
+                    break;
+
+                case 8313489259901120355:
+                    aircraftliveryname = "Condor";
+                    break;
+                    
+                case 8313489200039880036:
+                    aircraftliveryname = "Delta";
+                    break;
+                
+                case 8244227664071386468:
+                    aircraftliveryname = "Delta";
+                    break;
+
+                case 8244227745609508709:
+                    aircraftliveryname = "EgyptAir";
+                    break;
+
+                case 7454136200184559205:
+                    aircraftliveryname = "EVA Air";
+                    break;
+
+                case 7454136200437066086:
+                    aircraftliveryname = "Finnair";
+                    break;
+                    
+                case 8315159391455438186:
+                    aircraftliveryname = "Jet2Holidays";
+                    break;
+
+                case 8315181394572895594:
+                    aircraftliveryname = "Jet2Holidays";
+                    break;
+
+                case 7953745522431713897:
+                    aircraftliveryname = "Iberia";
+                    break;
+
+                case 8315181395378201962:
+                    aircraftliveryname = "jetBlue";
+                    break;
+
+                case 8318818614487836010:
+                    aircraftliveryname = "Jetstar";
+                    break;
+
+                case 8317974210797270378:
+                    aircraftliveryname = "Juneyao";
+                    break;
+
+                case 8317974159190942060:
+                    aircraftliveryname = "LATAM";
+                    break;
+
+                case 8317692684214231404:
+                    aircraftliveryname = "LATAM";
+                    break;
+
+                case 7378692205175010668:
+                    aircraftliveryname = "Luftwaffe";
+                    break;
+
+                case 7526464355956580721:
+                    aircraftliveryname = "Qanot Sharq";
+                    break;
+
+                case 7526486264668643697:
+                    aircraftliveryname = "Qantas";
+                    break;
+
+                case 7813850272768418163:
+                    aircraftliveryname = "Scandinavian Airlines";
+                    break;
+                case 8028334204837388659:
+                    aircraftliveryname = "Scandinavian Airlines";
+                    break;
+
+                case 7813850272767241587:
+                    aircraftliveryname = "Small Planet";
+                    break;
+
+                case 7813873349727711347:
+                    aircraftliveryname = "Spirit";
+                    break;
+
+                case 8319100054835983731:
+                    aircraftliveryname = "Sunclass";
+                    break;
+                    
+                case 8319100085168863091:
+                    aircraftliveryname = "SWISS";
+                    break;
+                    
+                case 8319677328773445491:
+                    aircraftliveryname = "SWISS";
+                    break;
+
+                case 8319677328689033844:
+                    aircraftliveryname = "TransNusa";
+                    break;
+
+                case 8316023608551044468:
+                    aircraftliveryname = "Turkish Airlines";
+                    break;
+
+                case 6874871727792485748:
+                    aircraftliveryname = "Turkish Airlines";
+                    break;
+
+                case 6878234038795331958:
+                    aircraftliveryname = "Vietjet Air";
+                    break;
+
+                case 6876259333091715446:
+                    aircraftliveryname = "Vietnam Airlines";
+                    break;
+
+                case 6876259332774062454:
+                    aircraftliveryname = "Viva Aerobus";
+                    break;
+
+                case 6877956995907217782:
+                    aircraftliveryname = "Viva Aerobus";
+                    break;
+
+                case 6877956995906563958:
+                    aircraftliveryname = "Volaris";
+                    break;
+
+                case 6874584755273561462:
+                    aircraftliveryname = "Vueling";
+                    break;
+
+                case 6877675448335755639:
+                    aircraftliveryname = "Wizz Air";
+                    break;
+
                 default:
                     aircraftliveryname = ceValueLivery.ToString();
                     break;
+
+                    /*
+
+                case XXXXXXXXXXXXXXXXXXX:
+                    aircraftliveryname = "XXXXXXXXXXX";
+                    break;
+                    
+                     */
             }
 
             switch (ceValue)
@@ -764,9 +928,35 @@ namespace FS4_Flight_Tracker
                     VLTA_Name_Aircraft.Text = "Airbus A380" + "\n" + aircraftliveryname;
                     break;
 
-                default:
-                    VLTA_Name_Aircraft.Text = ceValue.ToString();
+                case 926103394:
+                    VLTA_Name_Aircraft.Text = "Boeing 737" + "\n";
                     break;
+                
+                case 926168930:
+                    VLTA_Name_Aircraft.Text = "Boeing 747" + "\n";
+                    break;
+                
+                case 926365538:
+                    VLTA_Name_Aircraft.Text = "Boeing 777" + "\n";
+                    break;
+                
+                case 926431074:
+                    VLTA_Name_Aircraft.Text = "Boeing 787" + "\n";
+                    break;
+                
+                case 1668181859:
+                    VLTA_Name_Aircraft.Text = "Concorde" + "\n";
+                    break;
+                
+                default:
+                    VLTA_Name_Aircraft.Text = ceValue.ToString() + "\n";
+                    break;
+
+/*
+                case XXXXXXXXX:
+                    VLTA_Name_Aircraft.Text = "XXXXXXXXXXXX" + "\n";
+                    break;
+*/
             }
         }
 
