@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text.RegularExpressions;
-using Memory;
 
 namespace FS4_Flight_Tracker
 {
@@ -88,6 +87,7 @@ namespace FS4_Flight_Tracker
             StatusUpdateDepatureText();
             StatusUpdateArrivalText();
             StatusUpdateAircraftNameText();
+            StatusUpdateTimerClockText();
         }
 
         private void InitializeSharedMemory()
@@ -381,7 +381,7 @@ namespace FS4_Flight_Tracker
                     break;
 
                 case 7597696169466751088:
-                    aircraftliveryname = "Philippines";
+                    aircraftliveryname = "Philippine Airlines";
                     break;
 
                 case 8028334204837785458:
@@ -960,6 +960,71 @@ namespace FS4_Flight_Tracker
             }
         }
 
+        private void StatusUpdateTimerClockText()
+        {
+            string processName = "aerofly_fs_4";
+
+            // 0. กำหนด Pointer สำหรับ Double สั้น (เช่น 23.999999999)
+            int baseOffset = 0x0182F768;
+            int[] offsets = new int[] { 0x5E0, 0x20, 0x20, 0x0, 0xF0, 0x70 };
+
+            // 1. อ่านค่า Double จาก Memory
+            double rawTime = Form1.GetCEDoubleValue(processName, baseOffset, offsets);
+
+            // 2. คุมให้อยู่ในช่วง 0.0 ถึง 23.9999
+            double minTime = 0.0;
+            double maxTime = 23.9999;
+            double timeValue = rawTime;
+
+            if (timeValue < minTime)
+            {
+                timeValue = minTime;
+            }
+            else if (timeValue > maxTime)
+            {
+                timeValue = maxTime;
+            }
+
+            // 3. ดึงชั่วโมงและนาทีจาก TimeSpan
+            TimeSpan timeSpan = TimeSpan.FromHours(timeValue);
+            int hours24 = timeSpan.Hours;
+            int minutes = timeSpan.Minutes;
+
+            // เช็คเศษทศนิยม ถ้าเข้าใกล้ .9999 ให้ปรับเป็น 59 นาที
+            double fraction = timeValue - Math.Truncate(timeValue);
+            if (fraction >= 0.9999)
+            {
+                minutes = 59;
+            }
+
+            // 4. คำนวณหา AM / PM และแปลงชั่วโมงเป็นระบบ 12 ชั่วโมง
+            string designator = "";
+            int hours12 = hours24;
+
+            if (hours24 >= 12)
+            {
+                designator = "PM";
+                if (hours24 > 12)
+                {
+                    hours12 = hours24 - 12; // เช่น 13:00 -> 1:00 PM
+                }
+            }
+            else
+            {
+                designator = "AM";
+                if (hours24 == 0)
+                {
+                    hours12 = 12; // 00:00 -> 12:00 AM
+                }
+            }
+
+            // 5. จัดข้อความแสดงผล (เช่น "11:59 PM" หรือ "12:00 AM")
+            string ceValue = $"{hours12:D2}:{minutes:D2} {designator}";
+
+            // นำไปใช้งานกับ Text
+            VLTA_TIME.Text = "UTC: " + ceValue;
+
+        }
 
         #region Helper Function: เดิน Pointer Chain
         /// <summary>
@@ -1103,27 +1168,60 @@ namespace FS4_Flight_Tracker
 
         #region 3. อ่านค่าเป็น Float (ทศนิยม 4 Bytes) - แถมเผื่อไว้
         public static float GetCEFloatValue(string processName, int baseOffset, int[] offsets)
+
         {
+
             Process[] processes = Process.GetProcessesByName(processName);
             if (processes.Length == 0) return 0f;
 
             Process process = processes[0];
             IntPtr processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
-            if (processHandle == IntPtr.Zero) return 0f;
 
+            if (processHandle == IntPtr.Zero) return 0f;
             try
             {
                 IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
                 if (finalAddress == IntPtr.Zero) return 0f;
-
+                
                 byte[] valueBuffer = new byte[4];
                 IntPtr bytesRead;
                 if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 4, out bytesRead))
                 {
                     return BitConverter.ToSingle(valueBuffer, 0);
                 }
-
+                
                 return 0f;
+            }
+            finally
+            {
+                CloseHandle(processHandle);
+            }
+        }
+        #endregion
+
+        #region 4. อ่านค่าเป็น Double - แถมเผื่อไว้
+        public static double GetCEDoubleValue(string processName, int baseOffset, int[] offsets)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            if (processes.Length == 0) return 0.0;
+
+            Process process = processes[0];
+            IntPtr processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+            if (processHandle == IntPtr.Zero) return 0.0;
+
+            try
+            {
+                IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
+                if (finalAddress == IntPtr.Zero) return 0.0;
+
+                byte[] valueBuffer = new byte[8]; // อ่านข้อมูลขนาด 8 Bytes สำหรับ Double
+                IntPtr bytesRead;
+                if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 8, out bytesRead))
+                {
+                    return BitConverter.ToDouble(valueBuffer, 0); // แปลง Byte เป็น Double
+                }
+
+                return 0.0;
             }
             finally
             {
