@@ -245,31 +245,523 @@ namespace FS4_Flight_Tracker
             // ดึงค่า Value ข้อความ
             int ceValue = Form1.GetCEIntValue(processName, baseOffset, offsets);
 
-            int ceValueLivery = Form1.GetCEIntValue(processName, baseOffset, offsetslivery);
+            long ceValueLivery = Form1.GetCEIntValue8Byte(processName, baseOffset, offsetslivery);
 
-            // แสดงผลบนหน้าจอ Form
-            //      VLTA_Name_Aircraft.Text = ceValue.ToString()+"\n" + ceValueLivery.ToString();
+            string aircraftliveryname;
+
+            switch (ceValueLivery)
+            {
+                /*
+                
+                case XXXXXXXXXXXXXXXXXXX:
+                    aircraftliveryname = "XXXXXXXXXXX";
+                    break;
+
+                */
+
+                // Airbus A319
+                case 7453010347523466593:
+                    aircraftliveryname = "Aer Lingus";
+                    break;
+
+                case 7953764200926570849:
+                    aircraftliveryname = "Air France";
+                    break;
+
+                case 8247605414979594593:
+                    aircraftliveryname = "Air Maurits";
+                    break;
+
+                case 7953754309717159009:
+                    aircraftliveryname = "Allegiantt";
+                    break;
+
+                case 7953747721454972257:
+                    aircraftliveryname = "American Airlines";
+                    break;
+
+                case 7953747742644860513:
+                    aircraftliveryname = "Avianca";
+                    break;
+
+                case 7667766916028922465:
+                    aircraftliveryname = "Azerbaijan";
+                    break;
+
+                case 6875711763198665058:
+                    aircraftliveryname = "Bangkok Air";
+                    break;
+
+                case 7016448109311256674:
+                    aircraftliveryname = "Bhutan Airlines";
+                    break;
+
+                case 7954879165879120482:
+                    aircraftliveryname = "Braathens";
+                    break;
+
+                case 7954883517100421730:
+                    aircraftliveryname = "Brazilian Air Force";
+                    break;
+
+                case 6874864031461634658:
+                    aircraftliveryname = "Brazilian Air Force";
+                    break;
+
+                case 6874871727942890082:
+                    aircraftliveryname = "British Airways";
+                    break;
+
+                case 8317134158379184738:
+                    aircraftliveryname = "Brussels";
+                    break;
+
+                case 7161128437789386083:
+                    aircraftliveryname = "Cebu Pacific";
+                    break;
+
+                case 7161128519192373347:
+                    aircraftliveryname = "Chair";
+                    break;
+
+                case 7018120466395654243:
+                    aircraftliveryname = "China Eastern";
+                    break;
+
+                case 7018142542595127651:
+                    aircraftliveryname = "Cyprus";
+                    break;
+
+                case 7018142486508173923:
+                    aircraftliveryname = "Czech Airlines";
+                    break;
+
+                case 7018142456729068900:
+                    aircraftliveryname = "Delta";
+                    break;
+
+                case 7021790636159627876:
+                    aircraftliveryname = "Drukair";
+                    break;
+
+                case 7022349226955989349:
+                    aircraftliveryname = "easyJet";
+                    break;
+
+                case 6878234038880133477:
+                    aircraftliveryname = "easyJet.com";
+                    break;
+
+                case 6877675448133642598:
+                    aircraftliveryname = "Finnair";
+                    break;
+
+                case 7599664260938098023:
+                    aircraftliveryname = "Germanwings";
+                    break;
+
+                case 7600231608837109096:
+                    aircraftliveryname = "Hungarian Air Force";
+                    break;
+
+                case 7600212951683129961:
+                    aircraftliveryname = "Iberia";
+                    break;
+
+                case 8607057704791405673:
+                    aircraftliveryname = "ITA Airways";
+                    break;
+
+                case 8607057756365807980:
+                    aircraftliveryname = "LATAM";
+                    break;
+
+                case 8317692663057249644:
+                    aircraftliveryname = "Luftthansa";
+                    break;
+
+                case 7597696169466751088:
+                    aircraftliveryname = "Philippines";
+                    break;
+
+                case 8028334204837785458:
+                    aircraftliveryname = "Royan Jordanian";
+                    break;
+
+                case 8244227710998114162:
+                    aircraftliveryname = "Royal Air";
+                    break;
+
+                case 8244227710997717363:
+                    aircraftliveryname = "Scandinavian Airlines";
+                    break;
+
+                case 7019259560576642163:
+                    aircraftliveryname = "Slovak Republic";
+                    break;
+
+                case 7019269490473529459:
+                    aircraftliveryname = "Spirit";
+                    break;
+
+                case 7019269533439981427:
+                    aircraftliveryname = "SWISS";
+                    break;
+
+                case 7019269533440434548:
+                    aircraftliveryname = "TAP Portugal";
+                    break;
+
+                case 7019269537499605364:
+                    aircraftliveryname = "Tibet";
+                    break;
+
+                case 8244227741196383604:
+                    aircraftliveryname = "Tunisair";
+                    break;
+
+                case 8244230979785944693:
+                    aircraftliveryname = "United";
+                    break;
+
+                case 8247051282627194742:
+                    aircraftliveryname = "Volaris";
+                    break;
+
+                case 8241980343824707446:
+                    aircraftliveryname = "Volotea";
+                    break;
+
+                case 8243679041994192246:
+                    aircraftliveryname = "Vueling";
+                    break;
+
+                // Note : Eurowings not supported. idk why.
+
+
+                // Airbus A320 / A320 neo
+
+                case 8318832826298885473:
+                    aircraftliveryname = "Aegean";
+                    break;
+
+                case 7453015797936907617:
+                    aircraftliveryname = "Aegean";
+                    break;
+
+                case 8390043818026755425:
+                    aircraftliveryname = "Aeroflot";
+                    break;
+
+                case 7019268356283984225:
+                    aircraftliveryname = "Air Asia";
+                    break;
+
+                case 7814419776623765857:
+                    aircraftliveryname = "airberlin";
+                    break;
+
+                case 8244227672309393761:
+                    aircraftliveryname = "Air Cairo";
+                    break;
+
+                case 7956004992739076449:
+                    aircraftliveryname = "Air China";
+                    break;
+
+                case 8318833934300506465:
+                    aircraftliveryname = "Air Corsica";
+                    break;
+
+                case 7310590567722936673:
+                    aircraftliveryname = "Air Cote d'Ivoire";
+                    break;
+
+                case 7020374503636232545:
+                    aircraftliveryname = "Air Jamaica";
+                    break;
+
+                case 7594316270505453921:
+                    aircraftliveryname = "Air India";
+                    break;
+
+                case 7017559766754027873:
+                    aircraftliveryname = "Air Macau";
+                    break;
+
+                case 6879078480553863521:
+                    aircraftliveryname = "Air New Zeland";
+                    break;
+
+                case 7167871828133833057:
+                    aircraftliveryname = "Air Seychelles";
+                    break;
+
+                case 7956009382262761825:
+                    aircraftliveryname = "Aircalin";
+                    break;
+
+                case 7019260660054322273:
+                    aircraftliveryname = "Alitalia";
+                    break;
+
+                case 7953747721454710369:
+                    aircraftliveryname = "All Nippon Airlines";
+                    break;
+
+                case 7956009382261648993:
+                    aircraftliveryname = "All Nippon Airlines";
+                    break;
+
+                case 7163384699739206753:
+                    aircraftliveryname = "Atlantic Airways";
+                    break;
+
+                case 7953754357213918561:
+                    aircraftliveryname = "Austrian";
+                    break;
+
+                case 7953765296461806177:
+                    aircraftliveryname = "Azores";
+                    break;
+
+                case 7953765296361536097:
+                    aircraftliveryname = "Azul";
+                    break;
+
+                case 7953760941096395106:
+                    aircraftliveryname = "Bamboo";
+                    break;
+
+                case 7953760924034425186:
+                    aircraftliveryname = "Batik";
+                    break;
+
+                case 8097324114306687331:
+                    aircraftliveryname = "Cathay Pacific";
+                    break;
+
+                case 8030867432600594531:
+                    aircraftliveryname = "China Southern";
+                    break;
+
+                case 7741240723843082595:
+                    aircraftliveryname = "Citilink";
+                    break;
+
+                case 7741250632248356707:
+                    aircraftliveryname = "Condor";
+                    break;
+
+                case 7741240676782466404:
+                    aircraftliveryname = "Delta";
+                    break;
+
+                case 7742366576538907236:
+                    aircraftliveryname = "Druk Air";
+                    break;
+
+                case 7742925167335268709:
+                    aircraftliveryname = "easyJet";
+                    break;
+
+                case 7453010395036546405:
+                    aircraftliveryname = "Eurowings";
+                    break;
+
+                case 8316289750510429285:
+                    aircraftliveryname = "Edelweiss";
+                    break;
+
+                case 8320807549082889318:
+                    aircraftliveryname = "Fly Arystan";
+                    break;
+
+                case 8320808648846175334:
+                    aircraftliveryname = "Flynas";
+                    break;
+
+                case 8243110641761481318:
+                    aircraftliveryname = "Frontier";
+                    break;
+
+                case 8244227655246574951:
+                    aircraftliveryname = "Gulf Air";
+                    break;
+
+                case 8243116057714844008:
+                    aircraftliveryname = "Hainan Airlines";
+                    break;
+                    
+                case 8315178114391305064:
+                    aircraftliveryname = "Hong Kong Express";
+                    break;
+
+                case 8315159392528196201:
+                    aircraftliveryname = "Iberia";
+                    break;
+
+                case 8244243082818907753:
+                    aircraftliveryname = "Indigo";
+                    break;
+
+                case 8315159392527938665:
+                    aircraftliveryname = "ITA Airways";
+                    break;
+                    
+                case 8314052166922428778:
+                    aircraftliveryname = "Jazeera";
+                    break;
+
+                case 8390876178460992874:
+                    aircraftliveryname = "JetSmart";
+                    break;
+
+                case 8390876178159001964:
+                    aircraftliveryname = "LATAM";
+                    break;
+                    
+                case 8243662566316073324:
+                    aircraftliveryname = "LATAM Green";
+                    break;
+
+                case 8390876208525763946:
+                    aircraftliveryname = "Jetstar";
+                    break;
+
+                case 8244243082819559788:
+                    aircraftliveryname = "LAN";
+                    break;
+
+                case 8317692632992866669:
+                    aircraftliveryname = "Malta";
+                    break;
+
+
+                case 8315183577523449710:
+                    aircraftliveryname = "Northwest";
+                    break;
+
+                case 8317692662771705200:
+                    aircraftliveryname = "Peach";
+                    break;
+
+                case 8319122075099293040:
+                    aircraftliveryname = "Pegasus";
+                    break;
+
+                case 8319122075501554800:
+                    aircraftliveryname = "Play";
+                    break;
+
+                case 7954879191867275123:
+                    aircraftliveryname = "S7";
+                    break;
+
+                case 8315183577523435379:
+                    aircraftliveryname = "S7";
+                    break;
+
+                case 8319122075502731635:
+                    aircraftliveryname = "SAS";
+                    break;
+                    
+                case 8319122079629665139:
+                    aircraftliveryname = "Scoot flyscoot.com";
+                    break;
+
+                case 7954879191867287667:
+                    aircraftliveryname = "Shenzhen Airlines";
+                    break;
+
+                case 7957404748500658547:
+                    aircraftliveryname = "Sichuan Airlines";
+                    break;
+
+                case 8319122079630322547:
+                    aircraftliveryname = "Sky";
+                    break;
+
+                case 8319120932923338867:
+                    aircraftliveryname = "Spirit";
+                    break;
+                    
+                case 7311994657274164339:
+                    aircraftliveryname = "Starflyer";
+                    break;
+
+                case 7957404740095670131:
+                    aircraftliveryname = "Swiss";
+                    break;
+                    
+                case 7311994713126041459:
+                    aircraftliveryname = "Swiss";
+                    break;
+
+                case 7957404740095926644:
+                    aircraftliveryname = "TAM";
+                    break;
+
+                case 7957404740096123252:
+                    aircraftliveryname = "TAP Portugal";
+                    break;
+
+                case 7311994713126494580:
+                    aircraftliveryname = "TAP Portugal";
+                    break;
+
+                case 7957123243660634486:
+                    aircraftliveryname = "Vietnam Airlines";
+                    break;
+
+                case 7308604897319283062:
+                    aircraftliveryname = "Vietnam Airlines";
+                    break;
+
+                case 7305245833462770038:
+                    aircraftliveryname = "Vistara";
+                    break;
+
+                case 7305245833144199542:
+                    aircraftliveryname = "Viva";
+                    break;
+
+                case 7310302560134131574:
+                    aircraftliveryname = "Volaris";
+                    break;
+
+                case 7306930319501129078:
+                    aircraftliveryname = "Vueling";
+                    break;
+
+                case 7310021012563323255:
+                    aircraftliveryname = "Wizz Air";
+                    break;
+                default:
+                    aircraftliveryname = ceValueLivery.ToString();
+                    break;
+            }
 
             switch (ceValue)
             {
                 case 959525729:
-                    VLTA_Name_Aircraft.Text = "Airbus A319";
+                    VLTA_Name_Aircraft.Text = "Airbus A319" + "\n" + aircraftliveryname;
                     break;
 
                 case 808596321:
-                    VLTA_Name_Aircraft.Text = "Airbus A320";
+                    VLTA_Name_Aircraft.Text = "Airbus A320" + "\n" + aircraftliveryname;
                     break;
 
                 case 825373537:
-                    VLTA_Name_Aircraft.Text = "Airbus A321";
+                    VLTA_Name_Aircraft.Text = "Airbus A321" + "\n" + aircraftliveryname;
                     break;
 
                 case 808792929:
-                    VLTA_Name_Aircraft.Text = "Airbus A350-1000";
+                    VLTA_Name_Aircraft.Text = "Airbus A350-1000" + "\n" + aircraftliveryname;
                     break;
 
                 case 808989537:
-                    VLTA_Name_Aircraft.Text = "Airbus A380";
+                    VLTA_Name_Aircraft.Text = "Airbus A380" + "\n" + aircraftliveryname;
                     break;
 
                 default:
@@ -347,6 +839,40 @@ namespace FS4_Flight_Tracker
             }
         }
         #endregion
+
+
+
+        #region 1.2. อ่านค่าเป็น 8 Bytes (Int32)
+        public static long GetCEIntValue8Byte(string processName, int baseOffset, int[] offsets)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            if (processes.Length == 0) return 0;
+
+            Process process = processes[0];
+            IntPtr processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+            if (processHandle == IntPtr.Zero) return 0;
+
+            try
+            {
+                IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
+                if (finalAddress == IntPtr.Zero) return 0;
+
+                byte[] valueBuffer = new byte[8]; // 1. เปลี่ยนขนาด Buffer เป็น 8 Bytes สำหรับ Int64
+                IntPtr bytesRead;
+                if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 8, out bytesRead)) // 2. อ่านข้อมูลขนาด 8 Bytes
+                {
+                    return BitConverter.ToInt64(valueBuffer, 0); // 3. แปลงเป็น Int64 (long)
+                }
+
+                return 0;
+            }
+            finally
+            {
+                CloseHandle(processHandle);
+            }
+        }
+        #endregion
+
 
         #region 2. อ่านค่าเป็น String (ข้อความ)
         public static string GetCEStringValue(string processName, int baseOffset, int[] offsets, int stringLength = 32, Encoding encoding = null)
