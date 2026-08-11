@@ -39,15 +39,35 @@ namespace FS4_Flight_Tracker
 
         private const int PROCESS_WM_READ = 0x0010;
 
+        private double depXlocked;
+        private double depYlocked;
+        private double depZlocked;
 
+        private double arrXlocked;
+        private double arrYlocked;
+        private double arrZlocked;
 
+        private double playerX;
+        private double playerY;
+        private double playerZ;
+
+        private int switchColourStep = 0;
 
         public Form1()
         {
             InitializeComponent();
             InitializeSharedMemory();
             InitializeTelemetryTimer();
+            
         }
+
+
+
+        private void MovementTimer_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
         public static string GetCurrentAircraftRaw(string mcfFilePath)
         {
             if (!File.Exists(mcfFilePath)) return "Unknown";
@@ -148,7 +168,7 @@ namespace FS4_Flight_Tracker
 
                 double altitudestatus = data.Roll * (10.31493 / Math.PI); // 10.31493
 
-                double speedstatus = data2.IndicatedAirspeed * (6.1075 / Math.PI); // 6.1075
+                double speedstatus = data2.IndicatedAirspeed * (6.1075 / Math.PI); //* (6.1075 / Math.PI); // 6.1075
 
                 double rollstatus = data3.Roll * (191 / Math.PI); // 6.1075
 
@@ -197,7 +217,7 @@ namespace FS4_Flight_Tracker
 
         private void LoadNameAircraft_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void StatusUpdateDepatureText()
@@ -1026,6 +1046,7 @@ namespace FS4_Flight_Tracker
             VLTA_TIME.Text = "UTC: " + ceValue;
 
         }
+
         private void StatusUpdatePlayerPositionText()
         {
             string processName = "aerofly_fs_4";
@@ -1044,6 +1065,10 @@ namespace FS4_Flight_Tracker
             double playerPosY = Form1.GetCEDoubleValue(processName, baseOffsetPosY, offsetsPosY);
             double playerPosZ = Form1.GetCEDoubleValue(processName, baseOffsetPosZ, offsetsPosZ);
 
+            playerX = playerPosX;
+            playerY = playerPosY;
+            playerZ = playerPosZ;
+
             // Departure Position
             int baseOffsetDepPosX = 0x0173BB68;
             int[] offsetsDepPosX = new int[] { 0x20 , 0xD0 , 0x358 , 0x28 , 0x90 , 0x0 , 0x30 };
@@ -1056,24 +1081,88 @@ namespace FS4_Flight_Tracker
             double playerDepPosY = Form1.GetCEDoubleValue(processName, baseOffsetDepPosY, offsetsDepPosY);
             double playerDepPosZ = Form1.GetCEDoubleValue(processName, baseOffsetDepPosZ, offsetsDepPosZ);
 
+            depXlocked = playerDepPosX;
+            depYlocked = playerDepPosY;
+            depZlocked = playerDepPosZ;
+
             // Arrival Position
             int baseOffsetArrPosX = 0x0182F768;
             int[] offsetsArrPosX = new int[] { 0x60 , 0x20 , 0x20 , 0x0 , 0x348 , 0xE0 , 0x468 };
-            int baseOffsetArrPosY = 0x0182F768;
-            int[] offsetsArrPosY = new int[] { 0x8 , 0x20 , 0x20 , 0x358 , 0xB0 , 0x10 , 0x48 };
+            int baseOffsetArrPosY = 0x016D8A88;
+            int[] offsetsArrPosY = new int[] { 0xD0 , 0x358 , 0x28 , 0x60 , 0x0 , 0x8 , 0x30 };
             int baseOffsetArrPosZ = 0x0182F768;
-            int[] offsetsArrPosZ = new int[] { 0x8 , 0x20 , 0x20 , 0x0 , 0x348 , 0xC8 , 0x220 };
+            int[] offsetsArrPosZ = new int[] { 0x8B0 , 0x20 , 0x20 , 0x358 , 0xF8 , 0x4B0 , 0x18 };
 
             double playerArrPosX = Form1.GetCEDoubleValue(processName, baseOffsetArrPosX, offsetsArrPosX);
             double playerArrPosY = Form1.GetCEDoubleValue(processName, baseOffsetArrPosY, offsetsArrPosY);
             double playerArrPosZ = Form1.GetCEDoubleValue(processName, baseOffsetArrPosZ, offsetsArrPosZ);
 
+            arrXlocked = playerArrPosX;
+            arrYlocked = playerArrPosY;
+            arrZlocked = playerArrPosZ;
+
+
+            // ==========================================================
+            // ส่วนที่เพิ่ม: คำนวณระยะทางและเปอร์เซ็นต์ (Progress 0 - 100%)
+            // ==========================================================
+
+            // 1. คำนวณระยะทางรวมทั้งหมด (Departure -> Arrival) และ ระยะทางที่บินมาแล้ว (Departure -> Player)
+            double dxTotal = arrXlocked - depXlocked;
+            double dyTotal = arrYlocked - depYlocked;
+            double dzTotal = arrZlocked - depZlocked;
+            double totalDistanceMeters = Math.Sqrt(dxTotal * dxTotal + dyTotal * dyTotal + dzTotal * dzTotal);
+
+            double dxCurrent = playerX - depXlocked;
+            double dyCurrent = playerY - depYlocked;
+            double dzCurrent = playerZ - depZlocked;
+            double currentDistanceMeters = Math.Sqrt(dxCurrent * dxCurrent + dyCurrent * dyCurrent + dzCurrent * dzCurrent);
+
+            // 2. คำนวณเปอร์เซ็นต์ Progress (0 ถึง 100%)
+            double progressPercent = 0.0;
+            if (totalDistanceMeters > 0)
+            {
+                progressPercent = (currentDistanceMeters / totalDistanceMeters) * 100.0;
+            }
+
+            // ล็อกขอบเขตไม่ให้ต่ำกว่า 0% หรือเกิน 100%
+            if (progressPercent < 0.0) progressPercent = 0.0;
+            if (progressPercent > 100.0) progressPercent = 100.0;
+
+            // 3. คำนวณระยะทางที่เหลือ (แปลงเป็น กิโลเมตร)
+            double dxRemaining = arrXlocked - playerX;
+            double dyRemaining = arrYlocked - playerY;
+            double dzRemaining = arrZlocked - playerZ;
+            double remainingMeters = Math.Sqrt(dxRemaining * dxRemaining + dyRemaining * dyRemaining + dzRemaining * dzRemaining);
+            double remainingKm = remainingMeters / 1000.0; // แปลงเมตรเป็น กม.
+
+
+
+            int mincurrentsizepanelVolantastyle = 0;
+            int maxcurrentsizepanelVolantastyle = 860;
+
+            // คำนวณหาค่า current จาก progressPercent (0.0 ถึง 100.0)
+            int currentsizepanelVolantastyle = (int)Math.Round((progressPercent / 100.0) * maxcurrentsizepanelVolantastyle);
+
+            // กำหนดขอบเขตความปลอดภัย (Clamp)
+            if (currentsizepanelVolantastyle < mincurrentsizepanelVolantastyle) currentsizepanelVolantastyle = mincurrentsizepanelVolantastyle;
+            if (currentsizepanelVolantastyle > maxcurrentsizepanelVolantastyle) currentsizepanelVolantastyle = maxcurrentsizepanelVolantastyle;
+
             PlayerPosition.Text = "Player Position:" + "\n" + "X = " + playerPosX + "\n" + "Y = " + playerPosY + "\n" + "Z = " + playerPosZ;
             DeparturePosition.Text = "Departure Position:" + "\n" + "X = " + playerDepPosX + "\n" + "Y = " + playerDepPosY + "\n" + "Z = " + playerDepPosZ;
             ArrivalPosition.Text = "Arrival Position:" + "\n" + "X = " + playerArrPosX + "\n" + "Y = " + playerArrPosY + "\n" + "Z = " + playerArrPosZ;
+
+            // Label แสดง Progress และระยะทางที่เหลือ (สร้าง Label ใหม่เพิ่มใน Form เช่น lblProgress และ lblRemainingKm)
+            lblProgress.Text = $"Flight Progress: {progressPercent:F2} %";
+            lblCurrent.Text = "Remaining Distance: " + $"{remainingKm:F2}" + " NM";
+
+            
+            lblXYZ.Text = currentsizepanelVolantastyle.ToString();
+
+            ProgressBarStatus.Size = new Size(currentsizepanelVolantastyle, 7);
         }
 
-            #region Helper Function: เดิน Pointer Chain
+
+        #region Helper Function: เดิน Pointer Chain
         /// <summary>
         /// คำนวณหา Memory Address สุดท้ายจาก Pointer Chain ตาม Cheat Engine
         /// </summary>
@@ -1290,6 +1379,35 @@ namespace FS4_Flight_Tracker
         {
             panel1.Visible = true;
             panelVolantaStyle.Visible = false;
+        }
+
+        private void Switch_Color_Background_Click(object sender, EventArgs e)
+        {
+            switch (switchColourStep)
+            {
+                case 0:
+                    panelVolantaStyle.BackColor = Color.Black;
+                    Switch_Color_Background.ForeColor = Color.Black;
+                    Quit_Volanta.ForeColor = Color.Black;
+                    break;
+                case 1:
+                    panelVolantaStyle.BackColor = Color.Blue;
+                    Switch_Color_Background.ForeColor = Color.Blue;
+                    Quit_Volanta.ForeColor = Color.Blue;
+                    break;
+                case 2:
+                    panelVolantaStyle.BackColor = Color.Transparent;
+                    Switch_Color_Background.ForeColor = Color.Transparent; ;
+                    Quit_Volanta.ForeColor = Color.Transparent;
+                    break;
+                default:
+                    panelVolantaStyle.BackColor = Color.Lime;
+                    Switch_Color_Background.ForeColor = Color.Lime;
+                    Quit_Volanta.ForeColor = Color.Lime;
+                    switchColourStep = -1; // Resets cycle
+                    break;
+            }
+            switchColourStep++;
         }
     }
 }
