@@ -1,6 +1,16 @@
-# fs4_flight_tracker
+# FS4 Flight Tracker
 Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 
 ### Required
 
- [AeroflyFS4Bridge.dll](https://github.com/jlgabriel/Aerofly-FS4-Bridge/releases)
+- [AeroflyFS4Bridge.dll](https://github.com/jlgabriel/Aerofly-FS4-Bridge/releases)
+- [.NET Framework 4.8 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+
+### For Open-Source (Optional)
+- Visual Studio 2019 Community
+- .NET Desktop Development
+
+### How to install AeroflyFS4Bridge.dll
+- Go to **C:\Users\YOURNAME\OneDrive\Documents\Aerofly FS 4\external_dll**
+
+  Place the **AeroflyFS4Bridge.dll** file in the **external_dll** folder.
