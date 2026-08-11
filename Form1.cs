@@ -88,6 +88,7 @@ namespace FS4_Flight_Tracker
             StatusUpdateArrivalText();
             StatusUpdateAircraftNameText();
             StatusUpdateTimerClockText();
+            StatusUpdatePlayerPositionText();
         }
 
         private void InitializeSharedMemory()
@@ -1025,8 +1026,54 @@ namespace FS4_Flight_Tracker
             VLTA_TIME.Text = "UTC: " + ceValue;
 
         }
+        private void StatusUpdatePlayerPositionText()
+        {
+            string processName = "aerofly_fs_4";
 
-        #region Helper Function: เดิน Pointer Chain
+            // Player Position
+            int baseOffsetPosX = 0x0173BB68;
+            int[] offsetsPosX = new int[] { 0x20, 0xF0, 0x8, 0x90, 0x0, 0x0 , 0x2A8 };
+
+            int baseOffsetPosY = 0x016D8A88;
+            int[] offsetsPosY = new int[] { 0x10, 0x40, 0x0, 0x28, 0x8 , 0x0, 0x2B0 };
+
+            int baseOffsetPosZ = 0x0181B898;
+            int[] offsetsPosZ = new int [] { 0x5C8 , 0xD0 , 0x308 , 0x150 , 0x658 , 0x0 , 0x2B8 };
+
+            double playerPosX = Form1.GetCEDoubleValue(processName, baseOffsetPosX, offsetsPosX);
+            double playerPosY = Form1.GetCEDoubleValue(processName, baseOffsetPosY, offsetsPosY);
+            double playerPosZ = Form1.GetCEDoubleValue(processName, baseOffsetPosZ, offsetsPosZ);
+
+            // Departure Position
+            int baseOffsetDepPosX = 0x0173BB68;
+            int[] offsetsDepPosX = new int[] { 0x20 , 0xD0 , 0x358 , 0x28 , 0x90 , 0x0 , 0x30 };
+            int baseOffsetDepPosY = 0x016D8A88;
+            int[] offsetsDepPosY = new int[] { 0xD0 , 0x358 , 0x28 , 0x60 , 0x0 , 0x8 , 0x30 };
+            int baseOffsetDepPosZ = 0x016D8A88;
+            int[] offsetsDepPosZ = new int[] { 0xD0 , 0x0 , 0x348 , 0x98 , 0x0 , 0x50 };
+
+            double playerDepPosX = Form1.GetCEDoubleValue(processName, baseOffsetDepPosX, offsetsDepPosX);
+            double playerDepPosY = Form1.GetCEDoubleValue(processName, baseOffsetDepPosY, offsetsDepPosY);
+            double playerDepPosZ = Form1.GetCEDoubleValue(processName, baseOffsetDepPosZ, offsetsDepPosZ);
+
+            // Arrival Position
+            int baseOffsetArrPosX = 0x0182F768;
+            int[] offsetsArrPosX = new int[] { 0x60 , 0x20 , 0x20 , 0x0 , 0x348 , 0xE0 , 0x468 };
+            int baseOffsetArrPosY = 0x0182F768;
+            int[] offsetsArrPosY = new int[] { 0x8 , 0x20 , 0x20 , 0x358 , 0xB0 , 0x10 , 0x48 };
+            int baseOffsetArrPosZ = 0x0182F768;
+            int[] offsetsArrPosZ = new int[] { 0x8 , 0x20 , 0x20 , 0x0 , 0x348 , 0xC8 , 0x220 };
+
+            double playerArrPosX = Form1.GetCEDoubleValue(processName, baseOffsetArrPosX, offsetsArrPosX);
+            double playerArrPosY = Form1.GetCEDoubleValue(processName, baseOffsetArrPosY, offsetsArrPosY);
+            double playerArrPosZ = Form1.GetCEDoubleValue(processName, baseOffsetArrPosZ, offsetsArrPosZ);
+
+            PlayerPosition.Text = "Player Position:" + "\n" + "X = " + playerPosX + "\n" + "Y = " + playerPosY + "\n" + "Z = " + playerPosZ;
+            DeparturePosition.Text = "Departure Position:" + "\n" + "X = " + playerDepPosX + "\n" + "Y = " + playerDepPosY + "\n" + "Z = " + playerDepPosZ;
+            ArrivalPosition.Text = "Arrival Position:" + "\n" + "X = " + playerArrPosX + "\n" + "Y = " + playerArrPosY + "\n" + "Z = " + playerArrPosZ;
+        }
+
+            #region Helper Function: เดิน Pointer Chain
         /// <summary>
         /// คำนวณหา Memory Address สุดท้ายจาก Pointer Chain ตาม Cheat Engine
         /// </summary>
