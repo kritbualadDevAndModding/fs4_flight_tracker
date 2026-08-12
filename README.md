@@ -7,7 +7,7 @@ Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 - [.NET Framework 4.8 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
 
 ### For Open-Source (Optional)
-- Visual Studio 2019 Community
+- Visual Studio 2022 Community
 - .NET Desktop Development
 
 ### How to install AeroflyFS4Bridge.dll
