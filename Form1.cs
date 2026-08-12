@@ -213,13 +213,6 @@ namespace FS4_Flight_Tracker
             mmf?.Dispose();
             base.OnFormClosing(e);
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            panel1.Visible = false;
-            panelVolantaStyle.Visible = true;
-        }
-
-
 
         private void timerreadingmemory_Tick(object sender, EventArgs e)
         {
@@ -1382,10 +1375,15 @@ namespace FS4_Flight_Tracker
         {
 
         }
-
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
 
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+            panelVolantaStyle.Visible = true;
         }
 
         private void Quit_Volanta_Click(object sender, EventArgs e)

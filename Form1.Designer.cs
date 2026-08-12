@@ -54,9 +54,13 @@ namespace FS4_Flight_Tracker
             this.panelVolantaEnabled = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelVolantaStyle = new System.Windows.Forms.Panel();
-            this.ImageHUDVolantaStyle = new System.Windows.Forms.Panel();
             this.Quit_Volanta = new System.Windows.Forms.Button();
             this.Switch_Color_Background = new System.Windows.Forms.Button();
+            this.ImageCustomHUD1 = new System.Windows.Forms.Panel();
+            this.imageSlider1 = new CustomSliderApp.ImageSlider();
+            this.Custom_VLTA1_DEP_and_ARR_Status = new System.Windows.Forms.Label();
+            this.Custom_VLTA2_Speed_Status = new System.Windows.Forms.Label();
+            this.ImageHUDVolantaStyle = new System.Windows.Forms.Panel();
             this.ProgressBarStatus = new System.Windows.Forms.Panel();
             this.ProgressBar = new System.Windows.Forms.Panel();
             this.VLTA_ARR_Text = new System.Windows.Forms.Label();
@@ -71,6 +75,7 @@ namespace FS4_Flight_Tracker
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
             this.panelVolantaStyle.SuspendLayout();
+            this.ImageCustomHUD1.SuspendLayout();
             this.ImageHUDVolantaStyle.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -319,6 +324,9 @@ namespace FS4_Flight_Tracker
             // panelVolantaStyle
             // 
             this.panelVolantaStyle.BackColor = System.Drawing.Color.Lime;
+            this.panelVolantaStyle.Controls.Add(this.Quit_Volanta);
+            this.panelVolantaStyle.Controls.Add(this.Switch_Color_Background);
+            this.panelVolantaStyle.Controls.Add(this.ImageCustomHUD1);
             this.panelVolantaStyle.Controls.Add(this.ImageHUDVolantaStyle);
             this.panelVolantaStyle.Location = new System.Drawing.Point(0, 0);
             this.panelVolantaStyle.Name = "panelVolantaStyle";
@@ -326,12 +334,86 @@ namespace FS4_Flight_Tracker
             this.panelVolantaStyle.TabIndex = 14;
             this.panelVolantaStyle.Visible = false;
             // 
+            // Quit_Volanta
+            // 
+            this.Quit_Volanta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Quit_Volanta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Quit_Volanta.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Quit_Volanta.ForeColor = System.Drawing.Color.Lime;
+            this.Quit_Volanta.Location = new System.Drawing.Point(12, 410);
+            this.Quit_Volanta.Name = "Quit_Volanta";
+            this.Quit_Volanta.Size = new System.Drawing.Size(180, 46);
+            this.Quit_Volanta.TabIndex = 14;
+            this.Quit_Volanta.Text = "Quit Volanta Style";
+            this.Quit_Volanta.UseVisualStyleBackColor = true;
+            this.Quit_Volanta.Click += new System.EventHandler(this.Quit_Volanta_Click);
+            // 
+            // Switch_Color_Background
+            // 
+            this.Switch_Color_Background.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Switch_Color_Background.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Switch_Color_Background.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.Switch_Color_Background.ForeColor = System.Drawing.Color.Lime;
+            this.Switch_Color_Background.Location = new System.Drawing.Point(12, 80);
+            this.Switch_Color_Background.Name = "Switch_Color_Background";
+            this.Switch_Color_Background.Size = new System.Drawing.Size(180, 46);
+            this.Switch_Color_Background.TabIndex = 15;
+            this.Switch_Color_Background.Text = "Switch Color\r\nBackground";
+            this.Switch_Color_Background.UseVisualStyleBackColor = true;
+            this.Switch_Color_Background.Click += new System.EventHandler(this.Switch_Color_Background_Click);
+            // 
+            // ImageCustomHUD1
+            // 
+            this.ImageCustomHUD1.BackColor = System.Drawing.Color.Transparent;
+            this.ImageCustomHUD1.BackgroundImage = global::FS4_Flight_Tracker.Properties.Resources.CustomVolantaHUDStyle;
+            this.ImageCustomHUD1.Controls.Add(this.imageSlider1);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA1_DEP_and_ARR_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA2_Speed_Status);
+            this.ImageCustomHUD1.Location = new System.Drawing.Point(12, 12);
+            this.ImageCustomHUD1.Name = "ImageCustomHUD1";
+            this.ImageCustomHUD1.Size = new System.Drawing.Size(860, 446);
+            this.ImageCustomHUD1.TabIndex = 17;
+            // 
+            // imageSlider1
+            // 
+            this.imageSlider1.BackColor = System.Drawing.Color.Transparent;
+            this.imageSlider1.Location = new System.Drawing.Point(0, 31);
+            this.imageSlider1.Name = "imageSlider1";
+            this.imageSlider1.Size = new System.Drawing.Size(860, 22);
+            this.imageSlider1.TabIndex = 5;
+            this.imageSlider1.Text = "imageSlider1";
+            this.imageSlider1.ThumbImage = global::FS4_Flight_Tracker.Properties.Resources.CustomHUD1_AirplaneLogo;
+            this.imageSlider1.ThumbSize = new System.Drawing.Size(22, 22);
+            this.imageSlider1.TrackColor = System.Drawing.Color.Black;
+            this.imageSlider1.TrackHeight = 3;
+            this.imageSlider1.TrackProgressColor = System.Drawing.Color.Red;
+            // 
+            // Custom_VLTA1_DEP_and_ARR_Status
+            // 
+            this.Custom_VLTA1_DEP_and_ARR_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA1_DEP_and_ARR_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA1_DEP_and_ARR_Status.Location = new System.Drawing.Point(1, 1);
+            this.Custom_VLTA1_DEP_and_ARR_Status.Name = "Custom_VLTA1_DEP_and_ARR_Status";
+            this.Custom_VLTA1_DEP_and_ARR_Status.Size = new System.Drawing.Size(153, 27);
+            this.Custom_VLTA1_DEP_and_ARR_Status.TabIndex = 4;
+            this.Custom_VLTA1_DEP_and_ARR_Status.Text = "VTBD - VTCC";
+            this.Custom_VLTA1_DEP_and_ARR_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Custom_VLTA2_Speed_Status
+            // 
+            this.Custom_VLTA2_Speed_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA2_Speed_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA2_Speed_Status.Location = new System.Drawing.Point(662, 1);
+            this.Custom_VLTA2_Speed_Status.Name = "Custom_VLTA2_Speed_Status";
+            this.Custom_VLTA2_Speed_Status.Size = new System.Drawing.Size(197, 27);
+            this.Custom_VLTA2_Speed_Status.TabIndex = 6;
+            this.Custom_VLTA2_Speed_Status.Text = "SPEED : 320 KNOTS";
+            this.Custom_VLTA2_Speed_Status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // ImageHUDVolantaStyle
             // 
             this.ImageHUDVolantaStyle.BackColor = System.Drawing.Color.Transparent;
             this.ImageHUDVolantaStyle.BackgroundImage = global::FS4_Flight_Tracker.Properties.Resources.VolantaHUDStyle;
-            this.ImageHUDVolantaStyle.Controls.Add(this.Quit_Volanta);
-            this.ImageHUDVolantaStyle.Controls.Add(this.Switch_Color_Background);
             this.ImageHUDVolantaStyle.Controls.Add(this.ProgressBarStatus);
             this.ImageHUDVolantaStyle.Controls.Add(this.ProgressBar);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_ARR_Text);
@@ -347,34 +429,6 @@ namespace FS4_Flight_Tracker
             this.ImageHUDVolantaStyle.Name = "ImageHUDVolantaStyle";
             this.ImageHUDVolantaStyle.Size = new System.Drawing.Size(860, 446);
             this.ImageHUDVolantaStyle.TabIndex = 13;
-            // 
-            // Quit_Volanta
-            // 
-            this.Quit_Volanta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.Quit_Volanta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Quit_Volanta.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Quit_Volanta.ForeColor = System.Drawing.Color.Lime;
-            this.Quit_Volanta.Location = new System.Drawing.Point(0, 400);
-            this.Quit_Volanta.Name = "Quit_Volanta";
-            this.Quit_Volanta.Size = new System.Drawing.Size(180, 46);
-            this.Quit_Volanta.TabIndex = 14;
-            this.Quit_Volanta.Text = "Quit Volanta Style";
-            this.Quit_Volanta.UseVisualStyleBackColor = true;
-            this.Quit_Volanta.Click += new System.EventHandler(this.Quit_Volanta_Click);
-            // 
-            // Switch_Color_Background
-            // 
-            this.Switch_Color_Background.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.Switch_Color_Background.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Switch_Color_Background.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.Switch_Color_Background.ForeColor = System.Drawing.Color.Lime;
-            this.Switch_Color_Background.Location = new System.Drawing.Point(1, 64);
-            this.Switch_Color_Background.Name = "Switch_Color_Background";
-            this.Switch_Color_Background.Size = new System.Drawing.Size(180, 46);
-            this.Switch_Color_Background.TabIndex = 15;
-            this.Switch_Color_Background.Text = "Switch Color\r\nBackground";
-            this.Switch_Color_Background.UseVisualStyleBackColor = true;
-            this.Switch_Color_Background.Click += new System.EventHandler(this.Switch_Color_Background_Click);
             // 
             // ProgressBarStatus
             // 
@@ -516,6 +570,7 @@ namespace FS4_Flight_Tracker
             this.panel1.ResumeLayout(false);
             this.panelVolantaEnabled.ResumeLayout(false);
             this.panelVolantaStyle.ResumeLayout(false);
+            this.ImageCustomHUD1.ResumeLayout(false);
             this.ImageHUDVolantaStyle.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -561,6 +616,10 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label lblXYZ;
         private System.Windows.Forms.Button Switch_Color_Background;
         private System.Windows.Forms.Label VLTA_SPD_HideNumber;
+        private System.Windows.Forms.Panel ImageCustomHUD1;
+        private CustomSliderApp.ImageSlider imageSlider1;
+        private System.Windows.Forms.Label Custom_VLTA1_DEP_and_ARR_Status;
+        private System.Windows.Forms.Label Custom_VLTA2_Speed_Status;
     }
 }
 
