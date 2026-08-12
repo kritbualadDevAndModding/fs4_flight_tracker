@@ -57,7 +57,6 @@ namespace FS4_Flight_Tracker
             this.Quit_Volanta = new System.Windows.Forms.Button();
             this.Switch_Color_Background = new System.Windows.Forms.Button();
             this.ImageCustomHUD1 = new System.Windows.Forms.Panel();
-            this.imageSlider1 = new CustomSliderApp.ImageSlider();
             this.Custom_VLTA1_DEP_and_ARR_Status = new System.Windows.Forms.Label();
             this.Custom_VLTA2_Speed_Status = new System.Windows.Forms.Label();
             this.ImageHUDVolantaStyle = new System.Windows.Forms.Panel();
@@ -72,6 +71,12 @@ namespace FS4_Flight_Tracker
             this.VLTA_Name_Aircraft = new System.Windows.Forms.Label();
             this.VLTA_SPD = new System.Windows.Forms.Label();
             this.VLTA_SPD_HideNumber = new System.Windows.Forms.Label();
+            this.Custom_VLTA3_Altitude_Status = new System.Windows.Forms.Label();
+            this.Custom_VLTA4_Progress_Status = new System.Windows.Forms.Label();
+            this.Custom_VLTA5_Clock_Status = new System.Windows.Forms.Label();
+            this.Next_HUD = new System.Windows.Forms.Button();
+            this.ProgressSlider = new CustomSliderApp.ImageSlider();
+            this.Custom_VLTA2_Speed_HideNumber_Status = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
             this.panelVolantaStyle.SuspendLayout();
@@ -325,6 +330,7 @@ namespace FS4_Flight_Tracker
             // 
             this.panelVolantaStyle.BackColor = System.Drawing.Color.Lime;
             this.panelVolantaStyle.Controls.Add(this.Quit_Volanta);
+            this.panelVolantaStyle.Controls.Add(this.Next_HUD);
             this.panelVolantaStyle.Controls.Add(this.Switch_Color_Background);
             this.panelVolantaStyle.Controls.Add(this.ImageCustomHUD1);
             this.panelVolantaStyle.Controls.Add(this.ImageHUDVolantaStyle);
@@ -366,49 +372,39 @@ namespace FS4_Flight_Tracker
             // 
             this.ImageCustomHUD1.BackColor = System.Drawing.Color.Transparent;
             this.ImageCustomHUD1.BackgroundImage = global::FS4_Flight_Tracker.Properties.Resources.CustomVolantaHUDStyle;
-            this.ImageCustomHUD1.Controls.Add(this.imageSlider1);
+            this.ImageCustomHUD1.Controls.Add(this.ProgressSlider);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA1_DEP_and_ARR_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA2_Speed_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA2_Speed_HideNumber_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA3_Altitude_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA4_Progress_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA5_Clock_Status);
             this.ImageCustomHUD1.Location = new System.Drawing.Point(12, 12);
             this.ImageCustomHUD1.Name = "ImageCustomHUD1";
             this.ImageCustomHUD1.Size = new System.Drawing.Size(860, 446);
             this.ImageCustomHUD1.TabIndex = 17;
             // 
-            // imageSlider1
-            // 
-            this.imageSlider1.BackColor = System.Drawing.Color.Transparent;
-            this.imageSlider1.Location = new System.Drawing.Point(0, 31);
-            this.imageSlider1.Name = "imageSlider1";
-            this.imageSlider1.Size = new System.Drawing.Size(860, 22);
-            this.imageSlider1.TabIndex = 5;
-            this.imageSlider1.Text = "imageSlider1";
-            this.imageSlider1.ThumbImage = global::FS4_Flight_Tracker.Properties.Resources.CustomHUD1_AirplaneLogo;
-            this.imageSlider1.ThumbSize = new System.Drawing.Size(22, 22);
-            this.imageSlider1.TrackColor = System.Drawing.Color.Black;
-            this.imageSlider1.TrackHeight = 3;
-            this.imageSlider1.TrackProgressColor = System.Drawing.Color.Red;
-            // 
             // Custom_VLTA1_DEP_and_ARR_Status
             // 
             this.Custom_VLTA1_DEP_and_ARR_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA1_DEP_and_ARR_Status.ForeColor = System.Drawing.Color.White;
-            this.Custom_VLTA1_DEP_and_ARR_Status.Location = new System.Drawing.Point(1, 1);
+            this.Custom_VLTA1_DEP_and_ARR_Status.Location = new System.Drawing.Point(730, 1);
             this.Custom_VLTA1_DEP_and_ARR_Status.Name = "Custom_VLTA1_DEP_and_ARR_Status";
-            this.Custom_VLTA1_DEP_and_ARR_Status.Size = new System.Drawing.Size(153, 27);
+            this.Custom_VLTA1_DEP_and_ARR_Status.Size = new System.Drawing.Size(129, 27);
             this.Custom_VLTA1_DEP_and_ARR_Status.TabIndex = 4;
             this.Custom_VLTA1_DEP_and_ARR_Status.Text = "VTBD - VTCC";
-            this.Custom_VLTA1_DEP_and_ARR_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Custom_VLTA1_DEP_and_ARR_Status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Custom_VLTA2_Speed_Status
             // 
             this.Custom_VLTA2_Speed_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA2_Speed_Status.ForeColor = System.Drawing.Color.White;
-            this.Custom_VLTA2_Speed_Status.Location = new System.Drawing.Point(662, 1);
+            this.Custom_VLTA2_Speed_Status.Location = new System.Drawing.Point(1, 1);
             this.Custom_VLTA2_Speed_Status.Name = "Custom_VLTA2_Speed_Status";
             this.Custom_VLTA2_Speed_Status.Size = new System.Drawing.Size(197, 27);
             this.Custom_VLTA2_Speed_Status.TabIndex = 6;
             this.Custom_VLTA2_Speed_Status.Text = "SPEED : 320 KNOTS";
-            this.Custom_VLTA2_Speed_Status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Custom_VLTA2_Speed_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ImageHUDVolantaStyle
             // 
@@ -551,6 +547,80 @@ namespace FS4_Flight_Tracker
             this.VLTA_SPD_HideNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.VLTA_SPD_HideNumber.Visible = false;
             // 
+            // Custom_VLTA3_Altitude_Status
+            // 
+            this.Custom_VLTA3_Altitude_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA3_Altitude_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA3_Altitude_Status.Location = new System.Drawing.Point(204, 1);
+            this.Custom_VLTA3_Altitude_Status.Name = "Custom_VLTA3_Altitude_Status";
+            this.Custom_VLTA3_Altitude_Status.Size = new System.Drawing.Size(209, 27);
+            this.Custom_VLTA3_Altitude_Status.TabIndex = 7;
+            this.Custom_VLTA3_Altitude_Status.Text = "ALTITUDE : 32000 FT";
+            this.Custom_VLTA3_Altitude_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Custom_VLTA4_Progress_Status
+            // 
+            this.Custom_VLTA4_Progress_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA4_Progress_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA4_Progress_Status.Location = new System.Drawing.Point(532, 1);
+            this.Custom_VLTA4_Progress_Status.Name = "Custom_VLTA4_Progress_Status";
+            this.Custom_VLTA4_Progress_Status.Size = new System.Drawing.Size(193, 27);
+            this.Custom_VLTA4_Progress_Status.TabIndex = 8;
+            this.Custom_VLTA4_Progress_Status.Text = "Progress = 10.00%";
+            this.Custom_VLTA4_Progress_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Custom_VLTA5_Clock_Status
+            // 
+            this.Custom_VLTA5_Clock_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA5_Clock_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA5_Clock_Status.Location = new System.Drawing.Point(419, 1);
+            this.Custom_VLTA5_Clock_Status.Name = "Custom_VLTA5_Clock_Status";
+            this.Custom_VLTA5_Clock_Status.Size = new System.Drawing.Size(107, 27);
+            this.Custom_VLTA5_Clock_Status.TabIndex = 9;
+            this.Custom_VLTA5_Clock_Status.Text = "12:00 PM";
+            this.Custom_VLTA5_Clock_Status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Next_HUD
+            // 
+            this.Next_HUD.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Next_HUD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Next_HUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.Next_HUD.ForeColor = System.Drawing.Color.Lime;
+            this.Next_HUD.Location = new System.Drawing.Point(690, 80);
+            this.Next_HUD.Name = "Next_HUD";
+            this.Next_HUD.Size = new System.Drawing.Size(180, 46);
+            this.Next_HUD.TabIndex = 18;
+            this.Next_HUD.Text = "Next HUD";
+            this.Next_HUD.UseVisualStyleBackColor = true;
+            this.Next_HUD.Click += new System.EventHandler(this.Next_HUD_Click);
+            // 
+            // ProgressSlider
+            // 
+            this.ProgressSlider.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressSlider.Location = new System.Drawing.Point(-10, 31);
+            this.ProgressSlider.Maximum = 1000;
+            this.ProgressSlider.Name = "ProgressSlider";
+            this.ProgressSlider.Size = new System.Drawing.Size(879, 22);
+            this.ProgressSlider.TabIndex = 5;
+            this.ProgressSlider.Text = "imageSlider1";
+            this.ProgressSlider.ThumbImage = global::FS4_Flight_Tracker.Properties.Resources.CustomHUD1_AirplaneLogo;
+            this.ProgressSlider.ThumbSize = new System.Drawing.Size(24, 24);
+            this.ProgressSlider.TrackColor = System.Drawing.Color.Black;
+            this.ProgressSlider.TrackHeight = 4;
+            this.ProgressSlider.TrackProgressColor = System.Drawing.Color.Red;
+            this.ProgressSlider.Value = 10;
+            // 
+            // Custom_VLTA2_Speed_HideNumber_Status
+            // 
+            this.Custom_VLTA2_Speed_HideNumber_Status.Font = new System.Drawing.Font("Open Sans", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA2_Speed_HideNumber_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA2_Speed_HideNumber_Status.Location = new System.Drawing.Point(1, 1);
+            this.Custom_VLTA2_Speed_HideNumber_Status.Name = "Custom_VLTA2_Speed_HideNumber_Status";
+            this.Custom_VLTA2_Speed_HideNumber_Status.Size = new System.Drawing.Size(197, 27);
+            this.Custom_VLTA2_Speed_HideNumber_Status.TabIndex = 10;
+            this.Custom_VLTA2_Speed_HideNumber_Status.Text = "SPEED : - KNOTS";
+            this.Custom_VLTA2_Speed_HideNumber_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -617,9 +687,14 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Button Switch_Color_Background;
         private System.Windows.Forms.Label VLTA_SPD_HideNumber;
         private System.Windows.Forms.Panel ImageCustomHUD1;
-        private CustomSliderApp.ImageSlider imageSlider1;
+        private CustomSliderApp.ImageSlider ProgressSlider;
         private System.Windows.Forms.Label Custom_VLTA1_DEP_and_ARR_Status;
         private System.Windows.Forms.Label Custom_VLTA2_Speed_Status;
+        private System.Windows.Forms.Label Custom_VLTA3_Altitude_Status;
+        private System.Windows.Forms.Label Custom_VLTA4_Progress_Status;
+        private System.Windows.Forms.Label Custom_VLTA5_Clock_Status;
+        private System.Windows.Forms.Button Next_HUD;
+        private System.Windows.Forms.Label Custom_VLTA2_Speed_HideNumber_Status;
     }
 }
 

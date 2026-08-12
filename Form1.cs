@@ -52,7 +52,7 @@ namespace FS4_Flight_Tracker
         private double playerZ;
 
         private int switchColourStep = 0;
-
+        private int switchHUDStep = 0;
         public Form1()
         {
             InitializeComponent();
@@ -108,6 +108,7 @@ namespace FS4_Flight_Tracker
             StatusUpdateAircraftNameText();
             StatusUpdateTimerClockText();
             StatusUpdatePlayerPositionText();
+            StatusUpdateDepatureAndArrivalText();
         }
 
         private void InitializeSharedMemory()
@@ -178,11 +179,17 @@ namespace FS4_Flight_Tracker
                 {
                     VLTA_SPD_HideNumber.Visible = false;
                     VLTA_SPD.Visible = true;
+
+                    Custom_VLTA2_Speed_Status.Visible = true;
+                    Custom_VLTA2_Speed_HideNumber_Status.Visible = false;
                 }
                 else if (speedstatus < 30)
                 {
                     VLTA_SPD_HideNumber.Visible = true;
                     VLTA_SPD.Visible = false;
+
+                    Custom_VLTA2_Speed_Status.Visible = false;
+                    Custom_VLTA2_Speed_HideNumber_Status.Visible = true;
                 }
 
                 // แสดงผล
@@ -198,6 +205,8 @@ namespace FS4_Flight_Tracker
                 VLTA_SPD.Text = "SPD: " + $"{speedstatus:F0}" +"kts";
                 VLTA_ALT.Text = "ALT: " + $"{altitudestatus:F0}" + "ft";
 
+                Custom_VLTA2_Speed_Status.Text = "SPEED : " + $"{speedstatus:F0}" + " KNOTS";
+                Custom_VLTA3_Altitude_Status.Text = "ALTITUDE : " + $"{altitudestatus:F0}" + " FT";
             }
             catch (Exception ex)
             {
@@ -253,7 +262,24 @@ namespace FS4_Flight_Tracker
             // แสดงผลบนหน้าจอ Form
             VLTA_ARR_Status.Text = ceValue;
         }
+        private void StatusUpdateDepatureAndArrivalText()
+        {
+            string processName = "aerofly_fs_4";
 
+            // Departure
+
+            int baseOffsetDep = 0x0173BB88;
+            int[] offsetsDep = new int[] { 0x8, 0x358, 0xC8, 0x10 };
+            
+            // Arrival
+            int baseOffsetArr = 0x016D8A88;
+            int[] offsetsArr = new int[] { 0xD0, 0x358, 0xB0, 0x10, 0x100, 0x0 };
+            
+            string ceValueDep = Form1.GetCEStringValue(processName, baseOffsetDep, offsetsDep, 4);
+            string ceValueArr = Form1.GetCEStringValue(processName, baseOffsetArr, offsetsArr, 4);
+
+            Custom_VLTA1_DEP_and_ARR_Status.Text = ceValueDep + " - " + ceValueArr;
+        }
         private void StatusUpdateAircraftNameText()
         {
             string processName = "aerofly_fs_4";
@@ -1049,6 +1075,8 @@ namespace FS4_Flight_Tracker
             // นำไปใช้งานกับ Text
             VLTA_TIME.Text = "UTC: " + ceValue;
 
+            Custom_VLTA5_Clock_Status.Text = ceValue;
+
         }
 
         private void StatusUpdatePlayerPositionText()
@@ -1144,13 +1172,22 @@ namespace FS4_Flight_Tracker
             int mincurrentsizepanelVolantastyle = 0;
             int maxcurrentsizepanelVolantastyle = 860;
 
+            int mincurrentsizepanelVolantaCustomStyle = 0;
+            int maxcurrentsizepanelVolantaCustomStyle = 1000;
+
+
             // คำนวณหาค่า current จาก progressPercent (0.0 ถึง 100.0)
             int currentsizepanelVolantastyle = (int)Math.Round((progressPercent / 100.0) * maxcurrentsizepanelVolantastyle);
+
+            int currentsizepanelVolantaCustomstyle = (int)Math.Round((progressPercent / 100.0) * maxcurrentsizepanelVolantaCustomStyle);
+
 
             // กำหนดขอบเขตความปลอดภัย (Clamp)
             if (currentsizepanelVolantastyle < mincurrentsizepanelVolantastyle) currentsizepanelVolantastyle = mincurrentsizepanelVolantastyle;
             if (currentsizepanelVolantastyle > maxcurrentsizepanelVolantastyle) currentsizepanelVolantastyle = maxcurrentsizepanelVolantastyle;
 
+            if (currentsizepanelVolantaCustomstyle < mincurrentsizepanelVolantaCustomStyle) currentsizepanelVolantaCustomstyle = mincurrentsizepanelVolantaCustomStyle;
+            if (currentsizepanelVolantaCustomstyle > maxcurrentsizepanelVolantaCustomStyle) currentsizepanelVolantaCustomstyle = maxcurrentsizepanelVolantaCustomStyle;
 
 
             PlayerPosition.Text = "Player Position:" + "\n" + "X = " + playerPosX + "\n" + "Y = " + playerPosY + "\n" + "Z = " + playerPosZ;
@@ -1159,12 +1196,14 @@ namespace FS4_Flight_Tracker
 
             // Label แสดง Progress และระยะทางที่เหลือ (สร้าง Label ใหม่เพิ่มใน Form เช่น lblProgress และ lblRemainingKm)
             lblProgress.Text = $"Flight Progress: {progressPercent:F2} %";
+            Custom_VLTA4_Progress_Status.Text = $"Progress: {progressPercent:F2} %";
             lblCurrent.Text = "Remaining Distance: " + $"{remainingKm:F2}" + " NM";
 
             
             lblXYZ.Text = currentsizepanelVolantastyle.ToString();
 
             ProgressBarStatus.Size = new Size(currentsizepanelVolantastyle, 7);
+            ProgressSlider.Value = currentsizepanelVolantaCustomstyle;
         }
 
 
@@ -1400,25 +1439,46 @@ namespace FS4_Flight_Tracker
                     panelVolantaStyle.BackColor = Color.Black;
                     Switch_Color_Background.ForeColor = Color.Black;
                     Quit_Volanta.ForeColor = Color.Black;
+                    Next_HUD.ForeColor = Color.Black;
                     break;
                 case 1:
                     panelVolantaStyle.BackColor = Color.Blue;
                     Switch_Color_Background.ForeColor = Color.Blue;
                     Quit_Volanta.ForeColor = Color.Blue;
+                    Next_HUD.ForeColor = Color.Blue;
                     break;
                 case 2:
                     panelVolantaStyle.BackColor = Color.Transparent;
                     Switch_Color_Background.ForeColor = Color.Transparent; ;
                     Quit_Volanta.ForeColor = Color.Transparent;
+                    Next_HUD.ForeColor = Color.Transparent;
                     break;
                 default:
                     panelVolantaStyle.BackColor = Color.Lime;
                     Switch_Color_Background.ForeColor = Color.Lime;
                     Quit_Volanta.ForeColor = Color.Lime;
+                    Next_HUD.ForeColor = Color.Lime;
                     switchColourStep = -1; // Resets cycle
                     break;
             }
             switchColourStep++;
+        }
+
+        private void Next_HUD_Click(object sender, EventArgs e)
+        {
+            switch (switchHUDStep)
+            {
+                case 0:
+                    ImageCustomHUD1.Visible = true;
+                    ImageHUDVolantaStyle.Visible = false;
+                    break;
+                default:
+                    ImageCustomHUD1.Visible = false;
+                    ImageHUDVolantaStyle.Visible = true;
+                    switchHUDStep = -1;
+                    break;
+            }
+            switchHUDStep++;
         }
     }
 }
