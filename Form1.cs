@@ -58,7 +58,6 @@ namespace FS4_Flight_Tracker
             InitializeComponent();
             InitializeSharedMemory();
             InitializeTelemetryTimer();
-            
         }
 
 
@@ -173,6 +172,18 @@ namespace FS4_Flight_Tracker
                 double rollstatus = data3.Roll * (191 / Math.PI); // 6.1075
 
                 double pitchstatus = data4.Airspeed * (500 / Math.PI); // 6.1075
+
+
+                if (speedstatus > 30)
+                {
+                    VLTA_SPD_HideNumber.Visible = false;
+                    VLTA_SPD.Visible = true;
+                }
+                else if (speedstatus < 30)
+                {
+                    VLTA_SPD_HideNumber.Visible = true;
+                    VLTA_SPD.Visible = false;
+                }
 
                 // แสดงผล
                 AltitideStatus.Text = "Altitude\n" + $"{altitudestatus:F0}";
@@ -1146,6 +1157,8 @@ namespace FS4_Flight_Tracker
             // กำหนดขอบเขตความปลอดภัย (Clamp)
             if (currentsizepanelVolantastyle < mincurrentsizepanelVolantastyle) currentsizepanelVolantastyle = mincurrentsizepanelVolantastyle;
             if (currentsizepanelVolantastyle > maxcurrentsizepanelVolantastyle) currentsizepanelVolantastyle = maxcurrentsizepanelVolantastyle;
+
+
 
             PlayerPosition.Text = "Player Position:" + "\n" + "X = " + playerPosX + "\n" + "Y = " + playerPosY + "\n" + "Z = " + playerPosZ;
             DeparturePosition.Text = "Departure Position:" + "\n" + "X = " + playerDepPosX + "\n" + "Y = " + playerDepPosY + "\n" + "Z = " + playerDepPosZ;

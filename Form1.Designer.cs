@@ -45,7 +45,7 @@ namespace FS4_Flight_Tracker
             this.ArrivalPosition = new System.Windows.Forms.Label();
             this.PlayerPosition = new System.Windows.Forms.Label();
             this.DepartureText = new System.Windows.Forms.Label();
-            this.ThrottlesText = new System.Windows.Forms.Label();
+            this.StatusText = new System.Windows.Forms.Label();
             this.TestScript = new System.Windows.Forms.Button();
             this.StartVolantaStyle = new System.Windows.Forms.Button();
             this.DestinationCoordText = new System.Windows.Forms.Label();
@@ -56,6 +56,7 @@ namespace FS4_Flight_Tracker
             this.panelVolantaStyle = new System.Windows.Forms.Panel();
             this.ImageHUDVolantaStyle = new System.Windows.Forms.Panel();
             this.Quit_Volanta = new System.Windows.Forms.Button();
+            this.Switch_Color_Background = new System.Windows.Forms.Button();
             this.ProgressBarStatus = new System.Windows.Forms.Panel();
             this.ProgressBar = new System.Windows.Forms.Panel();
             this.VLTA_ARR_Text = new System.Windows.Forms.Label();
@@ -66,7 +67,7 @@ namespace FS4_Flight_Tracker
             this.VLTA_TIME = new System.Windows.Forms.Label();
             this.VLTA_Name_Aircraft = new System.Windows.Forms.Label();
             this.VLTA_SPD = new System.Windows.Forms.Label();
-            this.Switch_Color_Background = new System.Windows.Forms.Button();
+            this.VLTA_SPD_HideNumber = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
             this.panelVolantaStyle.SuspendLayout();
@@ -149,7 +150,7 @@ namespace FS4_Flight_Tracker
             this.panel1.Controls.Add(this.ArrivalPosition);
             this.panel1.Controls.Add(this.PlayerPosition);
             this.panel1.Controls.Add(this.DepartureText);
-            this.panel1.Controls.Add(this.ThrottlesText);
+            this.panel1.Controls.Add(this.StatusText);
             this.panel1.Controls.Add(this.TestScript);
             this.panel1.Controls.Add(this.StartVolantaStyle);
             this.panel1.Controls.Add(this.DestinationCoordText);
@@ -235,15 +236,15 @@ namespace FS4_Flight_Tracker
             this.DepartureText.Text = "Departure Text:";
             this.DepartureText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // ThrottlesText
+            // StatusText
             // 
-            this.ThrottlesText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ThrottlesText.Location = new System.Drawing.Point(397, 341);
-            this.ThrottlesText.Name = "ThrottlesText";
-            this.ThrottlesText.Size = new System.Drawing.Size(463, 39);
-            this.ThrottlesText.TabIndex = 10;
-            this.ThrottlesText.Text = "Throttle Text:";
-            this.ThrottlesText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.StatusText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusText.Location = new System.Drawing.Point(397, 341);
+            this.StatusText.Name = "StatusText";
+            this.StatusText.Size = new System.Drawing.Size(463, 39);
+            this.StatusText.TabIndex = 10;
+            this.StatusText.Text = "Status Text:";
+            this.StatusText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // TestScript
             // 
@@ -341,6 +342,7 @@ namespace FS4_Flight_Tracker
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_TIME);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_Name_Aircraft);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_SPD);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_SPD_HideNumber);
             this.ImageHUDVolantaStyle.Location = new System.Drawing.Point(12, 12);
             this.ImageHUDVolantaStyle.Name = "ImageHUDVolantaStyle";
             this.ImageHUDVolantaStyle.Size = new System.Drawing.Size(860, 446);
@@ -359,6 +361,20 @@ namespace FS4_Flight_Tracker
             this.Quit_Volanta.Text = "Quit Volanta Style";
             this.Quit_Volanta.UseVisualStyleBackColor = true;
             this.Quit_Volanta.Click += new System.EventHandler(this.Quit_Volanta_Click);
+            // 
+            // Switch_Color_Background
+            // 
+            this.Switch_Color_Background.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Switch_Color_Background.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Switch_Color_Background.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.Switch_Color_Background.ForeColor = System.Drawing.Color.Lime;
+            this.Switch_Color_Background.Location = new System.Drawing.Point(1, 64);
+            this.Switch_Color_Background.Name = "Switch_Color_Background";
+            this.Switch_Color_Background.Size = new System.Drawing.Size(180, 46);
+            this.Switch_Color_Background.TabIndex = 15;
+            this.Switch_Color_Background.Text = "Switch Color\r\nBackground";
+            this.Switch_Color_Background.UseVisualStyleBackColor = true;
+            this.Switch_Color_Background.Click += new System.EventHandler(this.Switch_Color_Background_Click);
             // 
             // ProgressBarStatus
             // 
@@ -469,19 +485,17 @@ namespace FS4_Flight_Tracker
             this.VLTA_SPD.Text = "SPD: 999kts ";
             this.VLTA_SPD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Switch_Color_Background
+            // VLTA_SPD_HideNumber
             // 
-            this.Switch_Color_Background.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.Switch_Color_Background.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Switch_Color_Background.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.Switch_Color_Background.ForeColor = System.Drawing.Color.Lime;
-            this.Switch_Color_Background.Location = new System.Drawing.Point(1, 64);
-            this.Switch_Color_Background.Name = "Switch_Color_Background";
-            this.Switch_Color_Background.Size = new System.Drawing.Size(180, 46);
-            this.Switch_Color_Background.TabIndex = 15;
-            this.Switch_Color_Background.Text = "Switch Color\r\nBackground";
-            this.Switch_Color_Background.UseVisualStyleBackColor = true;
-            this.Switch_Color_Background.Click += new System.EventHandler(this.Switch_Color_Background_Click);
+            this.VLTA_SPD_HideNumber.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_SPD_HideNumber.ForeColor = System.Drawing.Color.White;
+            this.VLTA_SPD_HideNumber.Location = new System.Drawing.Point(12, 0);
+            this.VLTA_SPD_HideNumber.Name = "VLTA_SPD_HideNumber";
+            this.VLTA_SPD_HideNumber.Size = new System.Drawing.Size(125, 42);
+            this.VLTA_SPD_HideNumber.TabIndex = 16;
+            this.VLTA_SPD_HideNumber.Text = "SPD: ---kts ";
+            this.VLTA_SPD_HideNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VLTA_SPD_HideNumber.Visible = false;
             // 
             // Form1
             // 
@@ -520,7 +534,7 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label RouteText;
         private System.Windows.Forms.Label DestinationCoordText;
         private System.Windows.Forms.Button StartVolantaStyle;
-        private System.Windows.Forms.Label ThrottlesText;
+        private System.Windows.Forms.Label StatusText;
         private System.Windows.Forms.Button TestScript;
         private System.Windows.Forms.Timer timerreadingmemory;
         private System.Windows.Forms.Label DepartureText;
@@ -546,6 +560,7 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label lblCurrent;
         private System.Windows.Forms.Label lblXYZ;
         private System.Windows.Forms.Button Switch_Color_Background;
+        private System.Windows.Forms.Label VLTA_SPD_HideNumber;
     }
 }
 
