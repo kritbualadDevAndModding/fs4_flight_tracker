@@ -14,3 +14,23 @@ Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 - Go to **C:\Users\YOURNAME\OneDrive\Documents\Aerofly FS 4\external_dll**
 
   Place the **AeroflyFS4Bridge.dll** file in the **external_dll** folder.
+
+### Status: Worked ✅
+- Speed
+- Altitude
+- Volanta Style HUD
+- Name Aircraft and Livery
+- Timer UTC
+- Player Position
+- Departure Position
+- Arrival Position
+- Departure Text
+- Arrival Text
+- Progress 0 to 100 for Departure to Arrival
+
+### Status: Under Development 👨‍💻
+- Landing Rate
+- Flaps
+- Speedbrake / Spoiler
+- Vertical Speed
+- Roll
