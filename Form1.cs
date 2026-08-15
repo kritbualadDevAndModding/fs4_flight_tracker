@@ -53,11 +53,28 @@ namespace FS4_Flight_Tracker
 
         private int switchColourStep = 0;
         private int switchHUDStep = 0;
+
+
+        // 1. นำเข้า API ของ Windows เพื่อควบคุมการลากหน้าต่าง
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HT_CAPTION = 0x2;
+
+
+        private String aircraftNameCustomHUD , aircraftLiveryCustomHUD , departureNameCustomHUD , arrivalNameCustomHUD;
+        private double progressCustomHUD;
         public Form1()
         {
             InitializeComponent();
             InitializeSharedMemory();
             InitializeTelemetryTimer();
+            this.FormBorderStyle = FormBorderStyle.None; // ซ่อนขอบฟอร์มเดิม  
         }
 
 
@@ -109,6 +126,7 @@ namespace FS4_Flight_Tracker
             StatusUpdateTimerClockText();
             StatusUpdatePlayerPositionText();
             StatusUpdateDepatureAndArrivalText();
+            Custom_VLTA5_AircraftName_Status.Text = "PROGRESS : " + $"{progressCustomHUD:F2} %" + "\n" + "AIRCRAFT : " + aircraftNameCustomHUD + "\n" + "LIVERY : " + aircraftLiveryCustomHUD + "\n" + "DEP : "+ departureNameCustomHUD + "\n" + "ARR : " + arrivalNameCustomHUD;
         }
 
         private void InitializeSharedMemory()
@@ -193,13 +211,13 @@ namespace FS4_Flight_Tracker
                 }
 
                 // แสดงผล
-                AltitideStatus.Text = "Altitude\n" + $"{altitudestatus:F0}";
+                AltitideStatus.Text = "Altitude : " + $"{altitudestatus:F0}";
 
-                SpeedStatus.Text = "Speed\n" + $"{speedstatus:F0}";
+                SpeedStatus.Text = "Speed : " + $"{speedstatus:F0}";
 
-                RollStatus.Text = "Roll\n" + $"{rollstatus:F0}";
+                RollStatus.Text = "Roll : " + $"{rollstatus:F0}";
 
-                PitchStatus.Text = "Pitch\n" + $"{pitchstatus:F0}";
+                PitchStatus.Text = "Pitch : " + $"{pitchstatus:F0}";
 
                 // Volanta Style
                 VLTA_SPD.Text = "SPD: " + $"{speedstatus:F0}" +"kts";
@@ -228,11 +246,6 @@ namespace FS4_Flight_Tracker
             
         }
 
-        private void LoadNameAircraft_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void StatusUpdateDepatureText()
         {
             string processName = "aerofly_fs_4";
@@ -247,6 +260,8 @@ namespace FS4_Flight_Tracker
             // แสดงผลบนหน้าจอ Form
             DepartureText.Text = ceValue;
             VLTA_DEP_Status.Text = ceValue;
+
+            departureNameCustomHUD = ceValue;
         }
         private void StatusUpdateArrivalText()
         {
@@ -261,6 +276,8 @@ namespace FS4_Flight_Tracker
 
             // แสดงผลบนหน้าจอ Form
             VLTA_ARR_Status.Text = ceValue;
+
+            arrivalNameCustomHUD = ceValue;
         }
         private void StatusUpdateDepatureAndArrivalText()
         {
@@ -298,7 +315,8 @@ namespace FS4_Flight_Tracker
 
             long ceValueLivery = Form1.GetCEIntValue8Byte(processName, baseOffset, offsetslivery);
 
-            string aircraftliveryname;
+            string aircraftName = "";
+            string aircraftliveryname = "";
 
             switch (ceValueLivery)
             {
@@ -959,44 +977,45 @@ namespace FS4_Flight_Tracker
 
             switch (ceValue)
             {
+                
                 case 959525729:
-                    VLTA_Name_Aircraft.Text = "Airbus A319" + "\n" + aircraftliveryname;
+                    aircraftName = "Airbus A319";
                     break;
 
                 case 808596321:
-                    VLTA_Name_Aircraft.Text = "Airbus A320" + "\n" + aircraftliveryname;
+                    aircraftName = "Airbus A320";
                     break;
 
                 case 825373537:
-                    VLTA_Name_Aircraft.Text = "Airbus A321" + "\n" + aircraftliveryname;
+                    aircraftName = "Airbus A321";
                     break;
 
                 case 808792929:
-                    VLTA_Name_Aircraft.Text = "Airbus A350-1000" + "\n" + aircraftliveryname;
+                    aircraftName = "Airbus A350-1000";
                     break;
 
                 case 808989537:
-                    VLTA_Name_Aircraft.Text = "Airbus A380" + "\n" + aircraftliveryname;
+                    aircraftName = "Airbus A380";
                     break;
 
                 case 926103394:
-                    VLTA_Name_Aircraft.Text = "Boeing 737" + "\n";
+                    aircraftName = "Boeing 737";
                     break;
                 
                 case 926168930:
-                    VLTA_Name_Aircraft.Text = "Boeing 747" + "\n";
+                    aircraftName = "Boeing 747";
                     break;
                 
                 case 926365538:
-                    VLTA_Name_Aircraft.Text = "Boeing 777" + "\n";
+                    aircraftName = "Boeing 777";
                     break;
                 
                 case 926431074:
-                    VLTA_Name_Aircraft.Text = "Boeing 787" + "\n";
+                    aircraftName = "Boeing 787";
                     break;
                 
                 case 1668181859:
-                    VLTA_Name_Aircraft.Text = "Concorde" + "\n";
+                    aircraftName = "Concorde";
                     break;
                 
                 default:
@@ -1009,6 +1028,11 @@ namespace FS4_Flight_Tracker
                     break;
 */
             }
+            VLTA_Name_Aircraft.Text = aircraftName + "\n" + aircraftliveryname;
+            Custom_VLTA5_AircraftName_Status.Text = aircraftName + "\n" + aircraftliveryname;
+
+            aircraftNameCustomHUD = aircraftName;
+            aircraftLiveryCustomHUD = aircraftliveryname;
         }
 
         private void StatusUpdateTimerClockText()
@@ -1204,6 +1228,8 @@ namespace FS4_Flight_Tracker
 
             ProgressBarStatus.Size = new Size(currentsizepanelVolantastyle, 7);
             ProgressSlider.Value = currentsizepanelVolantaCustomstyle;
+
+            progressCustomHUD = progressPercent;
         }
 
 
@@ -1422,12 +1448,14 @@ namespace FS4_Flight_Tracker
         private void button1_Click(object sender, EventArgs e)
         {
             panel1.Visible = false;
+            PanelTaskbar.Visible = false;
             panelVolantaStyle.Visible = true;
         }
 
         private void Quit_Volanta_Click(object sender, EventArgs e)
         {
             panel1.Visible = true;
+            PanelTaskbar.Visible = true;
             panelVolantaStyle.Visible = false;
         }
 
@@ -1479,6 +1507,38 @@ namespace FS4_Flight_Tracker
                     break;
             }
             switchHUDStep++;
+        }
+
+        private void PanelTaskbar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void label2_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void ButtonExitProgram_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Restart_Click(object sender, EventArgs e)
+        {
+            // Shuts down the application and immediately starts a new instance
+            Application.Restart();
+
+            // Prevents further code execution and background threads from hanging
+            Environment.Exit(0);
         }
     }
 }

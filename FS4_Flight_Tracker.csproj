@@ -125,5 +125,11 @@
   <ItemGroup>
     <None Include="Resources\CustomHUD1_AirplaneLogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExitTaskbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HideTaskbar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
