@@ -126,8 +126,42 @@ namespace FS4_Flight_Tracker
             StatusUpdateTimerClockText();
             StatusUpdatePlayerPositionText();
             StatusUpdateDepatureAndArrivalText();
-            Custom_VLTA5_AircraftName_Status.Text = "PROGRESS : " + $"{progressCustomHUD:F2} %" + "\n" + "AIRCRAFT : " + aircraftNameCustomHUD + "\n" + "LIVERY : " + aircraftLiveryCustomHUD + "\n" + "DEP : "+ departureNameCustomHUD + "\n" + "ARR : " + arrivalNameCustomHUD;
+            Custom_VLTA6_Debug_Status.Text = "PROGRESS : " + $"{progressCustomHUD:F2} %" + "\n" + "AIRCRAFT : " + aircraftNameCustomHUD + "\n" + "LIVERY : " + aircraftLiveryCustomHUD + "\n" + "DEP : "+ departureNameCustomHUD + "\n" + "ARR : " + arrivalNameCustomHUD;
+            rungame();
         }
+
+        private void rungame()
+        {
+            string targetAppName = "aerofly_fs_4";
+
+            if (IsAppRunning(targetAppName))
+            {
+                // เปิดเกมแล้ว
+                statusaeroflyfs4.Text = "✔️ Aerofly FS 4 Connected";
+                statusaeroflyfs4.ForeColor = Color.Lime;
+                Restart.Visible = true;
+                pleaserestart.Visible = true;
+            }
+            else
+            {
+                // ปิดเกมแล้ว
+                statusaeroflyfs4.Text = "❌ Aerofly FS 4 Disconnected";
+                statusaeroflyfs4.ForeColor = Color.Red;
+                notificationopengame.Visible = true;
+                Restart.Visible = false;
+                pleaserestart.Visible = false;
+                panel1.Visible = false;
+            }
+        }
+
+        // ฟังก์ชันสำหรับเช็กสถานะ
+        private bool IsAppRunning(string processName)
+        {
+            // ค้นหา Process ตามชื่อ (ไม่ต้องใส่ .exe)
+            Process[] processes = Process.GetProcessesByName(processName);
+            return processes.Length > 0;
+        }
+
 
         private void InitializeSharedMemory()
         {
@@ -135,18 +169,19 @@ namespace FS4_Flight_Tracker
             {
                 // เปิดการเชื่อมต่อ Shared Memory
                 mmf = MemoryMappedFile.OpenExisting(MAP_NAME);
-                accessor = mmf.CreateViewAccessor();
-                statusaeroflyfs4.Text = "Status: Connected to Aerofly FS4";
+                accessor = mmf.CreateViewAccessor();             
                 statusaeroflyfs4.ForeColor = Color.Lime;
+                notificationopengame.Visible = false;
+                panel1.Visible = true;
             }
             catch (FileNotFoundException)
-            {
-                statusaeroflyfs4.Text = "Status: Shared Memory not found (Open Aerofly first)";
+            {               
                 statusaeroflyfs4.ForeColor = Color.Red;
+                notificationopengame.Visible = true;
             }
             catch (Exception ex)
             {
-                statusaeroflyfs4.Text = $"Status: Error ({ex.Message})";
+                statusaeroflyfs4.Text = $"Error ({ex.Message})";
                 statusaeroflyfs4.ForeColor = Color.Red;
             }
         }
@@ -268,8 +303,8 @@ namespace FS4_Flight_Tracker
             string processName = "aerofly_fs_4";
 
             // ตั้งค่าตาม Cheat Engine
-            int baseOffset = 0x016D8A88;
-            int[] offsets = new int[] { 0xD0 , 0x358 , 0xB0 , 0x10 , 0x100 , 0x0 }; // เรียง Offsets ตามที่โชว์ใน CE
+            int baseOffset = 0x0173BB60;
+            int[] offsets = new int[] { 0x358 , 0x98 , 0x10 , 0x110 }; // เรียง Offsets ตามที่โชว์ใน CE
 
             // ดึงค่า Value ข้อความ
             string ceValue = Form1.GetCEStringValue(processName, baseOffset, offsets, 4);
@@ -278,6 +313,7 @@ namespace FS4_Flight_Tracker
             VLTA_ARR_Status.Text = ceValue;
 
             arrivalNameCustomHUD = ceValue;
+            ArrivalText.Text = ceValue;
         }
         private void StatusUpdateDepatureAndArrivalText()
         {
@@ -289,8 +325,8 @@ namespace FS4_Flight_Tracker
             int[] offsetsDep = new int[] { 0x8, 0x358, 0xC8, 0x10 };
             
             // Arrival
-            int baseOffsetArr = 0x016D8A88;
-            int[] offsetsArr = new int[] { 0xD0, 0x358, 0xB0, 0x10, 0x100, 0x0 };
+            int baseOffsetArr = 0x0173BB60;
+            int[] offsetsArr = new int[] { 0x358, 0x98, 0x10, 0x110 };
             
             string ceValueDep = Form1.GetCEStringValue(processName, baseOffsetDep, offsetsDep, 4);
             string ceValueArr = Form1.GetCEStringValue(processName, baseOffsetArr, offsetsArr, 4);
@@ -1029,7 +1065,7 @@ namespace FS4_Flight_Tracker
 */
             }
             VLTA_Name_Aircraft.Text = aircraftName + "\n" + aircraftliveryname;
-            Custom_VLTA5_AircraftName_Status.Text = aircraftName + "\n" + aircraftliveryname;
+            Custom_VLTA6_Debug_Status.Text = aircraftName + "\n" + aircraftliveryname;
 
             aircraftNameCustomHUD = aircraftName;
             aircraftLiveryCustomHUD = aircraftliveryname;
@@ -1450,12 +1486,14 @@ namespace FS4_Flight_Tracker
             panel1.Visible = false;
             PanelTaskbar.Visible = false;
             panelVolantaStyle.Visible = true;
+            statusaeroflyfs4.Visible = false;
         }
 
         private void Quit_Volanta_Click(object sender, EventArgs e)
         {
             panel1.Visible = true;
             PanelTaskbar.Visible = true;
+            statusaeroflyfs4.Visible = true;
             panelVolantaStyle.Visible = false;
         }
 

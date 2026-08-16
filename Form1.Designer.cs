@@ -45,18 +45,18 @@ namespace FS4_Flight_Tracker
             this.ArrivalPosition = new System.Windows.Forms.Label();
             this.PlayerPosition = new System.Windows.Forms.Label();
             this.DepartureText = new System.Windows.Forms.Label();
-            this.StatusText = new System.Windows.Forms.Label();
-            this.Restart = new System.Windows.Forms.Button();
+            this.ArrivalText = new System.Windows.Forms.Label();
             this.StartVolantaStyle = new System.Windows.Forms.Button();
             this.DestinationCoordText = new System.Windows.Forms.Label();
             this.RouteText = new System.Windows.Forms.Label();
+            this.Restart = new System.Windows.Forms.Button();
             this.timerreadingmemory = new System.Windows.Forms.Timer(this.components);
             this.panelVolantaEnabled = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelVolantaStyle = new System.Windows.Forms.Panel();
+            this.Switch_Color_Background = new System.Windows.Forms.Button();
             this.Quit_Volanta = new System.Windows.Forms.Button();
             this.Next_HUD = new System.Windows.Forms.Button();
-            this.Switch_Color_Background = new System.Windows.Forms.Button();
             this.ImageHUDVolantaStyle = new System.Windows.Forms.Panel();
             this.ProgressBarStatus = new System.Windows.Forms.Panel();
             this.ProgressBar = new System.Windows.Forms.Panel();
@@ -76,10 +76,13 @@ namespace FS4_Flight_Tracker
             this.Custom_VLTA3_Altitude_Status = new System.Windows.Forms.Label();
             this.Custom_VLTA4_Progress_Status = new System.Windows.Forms.Label();
             this.Custom_VLTA5_Clock_Status = new System.Windows.Forms.Label();
+            this.Custom_VLTA6_Debug_Status = new System.Windows.Forms.Label();
             this.PanelTaskbar = new System.Windows.Forms.Panel();
             this.ButtonExitProgram = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Custom_VLTA5_AircraftName_Status = new System.Windows.Forms.Label();
+            this.TaskbarName = new System.Windows.Forms.Label();
+            this.notificationopengame = new System.Windows.Forms.Panel();
+            this.pleaserestart = new System.Windows.Forms.Label();
+            this.pleaseopenaerofly = new System.Windows.Forms.Label();
             this.ProgressSlider = new CustomSliderApp.ImageSlider();
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
@@ -87,6 +90,7 @@ namespace FS4_Flight_Tracker
             this.ImageHUDVolantaStyle.SuspendLayout();
             this.ImageCustomHUD1.SuspendLayout();
             this.PanelTaskbar.SuspendLayout();
+            this.notificationopengame.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusaeroflyfs4
@@ -94,12 +98,12 @@ namespace FS4_Flight_Tracker
             this.statusaeroflyfs4.BackColor = System.Drawing.Color.Black;
             this.statusaeroflyfs4.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusaeroflyfs4.ForeColor = System.Drawing.Color.Red;
-            this.statusaeroflyfs4.Location = new System.Drawing.Point(0, 0);
+            this.statusaeroflyfs4.Location = new System.Drawing.Point(0, 37);
             this.statusaeroflyfs4.Name = "statusaeroflyfs4";
             this.statusaeroflyfs4.Size = new System.Drawing.Size(884, 33);
             this.statusaeroflyfs4.TabIndex = 0;
             this.statusaeroflyfs4.Text = "❌ Aerofly FS 4 Disconnected";
-            this.statusaeroflyfs4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.statusaeroflyfs4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timerstatusaeroflyfs4
             // 
@@ -109,52 +113,52 @@ namespace FS4_Flight_Tracker
             // SpeedStatus
             // 
             this.SpeedStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SpeedStatus.Location = new System.Drawing.Point(8, 38);
+            this.SpeedStatus.Location = new System.Drawing.Point(515, 69);
             this.SpeedStatus.Name = "SpeedStatus";
             this.SpeedStatus.Size = new System.Drawing.Size(361, 36);
             this.SpeedStatus.TabIndex = 1;
             this.SpeedStatus.Text = "Speed";
-            this.SpeedStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SpeedStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // AltitideStatus
             // 
             this.AltitideStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AltitideStatus.Location = new System.Drawing.Point(8, 74);
+            this.AltitideStatus.Location = new System.Drawing.Point(515, 105);
             this.AltitideStatus.Name = "AltitideStatus";
             this.AltitideStatus.Size = new System.Drawing.Size(361, 36);
             this.AltitideStatus.TabIndex = 2;
             this.AltitideStatus.Text = "Altitude";
-            this.AltitideStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.AltitideStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PitchStatus
             // 
             this.PitchStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PitchStatus.Location = new System.Drawing.Point(8, 110);
+            this.PitchStatus.Location = new System.Drawing.Point(515, 141);
             this.PitchStatus.Name = "PitchStatus";
             this.PitchStatus.Size = new System.Drawing.Size(361, 36);
             this.PitchStatus.TabIndex = 3;
             this.PitchStatus.Text = "Pitch";
-            this.PitchStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.PitchStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // RollStatus
             // 
             this.RollStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RollStatus.Location = new System.Drawing.Point(8, 146);
+            this.RollStatus.Location = new System.Drawing.Point(515, 177);
             this.RollStatus.Name = "RollStatus";
             this.RollStatus.Size = new System.Drawing.Size(361, 36);
             this.RollStatus.TabIndex = 4;
             this.RollStatus.Text = "Roll";
-            this.RollStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RollStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PositionStatus
             // 
             this.PositionStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PositionStatus.Location = new System.Drawing.Point(8, 182);
+            this.PositionStatus.Location = new System.Drawing.Point(515, 213);
             this.PositionStatus.Name = "PositionStatus";
             this.PositionStatus.Size = new System.Drawing.Size(361, 36);
             this.PositionStatus.TabIndex = 5;
             this.PositionStatus.Text = "Position";
-            this.PositionStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.PositionStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel1
             // 
@@ -165,26 +169,24 @@ namespace FS4_Flight_Tracker
             this.panel1.Controls.Add(this.ArrivalPosition);
             this.panel1.Controls.Add(this.PlayerPosition);
             this.panel1.Controls.Add(this.DepartureText);
-            this.panel1.Controls.Add(this.StatusText);
-            this.panel1.Controls.Add(this.Restart);
+            this.panel1.Controls.Add(this.ArrivalText);
             this.panel1.Controls.Add(this.StartVolantaStyle);
             this.panel1.Controls.Add(this.DestinationCoordText);
             this.panel1.Controls.Add(this.RouteText);
-            this.panel1.Controls.Add(this.statusaeroflyfs4);
             this.panel1.Controls.Add(this.SpeedStatus);
             this.panel1.Controls.Add(this.AltitideStatus);
             this.panel1.Controls.Add(this.PitchStatus);
             this.panel1.Controls.Add(this.RollStatus);
             this.panel1.Controls.Add(this.PositionStatus);
-            this.panel1.Location = new System.Drawing.Point(0, 36);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(884, 462);
+            this.panel1.Size = new System.Drawing.Size(884, 498);
             this.panel1.TabIndex = 6;
             // 
             // lblProgress
             // 
             this.lblProgress.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgress.Location = new System.Drawing.Point(524, 155);
+            this.lblProgress.Location = new System.Drawing.Point(525, 260);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(347, 25);
             this.lblProgress.TabIndex = 15;
@@ -194,17 +196,16 @@ namespace FS4_Flight_Tracker
             // lblXYZ
             // 
             this.lblXYZ.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblXYZ.Location = new System.Drawing.Point(592, 205);
+            this.lblXYZ.Location = new System.Drawing.Point(9, 74);
             this.lblXYZ.Name = "lblXYZ";
             this.lblXYZ.Size = new System.Drawing.Size(279, 93);
             this.lblXYZ.TabIndex = 17;
             this.lblXYZ.Text = "lblXYZ Text:";
-            this.lblXYZ.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblCurrent
             // 
             this.lblCurrent.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrent.Location = new System.Drawing.Point(520, 180);
+            this.lblCurrent.Location = new System.Drawing.Point(521, 285);
             this.lblCurrent.Name = "lblCurrent";
             this.lblCurrent.Size = new System.Drawing.Size(351, 25);
             this.lblCurrent.TabIndex = 16;
@@ -214,7 +215,7 @@ namespace FS4_Flight_Tracker
             // DeparturePosition
             // 
             this.DeparturePosition.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DeparturePosition.Location = new System.Drawing.Point(8, 224);
+            this.DeparturePosition.Location = new System.Drawing.Point(8, 288);
             this.DeparturePosition.Name = "DeparturePosition";
             this.DeparturePosition.Size = new System.Drawing.Size(331, 90);
             this.DeparturePosition.TabIndex = 13;
@@ -224,7 +225,7 @@ namespace FS4_Flight_Tracker
             // ArrivalPosition
             // 
             this.ArrivalPosition.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ArrivalPosition.Location = new System.Drawing.Point(8, 320);
+            this.ArrivalPosition.Location = new System.Drawing.Point(8, 398);
             this.ArrivalPosition.Name = "ArrivalPosition";
             this.ArrivalPosition.Size = new System.Drawing.Size(331, 90);
             this.ArrivalPosition.TabIndex = 14;
@@ -234,48 +235,37 @@ namespace FS4_Flight_Tracker
             // PlayerPosition
             // 
             this.PlayerPosition.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PlayerPosition.Location = new System.Drawing.Point(545, 38);
+            this.PlayerPosition.Location = new System.Drawing.Point(8, 188);
             this.PlayerPosition.Name = "PlayerPosition";
             this.PlayerPosition.Size = new System.Drawing.Size(331, 90);
             this.PlayerPosition.TabIndex = 12;
             this.PlayerPosition.Text = "Player Position:\r\nX =\r\nY = \r\nZ =";
-            this.PlayerPosition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.PlayerPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DepartureText
             // 
             this.DepartureText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DepartureText.Location = new System.Drawing.Point(480, 311);
+            this.DepartureText.Location = new System.Drawing.Point(576, 378);
             this.DepartureText.Name = "DepartureText";
-            this.DepartureText.Size = new System.Drawing.Size(397, 29);
+            this.DepartureText.Size = new System.Drawing.Size(300, 29);
             this.DepartureText.TabIndex = 11;
             this.DepartureText.Text = "Departure Text:";
             this.DepartureText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // StatusText
+            // ArrivalText
             // 
-            this.StatusText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StatusText.Location = new System.Drawing.Point(414, 342);
-            this.StatusText.Name = "StatusText";
-            this.StatusText.Size = new System.Drawing.Size(463, 39);
-            this.StatusText.TabIndex = 10;
-            this.StatusText.Text = "Status Text:";
-            this.StatusText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Restart
-            // 
-            this.Restart.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Restart.Location = new System.Drawing.Point(686, 416);
-            this.Restart.Name = "Restart";
-            this.Restart.Size = new System.Drawing.Size(198, 46);
-            this.Restart.TabIndex = 9;
-            this.Restart.Text = "Restart";
-            this.Restart.UseVisualStyleBackColor = true;
-            this.Restart.Click += new System.EventHandler(this.Restart_Click);
+            this.ArrivalText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ArrivalText.Location = new System.Drawing.Point(571, 407);
+            this.ArrivalText.Name = "ArrivalText";
+            this.ArrivalText.Size = new System.Drawing.Size(305, 39);
+            this.ArrivalText.TabIndex = 10;
+            this.ArrivalText.Text = "Arrival Text:";
+            this.ArrivalText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // StartVolantaStyle
             // 
             this.StartVolantaStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.StartVolantaStyle.Location = new System.Drawing.Point(340, 416);
+            this.StartVolantaStyle.Location = new System.Drawing.Point(340, 452);
             this.StartVolantaStyle.Name = "StartVolantaStyle";
             this.StartVolantaStyle.Size = new System.Drawing.Size(189, 46);
             this.StartVolantaStyle.TabIndex = 8;
@@ -286,7 +276,7 @@ namespace FS4_Flight_Tracker
             // DestinationCoordText
             // 
             this.DestinationCoordText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DestinationCoordText.Location = new System.Drawing.Point(148, 422);
+            this.DestinationCoordText.Location = new System.Drawing.Point(347, 397);
             this.DestinationCoordText.Name = "DestinationCoordText";
             this.DestinationCoordText.Size = new System.Drawing.Size(187, 37);
             this.DestinationCoordText.TabIndex = 7;
@@ -296,12 +286,28 @@ namespace FS4_Flight_Tracker
             // RouteText
             // 
             this.RouteText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RouteText.Location = new System.Drawing.Point(1, 413);
+            this.RouteText.Location = new System.Drawing.Point(354, 332);
             this.RouteText.Name = "RouteText";
             this.RouteText.Size = new System.Drawing.Size(180, 46);
             this.RouteText.TabIndex = 6;
             this.RouteText.Text = "ROUTE";
             this.RouteText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Restart
+            // 
+            this.Restart.BackColor = System.Drawing.Color.Transparent;
+            this.Restart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Restart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Restart.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Restart.ForeColor = System.Drawing.Color.White;
+            this.Restart.Location = new System.Drawing.Point(686, 452);
+            this.Restart.Name = "Restart";
+            this.Restart.Size = new System.Drawing.Size(198, 46);
+            this.Restart.TabIndex = 9;
+            this.Restart.Text = "RESTART";
+            this.Restart.UseVisualStyleBackColor = false;
+            this.Restart.Visible = false;
+            this.Restart.Click += new System.EventHandler(this.Restart_Click);
             // 
             // timerreadingmemory
             // 
@@ -337,13 +343,28 @@ namespace FS4_Flight_Tracker
             this.panelVolantaStyle.Controls.Add(this.Switch_Color_Background);
             this.panelVolantaStyle.Controls.Add(this.Quit_Volanta);
             this.panelVolantaStyle.Controls.Add(this.Next_HUD);
-            this.panelVolantaStyle.Controls.Add(this.ImageCustomHUD1);
             this.panelVolantaStyle.Controls.Add(this.ImageHUDVolantaStyle);
+            this.panelVolantaStyle.Controls.Add(this.ImageCustomHUD1);
             this.panelVolantaStyle.Location = new System.Drawing.Point(0, 0);
             this.panelVolantaStyle.Name = "panelVolantaStyle";
             this.panelVolantaStyle.Size = new System.Drawing.Size(997, 594);
             this.panelVolantaStyle.TabIndex = 14;
             this.panelVolantaStyle.Visible = false;
+            // 
+            // Switch_Color_Background
+            // 
+            this.Switch_Color_Background.BackColor = System.Drawing.Color.Transparent;
+            this.Switch_Color_Background.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.Switch_Color_Background.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Switch_Color_Background.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.Switch_Color_Background.ForeColor = System.Drawing.Color.Lime;
+            this.Switch_Color_Background.Location = new System.Drawing.Point(-1, 403);
+            this.Switch_Color_Background.Name = "Switch_Color_Background";
+            this.Switch_Color_Background.Size = new System.Drawing.Size(180, 46);
+            this.Switch_Color_Background.TabIndex = 15;
+            this.Switch_Color_Background.Text = "Switch Color\r\nBackground";
+            this.Switch_Color_Background.UseVisualStyleBackColor = false;
+            this.Switch_Color_Background.Click += new System.EventHandler(this.Switch_Color_Background_Click);
             // 
             // Quit_Volanta
             // 
@@ -372,21 +393,6 @@ namespace FS4_Flight_Tracker
             this.Next_HUD.Text = "Next HUD";
             this.Next_HUD.UseVisualStyleBackColor = true;
             this.Next_HUD.Click += new System.EventHandler(this.Next_HUD_Click);
-            // 
-            // Switch_Color_Background
-            // 
-            this.Switch_Color_Background.BackColor = System.Drawing.Color.Transparent;
-            this.Switch_Color_Background.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.Switch_Color_Background.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Switch_Color_Background.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.Switch_Color_Background.ForeColor = System.Drawing.Color.Lime;
-            this.Switch_Color_Background.Location = new System.Drawing.Point(-1, 403);
-            this.Switch_Color_Background.Name = "Switch_Color_Background";
-            this.Switch_Color_Background.Size = new System.Drawing.Size(180, 46);
-            this.Switch_Color_Background.TabIndex = 15;
-            this.Switch_Color_Background.Text = "Switch Color\r\nBackground";
-            this.Switch_Color_Background.UseVisualStyleBackColor = false;
-            this.Switch_Color_Background.Click += new System.EventHandler(this.Switch_Color_Background_Click);
             // 
             // ImageHUDVolantaStyle
             // 
@@ -540,7 +546,7 @@ namespace FS4_Flight_Tracker
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA3_Altitude_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA4_Progress_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA5_Clock_Status);
-            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA5_AircraftName_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA6_Debug_Status);
             this.ImageCustomHUD1.Location = new System.Drawing.Point(12, 12);
             this.ImageCustomHUD1.Name = "ImageCustomHUD1";
             this.ImageCustomHUD1.Size = new System.Drawing.Size(860, 446);
@@ -612,11 +618,22 @@ namespace FS4_Flight_Tracker
             this.Custom_VLTA5_Clock_Status.Text = "12:00 PM";
             this.Custom_VLTA5_Clock_Status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Custom_VLTA6_Debug_Status
+            // 
+            this.Custom_VLTA6_Debug_Status.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Custom_VLTA6_Debug_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA6_Debug_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA6_Debug_Status.Location = new System.Drawing.Point(0, 62);
+            this.Custom_VLTA6_Debug_Status.Name = "Custom_VLTA6_Debug_Status";
+            this.Custom_VLTA6_Debug_Status.Size = new System.Drawing.Size(423, 90);
+            this.Custom_VLTA6_Debug_Status.TabIndex = 11;
+            this.Custom_VLTA6_Debug_Status.Text = "PROGRESS : 25.50%\r\nBoeing 737-800\r\nNok Air\r\nVTBD\r\nVTCC";
+            // 
             // PanelTaskbar
             // 
             this.PanelTaskbar.BackColor = System.Drawing.Color.MediumBlue;
             this.PanelTaskbar.Controls.Add(this.ButtonExitProgram);
-            this.PanelTaskbar.Controls.Add(this.label2);
+            this.PanelTaskbar.Controls.Add(this.TaskbarName);
             this.PanelTaskbar.Location = new System.Drawing.Point(0, 0);
             this.PanelTaskbar.Name = "PanelTaskbar";
             this.PanelTaskbar.Size = new System.Drawing.Size(884, 37);
@@ -639,28 +656,54 @@ namespace FS4_Flight_Tracker
             this.ButtonExitProgram.UseVisualStyleBackColor = false;
             this.ButtonExitProgram.Click += new System.EventHandler(this.ButtonExitProgram_Click);
             // 
-            // label2
+            // TaskbarName
             // 
-            this.label2.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(343, 27);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "FS4 Flight Tracker";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label2_MouseDown);
+            this.TaskbarName.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TaskbarName.ForeColor = System.Drawing.Color.White;
+            this.TaskbarName.Location = new System.Drawing.Point(3, 6);
+            this.TaskbarName.Name = "TaskbarName";
+            this.TaskbarName.Size = new System.Drawing.Size(343, 27);
+            this.TaskbarName.TabIndex = 0;
+            this.TaskbarName.Text = "FS 4 Flight Tracker";
+            this.TaskbarName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.TaskbarName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label2_MouseDown);
             // 
-            // Custom_VLTA5_AircraftName_Status
+            // notificationopengame
             // 
-            this.Custom_VLTA5_AircraftName_Status.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.Custom_VLTA5_AircraftName_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Custom_VLTA5_AircraftName_Status.ForeColor = System.Drawing.Color.White;
-            this.Custom_VLTA5_AircraftName_Status.Location = new System.Drawing.Point(0, 62);
-            this.Custom_VLTA5_AircraftName_Status.Name = "Custom_VLTA5_AircraftName_Status";
-            this.Custom_VLTA5_AircraftName_Status.Size = new System.Drawing.Size(423, 90);
-            this.Custom_VLTA5_AircraftName_Status.TabIndex = 11;
-            this.Custom_VLTA5_AircraftName_Status.Text = "PROGRESS : 25.50%\r\nBoeing 737-800\r\nNok Air\r\nVTBD\r\nVTCC";
+            this.notificationopengame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.notificationopengame.Controls.Add(this.pleaserestart);
+            this.notificationopengame.Controls.Add(this.Restart);
+            this.notificationopengame.Controls.Add(this.pleaseopenaerofly);
+            this.notificationopengame.Location = new System.Drawing.Point(0, -1);
+            this.notificationopengame.Name = "notificationopengame";
+            this.notificationopengame.Size = new System.Drawing.Size(886, 499);
+            this.notificationopengame.TabIndex = 18;
+            this.notificationopengame.Visible = false;
+            // 
+            // pleaserestart
+            // 
+            this.pleaserestart.BackColor = System.Drawing.Color.Transparent;
+            this.pleaserestart.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 30F);
+            this.pleaserestart.ForeColor = System.Drawing.Color.Lime;
+            this.pleaserestart.Location = new System.Drawing.Point(20, 327);
+            this.pleaserestart.Name = "pleaserestart";
+            this.pleaserestart.Size = new System.Drawing.Size(849, 108);
+            this.pleaserestart.TabIndex = 10;
+            this.pleaserestart.Text = "Please restart FS 4 Flight Tracker.";
+            this.pleaserestart.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.pleaserestart.Visible = false;
+            // 
+            // pleaseopenaerofly
+            // 
+            this.pleaseopenaerofly.BackColor = System.Drawing.Color.Transparent;
+            this.pleaseopenaerofly.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 30F);
+            this.pleaseopenaerofly.ForeColor = System.Drawing.Color.Lime;
+            this.pleaseopenaerofly.Location = new System.Drawing.Point(23, 96);
+            this.pleaseopenaerofly.Name = "pleaseopenaerofly";
+            this.pleaseopenaerofly.Size = new System.Drawing.Size(849, 108);
+            this.pleaseopenaerofly.TabIndex = 0;
+            this.pleaseopenaerofly.Text = "Please open Aerofly FS 4 first.";
+            this.pleaseopenaerofly.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // ProgressSlider
             // 
@@ -684,9 +727,11 @@ namespace FS4_Flight_Tracker
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(884, 497);
-            this.Controls.Add(this.panelVolantaStyle);
+            this.Controls.Add(this.statusaeroflyfs4);
             this.Controls.Add(this.PanelTaskbar);
+            this.Controls.Add(this.notificationopengame);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelVolantaStyle);
             this.Controls.Add(this.panelVolantaEnabled);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
@@ -701,6 +746,7 @@ namespace FS4_Flight_Tracker
             this.ImageHUDVolantaStyle.ResumeLayout(false);
             this.ImageCustomHUD1.ResumeLayout(false);
             this.PanelTaskbar.ResumeLayout(false);
+            this.notificationopengame.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -718,7 +764,7 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label RouteText;
         private System.Windows.Forms.Label DestinationCoordText;
         private System.Windows.Forms.Button StartVolantaStyle;
-        private System.Windows.Forms.Label StatusText;
+        private System.Windows.Forms.Label ArrivalText;
         private System.Windows.Forms.Button Restart;
         private System.Windows.Forms.Timer timerreadingmemory;
         private System.Windows.Forms.Label DepartureText;
@@ -755,9 +801,12 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Button Next_HUD;
         private System.Windows.Forms.Label Custom_VLTA2_Speed_HideNumber_Status;
         private System.Windows.Forms.Panel PanelTaskbar;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label TaskbarName;
         private System.Windows.Forms.Button ButtonExitProgram;
-        private System.Windows.Forms.Label Custom_VLTA5_AircraftName_Status;
+        private System.Windows.Forms.Label Custom_VLTA6_Debug_Status;
+        private System.Windows.Forms.Panel notificationopengame;
+        private System.Windows.Forms.Label pleaseopenaerofly;
+        private System.Windows.Forms.Label pleaserestart;
     }
 }
 

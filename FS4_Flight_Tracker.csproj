@@ -131,5 +131,8 @@
   <ItemGroup>
     <None Include="Resources\HideTaskbar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Red.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
