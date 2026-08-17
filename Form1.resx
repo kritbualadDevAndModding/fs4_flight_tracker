@@ -123,15 +123,114 @@
   <metadata name="timerreadingmemory.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>215, 17</value>
   </metadata>
+  <metadata name="Custom_VLTA2_Speed_HideNumber_Status.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Custom_VLTA2_Speed_HideNumber_Status.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="ProgressBarStatus.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="ProgressBar.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Custom_VLTA2_Speed_HideNumber_Status.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ProgressBarStatus.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="ProgressBar.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ViewChangelogList.Text" xml:space="preserve">
+    <value>Update 0.60
+
+- Add Throttle Status
+- Update Main Menu
+- Remove Aircraft Name and Livery Name (There are a lot of bugs that cannot be fixed.)
+- Update Aircraft Name and Livery Name to Select yourself
+-----------------------------------------------------------------------
+Update 0.50
+
+- Update status run game
+- Update and fix arrival airport
+-----------------------------------------------------------------------
+Update 0.40
+
+- Custom Taskbar
+- Add Button Restart
+- Update Switch for Aircraft Name and Livery
+- Additional Update Main Menu
+-----------------------------------------------------------------------
+Update 0.30
+
+- Add Next HUD
+- Additional Custom HUD Updates.
+-----------------------------------------------------------------------
+Update 0.292
+
+- Add Custom HUD
+- Upgrade Visual Studio 2019 Community to Visual Studio 2022 Community
+-----------------------------------------------------------------------
+Update 0.291
+
+- Fix Speed
+-----------------------------------------------------------------------
+Update 0.29
+
+- Add Switch Color Background
+- Add Progress 0 to 100 for Departure to Arrival
+- Add Remaining Distance for Departure to Arrival
+
+- Fix Arrival Position
+
+Note: Version 0.30 is nearing release, and the changelog will be compiled in a public post.
+-----------------------------------------------------------------------
+Update 0.28
+
+- Add Player Position
+- Add Departure Position
+- Add Arrival Position
+-----------------------------------------------------------------------
+Update 0.27
+
+- Add Timer UTC
+-----------------------------------------------------------------------
+Update 0.26
+
+- Add Livery Airbus A321 / A321 XLR
+- Add more aircraft. Boeing 737 / 747 / 777 / 787 and Concorde
+-----------------------------------------------------------------------
+Update 0.25
+
+- Add Livery Name for Aircraft
+- Successfully completed for A319, A320, and A320 neo.
+-----------------------------------------------------------------------
+Update 0.24
+
+- Add Name Aircraft (Work in Progress)
+-----------------------------------------------------------------------
+Update 0.23
+
+- Work in Progress Volanta
+- Add Text Arrival
+-----------------------------------------------------------------------
+Update 0.12
+
+- Update the Departure Text status by performing the first memory read. ❤️❤️❤️
+-----------------------------------------------------------------------
+Update 0.2
+
+- Add Name Aircraft (Work in progress)
+- Add Roll Status Text
+- Add Support main.mcf
+-----------------------------------------------------------------------
+Update 0.1
+
+- I'm creating my first project.
+- Add status open and closed game Aerofly FS 4
+- Add speed knots text status
+- Add altitude text status</value>
+  </data>
   <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
