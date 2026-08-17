@@ -39,6 +39,10 @@ namespace FS4_Flight_Tracker
             this.RollStatus = new System.Windows.Forms.Label();
             this.AircraftandLivery = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label_aircraftname = new System.Windows.Forms.Label();
+            this.comboBox_selectaircraft = new System.Windows.Forms.ComboBox();
+            this.label_liveryname = new System.Windows.Forms.Label();
+            this.textbox_liveryname = new System.Windows.Forms.TextBox();
             this.lblProgress = new System.Windows.Forms.Label();
             this.lblXYZ = new System.Windows.Forms.Label();
             this.lblCurrent = new System.Windows.Forms.Label();
@@ -48,6 +52,7 @@ namespace FS4_Flight_Tracker
             this.DepartureText = new System.Windows.Forms.Label();
             this.ArrivalText = new System.Windows.Forms.Label();
             this.StartVolantaStyle = new System.Windows.Forms.Button();
+            this.label_blocklanguage = new System.Windows.Forms.Label();
             this.Restart = new System.Windows.Forms.Button();
             this.timerreadingmemory = new System.Windows.Forms.Timer(this.components);
             this.panelVolantaEnabled = new System.Windows.Forms.Panel();
@@ -83,16 +88,13 @@ namespace FS4_Flight_Tracker
             this.ButtonExitProgram = new System.Windows.Forms.Button();
             this.TaskbarName = new System.Windows.Forms.Label();
             this.notificationopengame = new System.Windows.Forms.Panel();
+            this.VersionText = new System.Windows.Forms.Label();
             this.ButtonChangelog = new System.Windows.Forms.Button();
             this.ViewChangelogList = new System.Windows.Forms.RichTextBox();
-            this.VersionText = new System.Windows.Forms.Label();
             this.pleaserestart = new System.Windows.Forms.Label();
             this.pleaseopenaerofly = new System.Windows.Forms.Label();
-            this.textbox_liveryname = new System.Windows.Forms.TextBox();
-            this.label_liveryname = new System.Windows.Forms.Label();
-            this.comboBox_selectaircraft = new System.Windows.Forms.ComboBox();
-            this.label_aircraftname = new System.Windows.Forms.Label();
-            this.label_blocklanguage = new System.Windows.Forms.Label();
+            this.ThrottleTest = new System.Windows.Forms.Label();
+            this.Custom_VLTA7_1_Throttle_Status = new System.Windows.Forms.Label();
             this.ProgressSlider = new CustomSliderApp.ImageSlider();
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
@@ -178,6 +180,7 @@ namespace FS4_Flight_Tracker
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.ThrottleTest);
             this.panel1.Controls.Add(this.label_aircraftname);
             this.panel1.Controls.Add(this.comboBox_selectaircraft);
             this.panel1.Controls.Add(this.label_liveryname);
@@ -202,6 +205,98 @@ namespace FS4_Flight_Tracker
             this.panel1.Size = new System.Drawing.Size(884, 498);
             this.panel1.TabIndex = 6;
             this.panel1.Visible = false;
+            // 
+            // label_aircraftname
+            // 
+            this.label_aircraftname.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_aircraftname.ForeColor = System.Drawing.Color.White;
+            this.label_aircraftname.Location = new System.Drawing.Point(306, 239);
+            this.label_aircraftname.Name = "label_aircraftname";
+            this.label_aircraftname.Size = new System.Drawing.Size(262, 39);
+            this.label_aircraftname.TabIndex = 23;
+            this.label_aircraftname.Text = "Aircraft Name";
+            this.label_aircraftname.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // comboBox_selectaircraft
+            // 
+            this.comboBox_selectaircraft.AllowDrop = true;
+            this.comboBox_selectaircraft.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_selectaircraft.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold);
+            this.comboBox_selectaircraft.FormattingEnabled = true;
+            this.comboBox_selectaircraft.IntegralHeight = false;
+            this.comboBox_selectaircraft.ItemHeight = 23;
+            this.comboBox_selectaircraft.Items.AddRange(new object[] {
+            "Airbus A319",
+            "Airbus A320",
+            "Airbus A320neo",
+            "Airbus A321",
+            "Airbus A321XLR",
+            "Airbus A350-1000",
+            "Airbus A380",
+            "Antares 21E",
+            "ASG 29",
+            "ASK 21",
+            "Baron 58",
+            "Bf 109E",
+            "Boeing 737-500",
+            "Boeing 737-800",
+            "Boeing 737-900ER",
+            "Boeing 737 MAX9",
+            "Boeing 747-400",
+            "Boeing 777-300ER",
+            "Boeing 777F",
+            "Boeing 787-10",
+            "Boeing 787-9",
+            "Camel",
+            "Cessna 172",
+            "Concorde",
+            "Corsair",
+            "CRJ-900LR",
+            "Dr.I",
+            "DR400",
+            "EC135",
+            "Extra 330",
+            "F-15E",
+            "F/A-18C",
+            "Ju 52",
+            "Jungmeister",
+            "King Air",
+            "Learjet 45",
+            "MB-339",
+            "Me 262",
+            "P-38",
+            "Pitts",
+            "Q400",
+            "R22",
+            "Swift",
+            "UH-60M"});
+            this.comboBox_selectaircraft.Location = new System.Drawing.Point(306, 290);
+            this.comboBox_selectaircraft.Name = "comboBox_selectaircraft";
+            this.comboBox_selectaircraft.Size = new System.Drawing.Size(262, 31);
+            this.comboBox_selectaircraft.Sorted = true;
+            this.comboBox_selectaircraft.TabIndex = 22;
+            // 
+            // label_liveryname
+            // 
+            this.label_liveryname.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_liveryname.ForeColor = System.Drawing.Color.White;
+            this.label_liveryname.Location = new System.Drawing.Point(306, 324);
+            this.label_liveryname.Name = "label_liveryname";
+            this.label_liveryname.Size = new System.Drawing.Size(262, 39);
+            this.label_liveryname.TabIndex = 19;
+            this.label_liveryname.Text = "Livery Name";
+            this.label_liveryname.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // textbox_liveryname
+            // 
+            this.textbox_liveryname.BackColor = System.Drawing.Color.White;
+            this.textbox_liveryname.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textbox_liveryname.ForeColor = System.Drawing.Color.Black;
+            this.textbox_liveryname.Location = new System.Drawing.Point(306, 366);
+            this.textbox_liveryname.Name = "textbox_liveryname";
+            this.textbox_liveryname.Size = new System.Drawing.Size(262, 30);
+            this.textbox_liveryname.TabIndex = 18;
+            this.textbox_liveryname.TextChanged += new System.EventHandler(this.textbox_liveryname_TextChanged);
             // 
             // lblProgress
             // 
@@ -272,7 +367,7 @@ namespace FS4_Flight_Tracker
             // 
             this.DepartureText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DepartureText.ForeColor = System.Drawing.Color.White;
-            this.DepartureText.Location = new System.Drawing.Point(686, 378);
+            this.DepartureText.Location = new System.Drawing.Point(686, 324);
             this.DepartureText.Name = "DepartureText";
             this.DepartureText.Size = new System.Drawing.Size(190, 29);
             this.DepartureText.TabIndex = 11;
@@ -283,7 +378,7 @@ namespace FS4_Flight_Tracker
             // 
             this.ArrivalText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ArrivalText.ForeColor = System.Drawing.Color.White;
-            this.ArrivalText.Location = new System.Drawing.Point(705, 407);
+            this.ArrivalText.Location = new System.Drawing.Point(705, 359);
             this.ArrivalText.Name = "ArrivalText";
             this.ArrivalText.Size = new System.Drawing.Size(171, 39);
             this.ArrivalText.TabIndex = 10;
@@ -300,6 +395,20 @@ namespace FS4_Flight_Tracker
             this.StartVolantaStyle.Text = "Start Volanta Style";
             this.StartVolantaStyle.UseVisualStyleBackColor = true;
             this.StartVolantaStyle.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label_blocklanguage
+            // 
+            this.label_blocklanguage.AutoSize = true;
+            this.label_blocklanguage.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14F, System.Drawing.FontStyle.Bold);
+            this.label_blocklanguage.ForeColor = System.Drawing.Color.White;
+            this.label_blocklanguage.Location = new System.Drawing.Point(241, 442);
+            this.label_blocklanguage.Name = "label_blocklanguage";
+            this.label_blocklanguage.Size = new System.Drawing.Size(379, 42);
+            this.label_blocklanguage.TabIndex = 24;
+            this.label_blocklanguage.Text = "You specified something that was blocked\r\nby the language filter. Please try agai" +
+    "n.";
+            this.label_blocklanguage.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label_blocklanguage.Visible = false;
             // 
             // Restart
             // 
@@ -416,6 +525,7 @@ namespace FS4_Flight_Tracker
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA4_Throttle_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA5_Clock_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA6_Debug_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA7_1_Throttle_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA7_Debug_Status);
             this.ImageCustomHUD1.Location = new System.Drawing.Point(12, 12);
             this.ImageCustomHUD1.Name = "ImageCustomHUD1";
@@ -424,7 +534,7 @@ namespace FS4_Flight_Tracker
             // 
             // ProgressBarThrottleWhite
             // 
-            this.ProgressBarThrottleWhite.BackColor = System.Drawing.Color.White;
+            this.ProgressBarThrottleWhite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.ProgressBarThrottleWhite.Location = new System.Drawing.Point(708, 81);
             this.ProgressBarThrottleWhite.Name = "ProgressBarThrottleWhite";
             this.ProgressBarThrottleWhite.Size = new System.Drawing.Size(152, 10);
@@ -723,6 +833,18 @@ namespace FS4_Flight_Tracker
             this.notificationopengame.TabIndex = 18;
             this.notificationopengame.Visible = false;
             // 
+            // VersionText
+            // 
+            this.VersionText.BackColor = System.Drawing.Color.Transparent;
+            this.VersionText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VersionText.ForeColor = System.Drawing.Color.White;
+            this.VersionText.Location = new System.Drawing.Point(7, 437);
+            this.VersionText.Name = "VersionText";
+            this.VersionText.Size = new System.Drawing.Size(209, 57);
+            this.VersionText.TabIndex = 11;
+            this.VersionText.Text = "Version X.XX\r\nMain Game X.X.X.X";
+            this.VersionText.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // ButtonChangelog
             // 
             this.ButtonChangelog.BackColor = System.Drawing.Color.Transparent;
@@ -755,18 +877,6 @@ namespace FS4_Flight_Tracker
             this.ViewChangelogList.Text = resources.GetString("ViewChangelogList.Text");
             this.ViewChangelogList.Visible = false;
             // 
-            // VersionText
-            // 
-            this.VersionText.BackColor = System.Drawing.Color.Transparent;
-            this.VersionText.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VersionText.ForeColor = System.Drawing.Color.White;
-            this.VersionText.Location = new System.Drawing.Point(7, 437);
-            this.VersionText.Name = "VersionText";
-            this.VersionText.Size = new System.Drawing.Size(209, 57);
-            this.VersionText.TabIndex = 11;
-            this.VersionText.Text = "Version X.XX\r\nMain Game X.X.X.X";
-            this.VersionText.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
             // pleaserestart
             // 
             this.pleaserestart.BackColor = System.Drawing.Color.Transparent;
@@ -792,111 +902,28 @@ namespace FS4_Flight_Tracker
             this.pleaseopenaerofly.Text = "Please open Aerofly FS 4 first.";
             this.pleaseopenaerofly.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textbox_liveryname
+            // ThrottleTest
             // 
-            this.textbox_liveryname.BackColor = System.Drawing.Color.White;
-            this.textbox_liveryname.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textbox_liveryname.ForeColor = System.Drawing.Color.Black;
-            this.textbox_liveryname.Location = new System.Drawing.Point(306, 366);
-            this.textbox_liveryname.Name = "textbox_liveryname";
-            this.textbox_liveryname.Size = new System.Drawing.Size(262, 30);
-            this.textbox_liveryname.TabIndex = 18;
-            this.textbox_liveryname.TextChanged += new System.EventHandler(this.textbox_liveryname_TextChanged);
+            this.ThrottleTest.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ThrottleTest.ForeColor = System.Drawing.Color.White;
+            this.ThrottleTest.Location = new System.Drawing.Point(686, 419);
+            this.ThrottleTest.Name = "ThrottleTest";
+            this.ThrottleTest.Size = new System.Drawing.Size(183, 39);
+            this.ThrottleTest.TabIndex = 25;
+            this.ThrottleTest.Text = "Throttle : 100%";
+            this.ThrottleTest.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label_liveryname
+            // Custom_VLTA7_1_Throttle_Status
             // 
-            this.label_liveryname.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_liveryname.ForeColor = System.Drawing.Color.White;
-            this.label_liveryname.Location = new System.Drawing.Point(306, 324);
-            this.label_liveryname.Name = "label_liveryname";
-            this.label_liveryname.Size = new System.Drawing.Size(262, 39);
-            this.label_liveryname.TabIndex = 19;
-            this.label_liveryname.Text = "Livery Name";
-            this.label_liveryname.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // comboBox_selectaircraft
-            // 
-            this.comboBox_selectaircraft.AllowDrop = true;
-            this.comboBox_selectaircraft.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_selectaircraft.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 15F, System.Drawing.FontStyle.Bold);
-            this.comboBox_selectaircraft.FormattingEnabled = true;
-            this.comboBox_selectaircraft.IntegralHeight = false;
-            this.comboBox_selectaircraft.ItemHeight = 23;
-            this.comboBox_selectaircraft.Items.AddRange(new object[] {
-            "Airbus A319",
-            "Airbus A320",
-            "Airbus A320neo",
-            "Airbus A321",
-            "Airbus A321XLR",
-            "Airbus A350-1000",
-            "Airbus A380",
-            "Antares 21E",
-            "ASG 29",
-            "ASK 21",
-            "Baron 58",
-            "Bf 109E",
-            "Boeing 737-500",
-            "Boeing 737-800",
-            "Boeing 737-900ER",
-            "Boeing 737 MAX9",
-            "Boeing 747-400",
-            "Boeing 777-300ER",
-            "Boeing 777F",
-            "Boeing 787-10",
-            "Boeing 787-9",
-            "Camel",
-            "Cessna 172",
-            "Concorde",
-            "Corsair",
-            "CRJ-900LR",
-            "Dr.I",
-            "DR400",
-            "EC135",
-            "Extra 330",
-            "F-15E",
-            "F/A-18C",
-            "Ju 52",
-            "Jungmeister",
-            "King Air",
-            "Learjet 45",
-            "MB-339",
-            "Me 262",
-            "P-38",
-            "Pitts",
-            "Q400",
-            "R22",
-            "Swift",
-            "UH-60M"});
-            this.comboBox_selectaircraft.Location = new System.Drawing.Point(306, 290);
-            this.comboBox_selectaircraft.Name = "comboBox_selectaircraft";
-            this.comboBox_selectaircraft.Size = new System.Drawing.Size(262, 31);
-            this.comboBox_selectaircraft.Sorted = true;
-            this.comboBox_selectaircraft.TabIndex = 22;
-            // 
-            // label_aircraftname
-            // 
-            this.label_aircraftname.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_aircraftname.ForeColor = System.Drawing.Color.White;
-            this.label_aircraftname.Location = new System.Drawing.Point(306, 239);
-            this.label_aircraftname.Name = "label_aircraftname";
-            this.label_aircraftname.Size = new System.Drawing.Size(262, 39);
-            this.label_aircraftname.TabIndex = 23;
-            this.label_aircraftname.Text = "Aircraft Name";
-            this.label_aircraftname.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label_blocklanguage
-            // 
-            this.label_blocklanguage.AutoSize = true;
-            this.label_blocklanguage.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14F, System.Drawing.FontStyle.Bold);
-            this.label_blocklanguage.ForeColor = System.Drawing.Color.White;
-            this.label_blocklanguage.Location = new System.Drawing.Point(241, 442);
-            this.label_blocklanguage.Name = "label_blocklanguage";
-            this.label_blocklanguage.Size = new System.Drawing.Size(379, 42);
-            this.label_blocklanguage.TabIndex = 24;
-            this.label_blocklanguage.Text = "You specified something that was blocked\r\nby the language filter. Please try agai" +
-    "n.";
-            this.label_blocklanguage.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label_blocklanguage.Visible = false;
+            this.Custom_VLTA7_1_Throttle_Status.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Custom_VLTA7_1_Throttle_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA7_1_Throttle_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA7_1_Throttle_Status.Location = new System.Drawing.Point(761, 93);
+            this.Custom_VLTA7_1_Throttle_Status.Name = "Custom_VLTA7_1_Throttle_Status";
+            this.Custom_VLTA7_1_Throttle_Status.Size = new System.Drawing.Size(98, 28);
+            this.Custom_VLTA7_1_Throttle_Status.TabIndex = 15;
+            this.Custom_VLTA7_1_Throttle_Status.Text = "50%";
+            this.Custom_VLTA7_1_Throttle_Status.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // ProgressSlider
             // 
@@ -923,8 +950,8 @@ namespace FS4_Flight_Tracker
             this.Controls.Add(this.PanelTaskbar);
             this.Controls.Add(this.statusaeroflyfs4);
             this.Controls.Add(this.notificationopengame);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelVolantaStyle);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelVolantaEnabled);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
@@ -1010,6 +1037,8 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.ComboBox comboBox_selectaircraft;
         private System.Windows.Forms.Label label_aircraftname;
         private System.Windows.Forms.Label label_blocklanguage;
+        private System.Windows.Forms.Label ThrottleTest;
+        private System.Windows.Forms.Label Custom_VLTA7_1_Throttle_Status;
     }
 }
 

@@ -1,3 +1,7 @@
+Update 0.61
+
+- Fix Throttle Progress
+-----------------------------------------------------------------------
 Update 0.60
 
 - Add Throttle Status

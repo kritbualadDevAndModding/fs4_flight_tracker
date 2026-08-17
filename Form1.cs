@@ -17,7 +17,7 @@ namespace FS4_Flight_Tracker
 {
     public partial class Form1 : Form
     {
-        private string fs4flighttrackversion = "0.60";
+        private string fs4flighttrackversion = "0.61";
         private string fs4maingameversion = "4.8.4.1";
         private bool toggleViewChangelog = false;
 
@@ -977,26 +977,29 @@ namespace FS4_Flight_Tracker
                     double clampedCurrent = Math.Max(0.0, Math.Min(current, 1.0));
                     double calculatedCurrent = min + (clampedCurrent * (max - min));
 
-                    double calculatedCurrentThrottle = minthrottle + (clampedCurrent * (maxthrottle - minthrottle));
+                    double calculatedCurrentThrottle = maxthrottle + (clampedCurrent * (minthrottle - maxthrottle));
 
 
-                    int currentthrottle = (int)Math.Round((calculatedCurrentThrottle / 100.0) * maxthrottle);
+                    int currentthrottle = (int)Math.Round((calculatedCurrentThrottle / 152.0) * maxthrottle);
 
 
                     // 4. นำไปแสดงผลบน Label.Text
                     Custom_VLTA4_Throttle_Status.Text = $"THROTTLE: {calculatedCurrent:F2}%"; // เช่น Current: 75.00%
-
+                    ThrottleTest.Text = $"Throttle : {calculatedCurrent:F2}%";
+                    Custom_VLTA7_1_Throttle_Status.Text = $"{calculatedCurrent:F2}%";
                     ProgressBarThrottleWhite.Size = new Size(currentthrottle, 10);
 
                 }
                 else
                 {
                     Custom_VLTA4_Throttle_Status.Text = "Read Error";
+                    ThrottleTest.Text = "Read Error";
                 }
             }
             else
             {
                 Custom_VLTA4_Throttle_Status.Text = "Bad Pointer";
+                ThrottleTest.Text = "Bad Pointer";
             }
 
            
