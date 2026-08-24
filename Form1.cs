@@ -2,22 +2,38 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
+using System.Drawing;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
+/*
+ * 
+Document Outline
+--------------------------
+Form1
+
+1.PanelTaskbar
+2.statusaeroflyfs4
+3.notificationopengame
+4.panelVolantaStyle
+5.panel1
+6.panelVolantaEnabled
+--------------------------
+
+ */
 namespace FS4_Flight_Tracker
 {
     public partial class Form1 : Form
     {
-        private string fs4flighttrackversion = "0.61";
+        private string fs4flighttrackversion = "0.70";
         private string fs4maingameversion = "4.8.4.1";
         private bool toggleViewChangelog = false;
 
@@ -74,6 +90,7 @@ namespace FS4_Flight_Tracker
 
         private String aircraftNameCustomHUD, aircraftLiveryCustomHUD, departureNameCustomHUD, arrivalNameCustomHUD;
         private double progressCustomHUD;
+
         public Form1()
         {
             InitializeComponent();
@@ -125,7 +142,8 @@ namespace FS4_Flight_Tracker
 
         private void timerstatusaeroflyfs4_Tick(object sender, EventArgs e)
         {
-            VersionText.Text = "Version " + fs4flighttrackversion +"\r\n"+ "Main Game " + fs4maingameversion;
+            VersionText.Text = "Version " + fs4flighttrackversion + "\r\n" + "Main Game " + fs4maingameversion;
+            VersionText2.Text = "Version " + fs4flighttrackversion + "\r\n" + "Main Game " + fs4maingameversion;
             StatusUpdateDepatureText();
             StatusUpdateArrivalText();
             StatusUpdateTimerClockText();
@@ -139,6 +157,7 @@ namespace FS4_Flight_Tracker
             liveryname = textbox_liveryname.Text;
             aircraftname = comboBox_selectaircraft.Text;
             AircraftandLivery.Text = aircraftname + " | " + liveryname;
+            //           StatusUpdateEnginePowerText();
         }
 
         private void rungame()
@@ -874,7 +893,7 @@ namespace FS4_Flight_Tracker
         private void textbox_liveryname_TextChanged(object sender, EventArgs e)
         {
             // 1. กำหนดรายการคำห้ามใช้ที่ต้องการตรวจจับ
-            string[] badWords = { "fuck" , "f***" , "fu**" , "fuc*" , "fucky" ,"fuckyou", "fuckyous", "gay", "nigga", "nigger" , "n1664" , "ni664", "nig64", "nigg4", "n1gga", "n16ga", "n166a", "n1gga", "shit", "5h17" , "sh1t" , "sh*t" , "bitch" , "b1tch" , "b17ch" , "ass" , "asshole" , "assholes" , "pussy" , "pu55y" , "nigg3r" ,"n1663r" , "dick" , "d1ck"};
+            string[] badWords = { "fuck", "f***", "fu**", "fuc*", "fucky", "fuckyou", "fuckyous", "gay", "nigga", "nigger", "n1664", "ni664", "nig64", "nigg4", "n1gga", "n16ga", "n166a", "n1gga", "shit", "5h17", "sh1t", "sh*t", "bitch", "b1tch", "b17ch", "ass", "asshole", "assholes", "pussy", "pu55y", "nigg3r", "n1663r", "dick", "d1ck" };
 
             string input = textbox_liveryname.Text;
 
@@ -908,6 +927,59 @@ namespace FS4_Flight_Tracker
             }
             return IntPtr.Zero;
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                // Code to run when toggled ON
+                this.TransparencyKey = Color.Lime;
+                Switch_Color_Background.FlatStyle = FlatStyle.Standard;
+                Custom_VLTA6_Debug_Status.BackColor = Color.Transparent;
+                Custom_VLTA7_Throttle_and_Engine_Text.BackColor = Color.Transparent;
+                Custom_VLTA7_1_Throttle_Status.BackColor = Color.Transparent;
+            }
+            else
+            {
+                // Code to run when toggled OFF
+                this.TransparencyKey = Color.Empty;
+                Switch_Color_Background.FlatStyle = FlatStyle.Flat;
+                //190,0,0,0
+                Custom_VLTA6_Debug_Status.BackColor = Color.FromArgb(190, 0, 0, 0);
+                Custom_VLTA7_Throttle_and_Engine_Text.BackColor = Color.FromArgb(190, 0, 0, 0);
+                Custom_VLTA7_1_Throttle_Status.BackColor = Color.FromArgb(190, 0, 0, 0);
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                // Code to run when toggled ON
+                this.TopMost = true;
+            }
+            else
+            {
+                // Code to run when toggled OFF
+                this.TopMost = false;
+            }
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked)
+            {
+                // Code to run when toggled ON
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            }
+            else
+            {
+                // Code to run when toggled OFF
+                this.FormBorderStyle = FormBorderStyle.None;
+            }
+
+        }
+
         private IntPtr ResolveCheatEnginePointer(IntPtr hProc, Process proc, string modName, int baseOff, int[] chainOffsets, bool is64Bit)
         {
             // หา Module Base Address
@@ -973,22 +1045,20 @@ namespace FS4_Flight_Tracker
 
                     int minthrottle = 0;
                     int maxthrottle = 152;
+
                     // 3. คำนวณแปลงค่า Current ดิบให้อยู่ในช่วง Min ถึง Max
                     double clampedCurrent = Math.Max(0.0, Math.Min(current, 1.0));
                     double calculatedCurrent = min + (clampedCurrent * (max - min));
 
+
                     double calculatedCurrentThrottle = maxthrottle + (clampedCurrent * (minthrottle - maxthrottle));
-
-
-                    int currentthrottle = (int)Math.Round((calculatedCurrentThrottle / 152.0) * maxthrottle);
-
+                    int currentthrottle = (int)Math.Round((calculatedCurrentThrottle / maxthrottle) * maxthrottle);
 
                     // 4. นำไปแสดงผลบน Label.Text
                     Custom_VLTA4_Throttle_Status.Text = $"THROTTLE: {calculatedCurrent:F2}%"; // เช่น Current: 75.00%
                     ThrottleTest.Text = $"Throttle : {calculatedCurrent:F2}%";
                     Custom_VLTA7_1_Throttle_Status.Text = $"{calculatedCurrent:F2}%";
                     ProgressBarThrottleWhite.Size = new Size(currentthrottle, 10);
-
                 }
                 else
                 {
@@ -1001,12 +1071,179 @@ namespace FS4_Flight_Tracker
                 Custom_VLTA4_Throttle_Status.Text = "Bad Pointer";
                 ThrottleTest.Text = "Bad Pointer";
             }
-
-           
-
             CloseHandle(hProcess);
 
-            
+            string supportAircraftTxt = comboBox_selectaircraft.Text.Trim(); // ดึงข้อความจาก TextBox และตัดช่องว่าง
+
+            switch (supportAircraftTxt)
+            {
+                case "Airbus A319":
+                    SupportTrue();
+                    break;
+
+                case "Airbus A320":
+                    SupportTrue();
+                    break;
+
+                case "Airbus A320neo":
+                    SupportTrue();
+                    break;
+
+                case "Airbus A321":
+                    SupportTrue();
+                    break;
+
+                case "Airbus A321XLR":
+                    SupportTrue();
+                    break;
+
+                case "Airbus A350-1000":
+                    SupportTrue();
+                    break;
+
+                case "Airbus A380":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 737-500":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 737-800":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 737-900ER":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 737 MAX9":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 747-400":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 777-300ER":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 777F":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 787-10":
+                    SupportTrue();
+                    break;
+
+                case "Boeing 787-9":
+                    SupportTrue();
+                    break;
+
+                default:
+                    SupportFalse();
+                    break;
+            }
+
+            void SupportTrue()
+            {
+                Custom_VLTA7_1_Throttle_Status.Visible = true;
+                Custom_VLTA7_Throttle_and_Engine_Text.Visible = true;
+                ProgressBarThrottleWhite.Visible = true;
+                ProgressBarThrottleRed.Visible = true;
+                Custom_VLTA4_Throttle_Status.Visible = true;
+            }
+            void SupportFalse()
+            {
+                Custom_VLTA7_1_Throttle_Status.Visible = false;
+                Custom_VLTA7_Throttle_and_Engine_Text.Visible = false;
+                ProgressBarThrottleWhite.Visible = false;
+                ProgressBarThrottleRed.Visible = false;
+                Custom_VLTA4_Throttle_Status.Visible = false;
+            }
+        }
+        /*
+        private void StatusUpdateEnginePowerText()
+        {
+            string processName = "aerofly_fs_4";
+
+
+            int baseOffset = 0x016D8A88;
+            int[] offsets = new int[] { 0xD8 , 0x40 , 0x0 , 0x140 , 0x28 , 0x0 , 0x360 };
+
+            Process[] processes = Process.GetProcessesByName(processName);
+            if (processes.Length == 0)
+            {
+                Custom_VLTA7_2_Engine_Status.Text = "Process Not Found";
+                return;
+            }
+
+            Process process = processes[0];
+            IntPtr hProcess = OpenProcess(0x0010, false, process.Id);
+
+            // 1. ดึง Base Address ของ Process หลักโดยตรง (ไม่ต้องใช้ moduleName)
+            IntPtr mainModuleBase = process.MainModule.BaseAddress;
+
+            // 2. Resolve Pointer จาก Base Address + baseOffset
+            IntPtr targetAddress = ResolvePointer(hProcess, mainModuleBase + baseOffset, offsets);
+
+            if (targetAddress != IntPtr.Zero)
+            {
+                byte[] buffer = new byte[8];
+                if (ReadProcessMemory(hProcess, targetAddress, buffer, buffer.Length, out _))
+                {
+                    double current = BitConverter.ToDouble(buffer, 0);
+
+                    double min = 0.0;
+                    double max = 100.0;
+
+                    int minenginepower = 0;
+                    int maxenginepower = 152;
+
+                    double clampedCurrent = Math.Max(0.0, Math.Min(current, 1.0));
+                    double calculatedCurrent = min + (clampedCurrent * (max - min));
+
+                    // คำนวณความกว้างของ ProgressBar (พิกัด 0 ถึง 152)
+                    double calculatedCurrentEnginePower = maxenginepower + (clampedCurrent * (minenginepower - maxenginepower));
+                    int currentEnginePower = (int)Math.Round(calculatedCurrentEnginePower);
+
+                    // แสดงผล
+                    Custom_VLTA7_2_Engine_Status.Text = $"{calculatedCurrent:F2}%";
+                    ProgressBarEngineWhite.Size = new Size(currentEnginePower, 10);
+                }
+                else
+                {
+                    Custom_VLTA7_2_Engine_Status.Text = "Read Error";
+                }
+            }
+            else
+            {
+                Custom_VLTA7_2_Engine_Status.Text = "Bad Pointer";
+            }
+
+            CloseHandle(hProcess);
+        }
+        */
+
+        public static IntPtr ResolvePointer(IntPtr hProcess, IntPtr baseAddress, int[] offsets)
+        {
+            byte[] buffer = new byte[8]; // รองรับ 64-bit Process
+            IntPtr currentAddress = baseAddress;
+
+            for (int i = 0; i < offsets.Length; i++)
+            {
+                if (!ReadProcessMemory(hProcess, currentAddress, buffer, buffer.Length, out _))
+                    return IntPtr.Zero;
+
+                IntPtr nextAddress = (IntPtr)BitConverter.ToInt64(buffer, 0);
+                if (nextAddress == IntPtr.Zero)
+                    return IntPtr.Zero;
+
+                currentAddress = nextAddress + offsets[i];
+            }
+
+            return currentAddress;
         }
     }
 }

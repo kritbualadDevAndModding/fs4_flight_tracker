@@ -123,17 +123,26 @@
   <metadata name="timerreadingmemory.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>215, 17</value>
   </metadata>
-  <metadata name="Custom_VLTA2_Speed_HideNumber_Status.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="ProgressBarStatus.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="ProgressBar.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="Custom_VLTA2_Speed_HideNumber_Status.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="ViewChangelogList.Text" xml:space="preserve">
-    <value>Update 0.61
+    <value>Update 0.70
+
+- Add Enable Taskbar
+- Add Enable TransparencyKey
+- Add Enable TopMost
+- Add Status Version 
+- Add Bad Language
+- Add Throttle Support Aircraft Airbus and Boeing
+-----------------------------------------------------------------------
+Update 0.61
 
 - Fix Throttle Progress
 -----------------------------------------------------------------------

@@ -1,3 +1,12 @@
+Update 0.70
+
+- Add Enable Taskbar
+- Add Enable TransparencyKey
+- Add Enable TopMost
+- Add Status Version 
+- Add Bad Language
+- Add Throttle Support Aircraft Airbus and Boeing
+-----------------------------------------------------------------------
 Update 0.61
 
 - Fix Throttle Progress
