@@ -18,7 +18,7 @@ Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 ### Status: Worked ✅
 - Speed
 - Altitude
-- Volanta Style HUD
+- Volanta Style HUD and Custom HUD
 - Name Aircraft and Livery
 - Timer UTC
 - Player Position
@@ -27,6 +27,7 @@ Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 - Departure Text
 - Arrival Text
 - Progress 0 to 100 for Departure to Arrival
+- Throttle for Airbus and Boeing only.
 
 ### Status: Not Working ❌
 - Landing Rate
