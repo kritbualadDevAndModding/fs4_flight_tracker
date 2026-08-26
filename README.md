@@ -28,7 +28,7 @@ Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 - Arrival Text
 - Progress 0 to 100 for Departure to Arrival
 
-### Status: Under Development 👨‍💻
+### Status: Not Working ❌
 - Landing Rate
 - Flaps
 - Speedbrake / Spoiler
