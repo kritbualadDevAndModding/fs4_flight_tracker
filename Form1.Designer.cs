@@ -35,8 +35,6 @@ namespace FS4_Flight_Tracker
             this.timerstatusaeroflyfs4 = new System.Windows.Forms.Timer(this.components);
             this.SpeedStatus = new System.Windows.Forms.Label();
             this.AltitideStatus = new System.Windows.Forms.Label();
-            this.PitchStatus = new System.Windows.Forms.Label();
-            this.RollStatus = new System.Windows.Forms.Label();
             this.AircraftandLivery = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.VersionText2 = new System.Windows.Forms.Label();
@@ -49,7 +47,6 @@ namespace FS4_Flight_Tracker
             this.label_liveryname = new System.Windows.Forms.Label();
             this.textbox_liveryname = new System.Windows.Forms.TextBox();
             this.lblProgress = new System.Windows.Forms.Label();
-            this.lblXYZ = new System.Windows.Forms.Label();
             this.lblCurrent = new System.Windows.Forms.Label();
             this.DeparturePosition = new System.Windows.Forms.Label();
             this.ArrivalPosition = new System.Windows.Forms.Label();
@@ -81,7 +78,6 @@ namespace FS4_Flight_Tracker
             this.ImageCustomHUD1 = new System.Windows.Forms.Panel();
             this.ProgressBarThrottleWhite = new System.Windows.Forms.Panel();
             this.ProgressBarThrottleRed = new System.Windows.Forms.Panel();
-            this.ProgressSlider = new CustomSliderApp.ImageSlider();
             this.Custom_VLTA1_DEP_and_ARR_Status = new System.Windows.Forms.Label();
             this.Custom_VLTA2_Speed_Status = new System.Windows.Forms.Label();
             this.Custom_VLTA2_Speed_HideNumber_Status = new System.Windows.Forms.Label();
@@ -100,6 +96,8 @@ namespace FS4_Flight_Tracker
             this.ViewChangelogList = new System.Windows.Forms.RichTextBox();
             this.pleaserestart = new System.Windows.Forms.Label();
             this.pleaseopenaerofly = new System.Windows.Forms.Label();
+            this.Custom_VLTA4_Progress_Status = new System.Windows.Forms.Label();
+            this.ProgressSlider = new CustomSliderApp.ImageSlider();
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
             this.panelVolantaStyle.SuspendLayout();
@@ -130,9 +128,9 @@ namespace FS4_Flight_Tracker
             // 
             this.SpeedStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SpeedStatus.ForeColor = System.Drawing.Color.White;
-            this.SpeedStatus.Location = new System.Drawing.Point(515, 69);
+            this.SpeedStatus.Location = new System.Drawing.Point(609, 112);
             this.SpeedStatus.Name = "SpeedStatus";
-            this.SpeedStatus.Size = new System.Drawing.Size(361, 36);
+            this.SpeedStatus.Size = new System.Drawing.Size(267, 36);
             this.SpeedStatus.TabIndex = 1;
             this.SpeedStatus.Text = "Speed";
             this.SpeedStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -141,34 +139,12 @@ namespace FS4_Flight_Tracker
             // 
             this.AltitideStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AltitideStatus.ForeColor = System.Drawing.Color.White;
-            this.AltitideStatus.Location = new System.Drawing.Point(515, 105);
+            this.AltitideStatus.Location = new System.Drawing.Point(604, 148);
             this.AltitideStatus.Name = "AltitideStatus";
-            this.AltitideStatus.Size = new System.Drawing.Size(361, 36);
+            this.AltitideStatus.Size = new System.Drawing.Size(272, 36);
             this.AltitideStatus.TabIndex = 2;
             this.AltitideStatus.Text = "Altitude";
             this.AltitideStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // PitchStatus
-            // 
-            this.PitchStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PitchStatus.ForeColor = System.Drawing.Color.White;
-            this.PitchStatus.Location = new System.Drawing.Point(515, 141);
-            this.PitchStatus.Name = "PitchStatus";
-            this.PitchStatus.Size = new System.Drawing.Size(361, 36);
-            this.PitchStatus.TabIndex = 3;
-            this.PitchStatus.Text = "Pitch";
-            this.PitchStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // RollStatus
-            // 
-            this.RollStatus.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RollStatus.ForeColor = System.Drawing.Color.White;
-            this.RollStatus.Location = new System.Drawing.Point(515, 177);
-            this.RollStatus.Name = "RollStatus";
-            this.RollStatus.Size = new System.Drawing.Size(361, 36);
-            this.RollStatus.TabIndex = 4;
-            this.RollStatus.Text = "Roll";
-            this.RollStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // AircraftandLivery
             // 
@@ -194,7 +170,6 @@ namespace FS4_Flight_Tracker
             this.panel1.Controls.Add(this.label_liveryname);
             this.panel1.Controls.Add(this.textbox_liveryname);
             this.panel1.Controls.Add(this.lblProgress);
-            this.panel1.Controls.Add(this.lblXYZ);
             this.panel1.Controls.Add(this.lblCurrent);
             this.panel1.Controls.Add(this.DeparturePosition);
             this.panel1.Controls.Add(this.ArrivalPosition);
@@ -205,8 +180,6 @@ namespace FS4_Flight_Tracker
             this.panel1.Controls.Add(this.SpeedStatus);
             this.panel1.Controls.Add(this.label_blocklanguage);
             this.panel1.Controls.Add(this.AltitideStatus);
-            this.panel1.Controls.Add(this.PitchStatus);
-            this.panel1.Controls.Add(this.RollStatus);
             this.panel1.Controls.Add(this.AircraftandLivery);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -377,16 +350,6 @@ namespace FS4_Flight_Tracker
             this.lblProgress.TabIndex = 15;
             this.lblProgress.Text = "lblProgress Text:";
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblXYZ
-            // 
-            this.lblXYZ.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblXYZ.ForeColor = System.Drawing.Color.White;
-            this.lblXYZ.Location = new System.Drawing.Point(9, 74);
-            this.lblXYZ.Name = "lblXYZ";
-            this.lblXYZ.Size = new System.Drawing.Size(279, 31);
-            this.lblXYZ.TabIndex = 17;
-            this.lblXYZ.Text = "lblXYZ Text:";
             // 
             // lblCurrent
             // 
@@ -644,7 +607,7 @@ namespace FS4_Flight_Tracker
             // 
             // VLTA_ARR_Status
             // 
-            this.VLTA_ARR_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_ARR_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VLTA_ARR_Status.ForeColor = System.Drawing.Color.White;
             this.VLTA_ARR_Status.Location = new System.Drawing.Point(447, 0);
             this.VLTA_ARR_Status.Name = "VLTA_ARR_Status";
@@ -655,7 +618,7 @@ namespace FS4_Flight_Tracker
             // 
             // VLTA_DEP_Status
             // 
-            this.VLTA_DEP_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_DEP_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VLTA_DEP_Status.ForeColor = System.Drawing.Color.White;
             this.VLTA_DEP_Status.Location = new System.Drawing.Point(291, 0);
             this.VLTA_DEP_Status.Name = "VLTA_DEP_Status";
@@ -734,6 +697,7 @@ namespace FS4_Flight_Tracker
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA2_Speed_HideNumber_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA3_Altitude_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA4_Throttle_Status);
+            this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA4_Progress_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA5_Clock_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA6_Debug_Status);
             this.ImageCustomHUD1.Controls.Add(this.Custom_VLTA7_1_Throttle_Status);
@@ -759,36 +723,21 @@ namespace FS4_Flight_Tracker
             this.ProgressBarThrottleRed.Size = new System.Drawing.Size(152, 10);
             this.ProgressBarThrottleRed.TabIndex = 14;
             // 
-            // ProgressSlider
-            // 
-            this.ProgressSlider.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressSlider.Location = new System.Drawing.Point(0, 30);
-            this.ProgressSlider.Maximum = 1000;
-            this.ProgressSlider.Name = "ProgressSlider";
-            this.ProgressSlider.Size = new System.Drawing.Size(860, 29);
-            this.ProgressSlider.TabIndex = 5;
-            this.ProgressSlider.Text = "imageSlider1";
-            this.ProgressSlider.ThumbImage = global::FS4_Flight_Tracker.Properties.Resources.CustomHUD1_AirplaneLogo;
-            this.ProgressSlider.ThumbSize = new System.Drawing.Size(24, 24);
-            this.ProgressSlider.TrackColor = System.Drawing.Color.White;
-            this.ProgressSlider.TrackHeight = 5;
-            this.ProgressSlider.TrackProgressColor = System.Drawing.Color.Red;
-            this.ProgressSlider.Value = 10;
-            // 
             // Custom_VLTA1_DEP_and_ARR_Status
             // 
-            this.Custom_VLTA1_DEP_and_ARR_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA1_DEP_and_ARR_Status.AutoEllipsis = true;
+            this.Custom_VLTA1_DEP_and_ARR_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA1_DEP_and_ARR_Status.ForeColor = System.Drawing.Color.White;
-            this.Custom_VLTA1_DEP_and_ARR_Status.Location = new System.Drawing.Point(730, 1);
+            this.Custom_VLTA1_DEP_and_ARR_Status.Location = new System.Drawing.Point(712, 1);
             this.Custom_VLTA1_DEP_and_ARR_Status.Name = "Custom_VLTA1_DEP_and_ARR_Status";
-            this.Custom_VLTA1_DEP_and_ARR_Status.Size = new System.Drawing.Size(129, 27);
+            this.Custom_VLTA1_DEP_and_ARR_Status.Size = new System.Drawing.Size(147, 27);
             this.Custom_VLTA1_DEP_and_ARR_Status.TabIndex = 4;
-            this.Custom_VLTA1_DEP_and_ARR_Status.Text = "VTBD - VTCC";
+            this.Custom_VLTA1_DEP_and_ARR_Status.Text = "WWWW - WWWW";
             this.Custom_VLTA1_DEP_and_ARR_Status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Custom_VLTA2_Speed_Status
             // 
-            this.Custom_VLTA2_Speed_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA2_Speed_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA2_Speed_Status.ForeColor = System.Drawing.Color.White;
             this.Custom_VLTA2_Speed_Status.Location = new System.Drawing.Point(1, 1);
             this.Custom_VLTA2_Speed_Status.Name = "Custom_VLTA2_Speed_Status";
@@ -799,7 +748,7 @@ namespace FS4_Flight_Tracker
             // 
             // Custom_VLTA2_Speed_HideNumber_Status
             // 
-            this.Custom_VLTA2_Speed_HideNumber_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F);
+            this.Custom_VLTA2_Speed_HideNumber_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12.5F);
             this.Custom_VLTA2_Speed_HideNumber_Status.ForeColor = System.Drawing.Color.White;
             this.Custom_VLTA2_Speed_HideNumber_Status.Location = new System.Drawing.Point(1, 1);
             this.Custom_VLTA2_Speed_HideNumber_Status.Name = "Custom_VLTA2_Speed_HideNumber_Status";
@@ -810,7 +759,7 @@ namespace FS4_Flight_Tracker
             // 
             // Custom_VLTA3_Altitude_Status
             // 
-            this.Custom_VLTA3_Altitude_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA3_Altitude_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA3_Altitude_Status.ForeColor = System.Drawing.Color.White;
             this.Custom_VLTA3_Altitude_Status.Location = new System.Drawing.Point(204, 1);
             this.Custom_VLTA3_Altitude_Status.Name = "Custom_VLTA3_Altitude_Status";
@@ -821,7 +770,7 @@ namespace FS4_Flight_Tracker
             // 
             // Custom_VLTA4_Throttle_Status
             // 
-            this.Custom_VLTA4_Throttle_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA4_Throttle_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA4_Throttle_Status.ForeColor = System.Drawing.Color.White;
             this.Custom_VLTA4_Throttle_Status.Location = new System.Drawing.Point(532, 2);
             this.Custom_VLTA4_Throttle_Status.Name = "Custom_VLTA4_Throttle_Status";
@@ -832,7 +781,7 @@ namespace FS4_Flight_Tracker
             // 
             // Custom_VLTA5_Clock_Status
             // 
-            this.Custom_VLTA5_Clock_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA5_Clock_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Custom_VLTA5_Clock_Status.ForeColor = System.Drawing.Color.White;
             this.Custom_VLTA5_Clock_Status.Location = new System.Drawing.Point(419, 1);
             this.Custom_VLTA5_Clock_Status.Name = "Custom_VLTA5_Clock_Status";
@@ -1001,6 +950,34 @@ namespace FS4_Flight_Tracker
             this.pleaseopenaerofly.Text = "Please open Aerofly FS 4 first.";
             this.pleaseopenaerofly.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // Custom_VLTA4_Progress_Status
+            // 
+            this.Custom_VLTA4_Progress_Status.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Custom_VLTA4_Progress_Status.ForeColor = System.Drawing.Color.White;
+            this.Custom_VLTA4_Progress_Status.Location = new System.Drawing.Point(532, 2);
+            this.Custom_VLTA4_Progress_Status.Name = "Custom_VLTA4_Progress_Status";
+            this.Custom_VLTA4_Progress_Status.Size = new System.Drawing.Size(177, 27);
+            this.Custom_VLTA4_Progress_Status.TabIndex = 17;
+            this.Custom_VLTA4_Progress_Status.Text = "PROGRESS: 100.00%";
+            this.Custom_VLTA4_Progress_Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Custom_VLTA4_Progress_Status.Visible = false;
+            // 
+            // ProgressSlider
+            // 
+            this.ProgressSlider.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressSlider.Location = new System.Drawing.Point(0, 30);
+            this.ProgressSlider.Maximum = 1000;
+            this.ProgressSlider.Name = "ProgressSlider";
+            this.ProgressSlider.Size = new System.Drawing.Size(860, 29);
+            this.ProgressSlider.TabIndex = 5;
+            this.ProgressSlider.Text = "imageSlider1";
+            this.ProgressSlider.ThumbImage = global::FS4_Flight_Tracker.Properties.Resources.CustomHUD1_AirplaneLogo;
+            this.ProgressSlider.ThumbSize = new System.Drawing.Size(24, 24);
+            this.ProgressSlider.TrackColor = System.Drawing.Color.White;
+            this.ProgressSlider.TrackHeight = 5;
+            this.ProgressSlider.TrackProgressColor = System.Drawing.Color.Red;
+            this.ProgressSlider.Value = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1017,7 +994,7 @@ namespace FS4_Flight_Tracker
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "FS4 Flight Tracker";
+            this.Text = "FS 4 Flight Tracker";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
@@ -1039,8 +1016,6 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Timer timerstatusaeroflyfs4;
         private System.Windows.Forms.Label SpeedStatus;
         private System.Windows.Forms.Label AltitideStatus;
-        private System.Windows.Forms.Label PitchStatus;
-        private System.Windows.Forms.Label RollStatus;
         private System.Windows.Forms.Label AircraftandLivery;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button StartVolantaStyle;
@@ -1068,7 +1043,6 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label ArrivalPosition;
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.Label lblCurrent;
-        private System.Windows.Forms.Label lblXYZ;
         private System.Windows.Forms.Button Switch_Color_Background;
         private System.Windows.Forms.Label VLTA_SPD_HideNumber;
         private System.Windows.Forms.Panel ImageCustomHUD1;
@@ -1104,6 +1078,7 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Label VersionText2;
+        private System.Windows.Forms.Label Custom_VLTA4_Progress_Status;
     }
 }
 

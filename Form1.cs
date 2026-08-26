@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework.Drawing.Html;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,7 +34,7 @@ namespace FS4_Flight_Tracker
 {
     public partial class Form1 : Form
     {
-        private string fs4flighttrackversion = "0.70";
+        private string fs4flighttrackversion = "0.80";
         private string fs4maingameversion = "4.8.4.1";
         private bool toggleViewChangelog = false;
 
@@ -91,6 +92,7 @@ namespace FS4_Flight_Tracker
         private String aircraftNameCustomHUD, aircraftLiveryCustomHUD, departureNameCustomHUD, arrivalNameCustomHUD;
         private double progressCustomHUD;
 
+        private double vspeedstatus;
         public Form1()
         {
             InitializeComponent();
@@ -138,12 +140,13 @@ namespace FS4_Flight_Tracker
             public double FlapPosition;       // Offset 64
             public double ThrottlePosition;   // Offset 72
             public double Airspeed;           // Offset 80
+            public double AIRCRAFT_VERTICAL_SPEED;
         }
 
         private void timerstatusaeroflyfs4_Tick(object sender, EventArgs e)
         {
-            VersionText.Text = "Version " + fs4flighttrackversion + "\r\n" + "Main Game " + fs4maingameversion;
-            VersionText2.Text = "Version " + fs4flighttrackversion + "\r\n" + "Main Game " + fs4maingameversion;
+            VersionText.Text = "Version : " + fs4flighttrackversion + "\r\n" + "Main Game : " + fs4maingameversion;
+            VersionText2.Text = "Version : " + fs4flighttrackversion + "\r\n" + "Main Game : " + fs4maingameversion;
             StatusUpdateDepatureText();
             StatusUpdateArrivalText();
             StatusUpdateTimerClockText();
@@ -236,20 +239,22 @@ namespace FS4_Flight_Tracker
             try
             {
                 // อ่าน Struct ทั้งหมดออกมารวดเดียว
-                /*
-                 
+
+                 /*
                 0 = Altitude ความสูง ใช้ Roll
                  
                 8 / 24 = หมุนซ้ายขวา แกน X
 
                 16 = ความเร็ว Speed Knots ใช้ IndicatedAirspeed
 
-                 */
+                */
 
                 accessor.Read<AeroflyBridgeData>(0, out AeroflyBridgeData data);
                 accessor.Read<AeroflyBridgeData>(16, out AeroflyBridgeData data2);
                 accessor.Read<AeroflyBridgeData>(24, out AeroflyBridgeData data3);
                 accessor.Read<AeroflyBridgeData>(10, out AeroflyBridgeData data4);
+
+                accessor.Read<AeroflyBridgeData>(2, out AeroflyBridgeData data5);
 
                 double altitudestatus = data.Roll * (10.31493 / Math.PI); // 10.31493
 
@@ -258,6 +263,8 @@ namespace FS4_Flight_Tracker
                 double rollstatus = data3.Roll * (191 / Math.PI); // 6.1075
 
                 double pitchstatus = data4.Airspeed * (500 / Math.PI); // 6.1075
+
+                double vs = data5.AIRCRAFT_VERTICAL_SPEED * (1000 / Math.PI); ;
 
 
                 if (speedstatus > 30)
@@ -282,16 +289,13 @@ namespace FS4_Flight_Tracker
 
                 SpeedStatus.Text = "Speed : " + $"{speedstatus:F0}";
 
-                RollStatus.Text = "Roll : " + $"{rollstatus:F0}";
-
-                PitchStatus.Text = "Pitch : " + $"{pitchstatus:F0}";
-
                 // Volanta Style
                 VLTA_SPD.Text = "SPD: " + $"{speedstatus:F0}" + "kts";
                 VLTA_ALT.Text = "ALT: " + $"{altitudestatus:F0}" + "ft";
 
                 Custom_VLTA2_Speed_Status.Text = "SPEED : " + $"{speedstatus:F0}" + " KNOTS";
                 Custom_VLTA3_Altitude_Status.Text = "ALTITUDE : " + $"{altitudestatus:F0}" + " FT";
+
             }
             catch (Exception ex)
             {
@@ -553,15 +557,13 @@ namespace FS4_Flight_Tracker
             lblProgress.Text = $"Flight Progress: {progressPercent:F2} %";
             lblCurrent.Text = "Remaining Distance: " + $"{remainingKm:F2}" + " NM";
 
-
-            lblXYZ.Text = currentsizepanelVolantastyle.ToString();
-
             ProgressBarStatus.Size = new Size(currentsizepanelVolantastyle, 7);
             ProgressSlider.Value = currentsizepanelVolantaCustomstyle;
 
+            Custom_VLTA4_Progress_Status.Text = $"PROGRESS: {progressPercent:F2} %";
+
             progressCustomHUD = progressPercent;
         }
-
 
         #region Helper Function: เดิน Pointer Chain
         /// <summary>
@@ -1153,6 +1155,7 @@ namespace FS4_Flight_Tracker
                 ProgressBarThrottleWhite.Visible = true;
                 ProgressBarThrottleRed.Visible = true;
                 Custom_VLTA4_Throttle_Status.Visible = true;
+                Custom_VLTA4_Progress_Status.Visible = false;
             }
             void SupportFalse()
             {
@@ -1161,6 +1164,7 @@ namespace FS4_Flight_Tracker
                 ProgressBarThrottleWhite.Visible = false;
                 ProgressBarThrottleRed.Visible = false;
                 Custom_VLTA4_Throttle_Status.Visible = false;
+                Custom_VLTA4_Progress_Status.Visible = true;
             }
         }
         /*

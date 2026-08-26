@@ -1,3 +1,11 @@
+Update 0.80
+
+- Remove Roll 
+- Remove Pitch
+- Update Custom HUD Adjust the size font appropriately.
+
+For version 0.90, I will receive the official release date announcement, and the 0.90 update will support the vertical aspect ratio for TikTok live streams.
+-----------------------------------------------------------------------
 Update 0.70
 
 - Add Enable Taskbar
