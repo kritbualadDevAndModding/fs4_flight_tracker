@@ -34,11 +34,11 @@ namespace FS4_Flight_Tracker
 {
     public partial class Form1 : Form
     {
-        private string fs4flighttrackversion = "0.80";
+        private string fs4flighttrackversion = "0.90";
         private string fs4maingameversion = "4.8.4.1";
         private bool toggleViewChangelog = false;
 
-        // กำหนดชื่อให้ตรงกับ Shared Memory ของ Bridge DLL ที่คุณใช้
+        // Set the name to match the shared memory of the Bridge DLL you are using.
         private const string MAP_NAME = "AeroflyBridgeData";
 
         private MemoryMappedFile mmf;
@@ -47,7 +47,7 @@ namespace FS4_Flight_Tracker
 
 
 
-        // Imports Windows APIs สำหรับอ่าน Process Memory
+        // Imports Windows APIs for read Process Memory
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
@@ -74,10 +74,12 @@ namespace FS4_Flight_Tracker
         private int switchColourStep = 0;
         private int switchHUDStep = 0;
 
+        private bool switchSpeedKnots = false;
+
         private string liveryname = "";
         private string aircraftname = "";
 
-        // 1. นำเข้า API ของ Windows เพื่อควบคุมการลากหน้าต่าง
+        // 1. Import Windows APIs to control window dragging.
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
@@ -98,7 +100,10 @@ namespace FS4_Flight_Tracker
             InitializeComponent();
             InitializeSharedMemory();
             InitializeTelemetryTimer();
-            this.FormBorderStyle = FormBorderStyle.None; // ซ่อนขอบฟอร์มเดิม  
+            this.FormBorderStyle = FormBorderStyle.None; // Hide Form Original  
+            panelVolantaStyle.BackColor = Color.Lime;
+            this.Text = "FS 4 Flight Tracker" + " " + "v" + fs4flighttrackversion;
+            TaskbarName.Text = "FS 4 Flight Tracker" + " " + "v" + fs4flighttrackversion;
         }
 
 
@@ -114,13 +119,13 @@ namespace FS4_Flight_Tracker
 
             string content = File.ReadAllText(mcfFilePath);
 
-            // หาบล็อก tmsettings_aircraft และอ่านค่าใน tag name
+            // Locate the tmsettings_aircraft block and read the value in the name tag.
             string pattern = @"<\[tmsettings_aircraft\]\[aircraft\]\[\]\s*<\[string8u\]\[name\]\[([^\]]+)\]>";
             Match match = Regex.Match(content, pattern);
 
             if (match.Success)
             {
-                return match.Groups[1].Value; // ได้ค่า "b787_9"
+                return match.Groups[1].Value; // Get value. "b787_9"
             }
 
             return "Not Found";
@@ -135,7 +140,7 @@ namespace FS4_Flight_Tracker
             public double Pitch;              // Offset 24 (Radians)
             public double Roll;               // Offset 32 (Radians)
             public double Heading;            // Offset 40 (Radians)
-            public double IndicatedAirspeed;  // Offset 48 (m/s) **ตำแหน่งความเร็ว**
+            public double IndicatedAirspeed;  // Offset 48 (m/s) **position speed knots**
             public double GearPosition;       // Offset 56
             public double FlapPosition;       // Offset 64
             public double ThrottlePosition;   // Offset 72
@@ -169,7 +174,7 @@ namespace FS4_Flight_Tracker
 
             if (IsAppRunning(targetAppName))
             {
-                // เปิดเกมแล้ว
+                // Opened Aerofly FS 4
                 statusaeroflyfs4.Text = "✔️ Aerofly FS 4 Connected";
                 statusaeroflyfs4.ForeColor = Color.Lime;
                 Restart.Visible = true;
@@ -177,7 +182,7 @@ namespace FS4_Flight_Tracker
             }
             else
             {
-                // ปิดเกมแล้ว
+                // Closed Aerofly FS 4
                 statusaeroflyfs4.Text = "❌ Aerofly FS 4 Disconnected";
                 statusaeroflyfs4.ForeColor = Color.Red;
                 notificationopengame.Visible = true;
@@ -189,10 +194,10 @@ namespace FS4_Flight_Tracker
             }
         }
 
-        // ฟังก์ชันสำหรับเช็กสถานะ
+        // Function for checking status
         private bool IsAppRunning(string processName)
         {
-            // ค้นหา Process ตามชื่อ (ไม่ต้องใส่ .exe)
+            // Search for a process by name (do not include .exe)
             Process[] processes = Process.GetProcessesByName(processName);
             return processes.Length > 0;
         }
@@ -202,7 +207,7 @@ namespace FS4_Flight_Tracker
         {
             try
             {
-                // เปิดการเชื่อมต่อ Shared Memory
+                // Open shared memory connection
                 mmf = MemoryMappedFile.OpenExisting(MAP_NAME);
                 accessor = mmf.CreateViewAccessor();
                 statusaeroflyfs4.ForeColor = Color.Lime;
@@ -224,7 +229,7 @@ namespace FS4_Flight_Tracker
         private void InitializeTelemetryTimer()
         {
             timer = new Timer();
-            timer.Interval = 16; // อัปเดตประมาณ 30 FPS (33ms)
+            timer.Interval = 16; // Update at approximately 30 FPS (33ms)
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -238,16 +243,16 @@ namespace FS4_Flight_Tracker
 
             try
             {
-                // อ่าน Struct ทั้งหมดออกมารวดเดียว
+                // Read all the structs at once.
 
-                 /*
-                0 = Altitude ความสูง ใช้ Roll
-                 
-                8 / 24 = หมุนซ้ายขวา แกน X
+                /*
+               0 = Altitude use Roll
 
-                16 = ความเร็ว Speed Knots ใช้ IndicatedAirspeed
+               8 / 24 = Rotate X
 
-                */
+               16 = Speed Knots use IndicatedAirspeed
+
+               */
 
                 accessor.Read<AeroflyBridgeData>(0, out AeroflyBridgeData data);
                 accessor.Read<AeroflyBridgeData>(16, out AeroflyBridgeData data2);
@@ -284,7 +289,7 @@ namespace FS4_Flight_Tracker
                     Custom_VLTA2_Speed_HideNumber_Status.Visible = true;
                 }
 
-                // แสดงผล
+                // Status
                 AltitideStatus.Text = "Altitude : " + $"{altitudestatus:F0}";
 
                 SpeedStatus.Text = "Speed : " + $"{speedstatus:F0}";
@@ -294,6 +299,7 @@ namespace FS4_Flight_Tracker
                 VLTA_ALT.Text = "ALT: " + $"{altitudestatus:F0}" + "ft";
 
                 Custom_VLTA2_Speed_Status.Text = "SPEED : " + $"{speedstatus:F0}" + " KNOTS";
+                Custom_VLTA2_Speed_Status_Normal.Text = "SPEED : " + $"{speedstatus:F0}" + " KNOTS";
                 Custom_VLTA3_Altitude_Status.Text = "ALTITUDE : " + $"{altitudestatus:F0}" + " FT";
 
             }
@@ -303,7 +309,7 @@ namespace FS4_Flight_Tracker
             }
         }
 
-        // คืนทรัพยากรเมื่อปิดหน้าต่างโปรแกรม
+        // Release resources when closing the program window.
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             timer?.Stop();
@@ -321,14 +327,14 @@ namespace FS4_Flight_Tracker
         {
             string processName = "aerofly_fs_4";
 
-            // ตั้งค่าตาม Cheat Engine
+            // Set follow Cheat Engine
             int baseOffset = 0x0173BB88;
             int[] offsets = new int[] { 0x8, 0x358, 0xC8, 0x10 }; // เรียง Offsets ตามที่โชว์ใน CE
 
-            // ดึงค่า Value ข้อความ
+            // Extract text value
             string ceValue = Form1.GetCEStringValue(processName, baseOffset, offsets, 4);
 
-            // แสดงผลบนหน้าจอ Form
+            // Display On Screen Form
             DepartureText.Text = ceValue;
             VLTA_DEP_Status.Text = ceValue;
 
@@ -338,14 +344,11 @@ namespace FS4_Flight_Tracker
         {
             string processName = "aerofly_fs_4";
 
-            // ตั้งค่าตาม Cheat Engine
             int baseOffset = 0x0173BB60;
             int[] offsets = new int[] { 0x358, 0x98, 0x10, 0x110 }; // เรียง Offsets ตามที่โชว์ใน CE
 
-            // ดึงค่า Value ข้อความ
             string ceValue = Form1.GetCEStringValue(processName, baseOffset, offsets, 4);
 
-            // แสดงผลบนหน้าจอ Form
             VLTA_ARR_Status.Text = ceValue;
 
             arrivalNameCustomHUD = ceValue;
@@ -374,14 +377,11 @@ namespace FS4_Flight_Tracker
         {
             string processName = "aerofly_fs_4";
 
-            // 0. กำหนด Pointer สำหรับ Double สั้น (เช่น 23.999999999)
             int baseOffset = 0x0182F768;
             int[] offsets = new int[] { 0x5E0, 0x20, 0x20, 0x0, 0xF0, 0x70 };
 
-            // 1. อ่านค่า Double จาก Memory
             double rawTime = Form1.GetCEDoubleValue(processName, baseOffset, offsets);
 
-            // 2. คุมให้อยู่ในช่วง 0.0 ถึง 23.9999
             double minTime = 0.0;
             double maxTime = 23.9999;
             double timeValue = rawTime;
@@ -395,19 +395,16 @@ namespace FS4_Flight_Tracker
                 timeValue = maxTime;
             }
 
-            // 3. ดึงชั่วโมงและนาทีจาก TimeSpan
             TimeSpan timeSpan = TimeSpan.FromHours(timeValue);
             int hours24 = timeSpan.Hours;
             int minutes = timeSpan.Minutes;
 
-            // เช็คเศษทศนิยม ถ้าเข้าใกล้ .9999 ให้ปรับเป็น 59 นาที
             double fraction = timeValue - Math.Truncate(timeValue);
             if (fraction >= 0.9999)
             {
                 minutes = 59;
             }
 
-            // 4. คำนวณหา AM / PM และแปลงชั่วโมงเป็นระบบ 12 ชั่วโมง
             string designator = "";
             int hours12 = hours24;
 
@@ -428,10 +425,8 @@ namespace FS4_Flight_Tracker
                 }
             }
 
-            // 5. จัดข้อความแสดงผล (เช่น "11:59 PM" หรือ "12:00 AM")
             string ceValue = $"{hours12:D2}:{minutes:D2} {designator}";
 
-            // นำไปใช้งานกับ Text
             VLTA_TIME.Text = "UTC: " + ceValue;
 
             Custom_VLTA5_Clock_Status.Text = ceValue;
@@ -494,10 +489,10 @@ namespace FS4_Flight_Tracker
 
 
             // ==========================================================
-            // ส่วนที่เพิ่ม: คำนวณระยะทางและเปอร์เซ็นต์ (Progress 0 - 100%)
+            // Additional section: Calculate distance and percentage (Progress 0–100%)
             // ==========================================================
 
-            // 1. คำนวณระยะทางรวมทั้งหมด (Departure -> Arrival) และ ระยะทางที่บินมาแล้ว (Departure -> Player)
+            // 1. Calculate the total distance (Departure -> Arrival) and the distance already flown (Departure -> Player).
             double dxTotal = arrXlocked - depXlocked;
             double dyTotal = arrYlocked - depYlocked;
             double dzTotal = arrZlocked - depZlocked;
@@ -508,23 +503,23 @@ namespace FS4_Flight_Tracker
             double dzCurrent = playerZ - depZlocked;
             double currentDistanceMeters = Math.Sqrt(dxCurrent * dxCurrent + dyCurrent * dyCurrent + dzCurrent * dzCurrent);
 
-            // 2. คำนวณเปอร์เซ็นต์ Progress (0 ถึง 100%)
+            // 2. Calculate progress percentage (0 to 100%)
             double progressPercent = 0.0;
             if (totalDistanceMeters > 0)
             {
                 progressPercent = (currentDistanceMeters / totalDistanceMeters) * 100.0;
             }
 
-            // ล็อกขอบเขตไม่ให้ต่ำกว่า 0% หรือเกิน 100%
+            // Clamp the range so it does not fall below 0% or exceed 100%.
             if (progressPercent < 0.0) progressPercent = 0.0;
             if (progressPercent > 100.0) progressPercent = 100.0;
 
-            // 3. คำนวณระยะทางที่เหลือ (แปลงเป็น กิโลเมตร)
+            // 3. Calculate the remaining distance (convert to kilometers)
             double dxRemaining = arrXlocked - playerX;
             double dyRemaining = arrYlocked - playerY;
             double dzRemaining = arrZlocked - playerZ;
             double remainingMeters = Math.Sqrt(dxRemaining * dxRemaining + dyRemaining * dyRemaining + dzRemaining * dzRemaining);
-            double remainingKm = remainingMeters / 1000.0; // แปลงเมตรเป็น กม.
+            double remainingKm = remainingMeters / 1000.0; // Convert meters to kilometers.
 
 
 
@@ -535,13 +530,13 @@ namespace FS4_Flight_Tracker
             int maxcurrentsizepanelVolantaCustomStyle = 1000;
 
 
-            // คำนวณหาค่า current จาก progressPercent (0.0 ถึง 100.0)
+            // Calculate the current value from progressPercent (0.0 to 100.0).
             int currentsizepanelVolantastyle = (int)Math.Round((progressPercent / 100.0) * maxcurrentsizepanelVolantastyle);
 
             int currentsizepanelVolantaCustomstyle = (int)Math.Round((progressPercent / 100.0) * maxcurrentsizepanelVolantaCustomStyle);
 
 
-            // กำหนดขอบเขตความปลอดภัย (Clamp)
+            // Define safety boundaries (Clamp)
             if (currentsizepanelVolantastyle < mincurrentsizepanelVolantastyle) currentsizepanelVolantastyle = mincurrentsizepanelVolantastyle;
             if (currentsizepanelVolantastyle > maxcurrentsizepanelVolantastyle) currentsizepanelVolantastyle = maxcurrentsizepanelVolantastyle;
 
@@ -553,7 +548,7 @@ namespace FS4_Flight_Tracker
             DeparturePosition.Text = "Departure Position:" + "\n" + "X = " + playerDepPosX + "\n" + "Y = " + playerDepPosY + "\n" + "Z = " + playerDepPosZ;
             ArrivalPosition.Text = "Arrival Position:" + "\n" + "X = " + playerArrPosX + "\n" + "Y = " + playerArrPosY + "\n" + "Z = " + playerArrPosZ;
 
-            // Label แสดง Progress และระยะทางที่เหลือ (สร้าง Label ใหม่เพิ่มใน Form เช่น lblProgress และ lblRemainingKm)
+            // Add labels to display progress and remaining distance (e.g., create new labels on the form named `lblProgress` and `lblRemainingKm`).
             lblProgress.Text = $"Flight Progress: {progressPercent:F2} %";
             lblCurrent.Text = "Remaining Distance: " + $"{remainingKm:F2}" + " NM";
 
@@ -567,18 +562,18 @@ namespace FS4_Flight_Tracker
 
         #region Helper Function: เดิน Pointer Chain
         /// <summary>
-        /// คำนวณหา Memory Address สุดท้ายจาก Pointer Chain ตาม Cheat Engine
+        /// Calculate the final memory address from a pointer chain using Cheat Engine.
         /// </summary>
         private static IntPtr GetFinalAddress(IntPtr processHandle, IntPtr baseAddress, int baseOffset, int[] offsets)
         {
             IntPtr currentAddress = IntPtr.Add(baseAddress, baseOffset);
-            byte[] buffer = new byte[8]; // รองรับทั้ง 32-bit และ 64-bit Pointer
+            byte[] buffer = new byte[8]; // Supports both 32-bit and 64-bit pointers.
             IntPtr bytesRead;
 
             if (offsets == null || offsets.Length == 0)
                 return currentAddress;
 
-            // เดินตาม Offset ตัวที่ 0 ถึง N-2
+            // Iterate through offsets from 0 to N-2.
             for (int i = 0; i < offsets.Length - 1; i++)
             {
                 if (!ReadProcessMemory(processHandle, currentAddress, buffer, IntPtr.Size, out bytesRead))
@@ -591,7 +586,7 @@ namespace FS4_Flight_Tracker
                 currentAddress = new IntPtr(nextAddress + offsets[i]);
             }
 
-            // อ่าน Pointer ตัวสุดท้าย แล้วบวกด้วย Offset ตัวสุดท้าย
+            // Read the last pointer and add the last offset.
             if (!ReadProcessMemory(processHandle, currentAddress, buffer, IntPtr.Size, out bytesRead))
                 return IntPtr.Zero;
 
@@ -603,7 +598,7 @@ namespace FS4_Flight_Tracker
         }
         #endregion
 
-        #region 1. อ่านค่าเป็น 4 Bytes (Int32)
+        #region 1. Read as 4 bytes (Int32)
         public static int GetCEIntValue(string processName, int baseOffset, int[] offsets)
         {
             Process[] processes = Process.GetProcessesByName(processName);
@@ -618,7 +613,7 @@ namespace FS4_Flight_Tracker
                 IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
                 if (finalAddress == IntPtr.Zero) return 0;
 
-                byte[] valueBuffer = new byte[4]; // 4 Bytesสำหรับ Int32
+                byte[] valueBuffer = new byte[4]; // 4 Bytes for Int32
                 IntPtr bytesRead;
                 if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 4, out bytesRead))
                 {
@@ -636,7 +631,7 @@ namespace FS4_Flight_Tracker
 
 
 
-        #region 1.2. อ่านค่าเป็น 8 Bytes (Int32)
+        #region 1.2. Read value as 8 Bytes (Int32)
         public static long GetCEIntValue8Byte(string processName, int baseOffset, int[] offsets)
         {
             Process[] processes = Process.GetProcessesByName(processName);
@@ -651,11 +646,11 @@ namespace FS4_Flight_Tracker
                 IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
                 if (finalAddress == IntPtr.Zero) return 0;
 
-                byte[] valueBuffer = new byte[8]; // 1. เปลี่ยนขนาด Buffer เป็น 8 Bytes สำหรับ Int64
+                byte[] valueBuffer = new byte[8]; // 1. Change the buffer size to 8 bytes for Int64.
                 IntPtr bytesRead;
-                if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 8, out bytesRead)) // 2. อ่านข้อมูลขนาด 8 Bytes
+                if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 8, out bytesRead)) // 2. Read 8 bytes of data.
                 {
-                    return BitConverter.ToInt64(valueBuffer, 0); // 3. แปลงเป็น Int64 (long)
+                    return BitConverter.ToInt64(valueBuffer, 0); // 3. Convert to Int64 (long)
                 }
 
                 return 0;
@@ -668,7 +663,7 @@ namespace FS4_Flight_Tracker
         #endregion
 
 
-        #region 2. อ่านค่าเป็น String (ข้อความ)
+        #region 2. Read value as String (Text)
         public static string GetCEStringValue(string processName, int baseOffset, int[] offsets, int stringLength = 32, Encoding encoding = null)
         {
             Process[] processes = Process.GetProcessesByName(processName);
@@ -690,7 +685,7 @@ namespace FS4_Flight_Tracker
                 {
                     if (encoding == null) encoding = Encoding.UTF8;
 
-                    // แปลง Byte Array เป็น String และตัด Null Terminator ('\0') ออก
+                    // Convert a byte array to a string and remove the null terminator ('\0').
                     string result = encoding.GetString(stringBuffer);
                     int nullIndex = result.IndexOf('\0');
                     return nullIndex >= 0 ? result.Substring(0, nullIndex) : result;
@@ -705,7 +700,7 @@ namespace FS4_Flight_Tracker
         }
         #endregion
 
-        #region 3. อ่านค่าเป็น Float (ทศนิยม 4 Bytes) - แถมเผื่อไว้
+        #region 3. Read valur as Float (decimal 4 Bytes)
         public static float GetCEFloatValue(string processName, int baseOffset, int[] offsets)
 
         {
@@ -753,11 +748,11 @@ namespace FS4_Flight_Tracker
                 IntPtr finalAddress = GetFinalAddress(processHandle, process.MainModule.BaseAddress, baseOffset, offsets);
                 if (finalAddress == IntPtr.Zero) return 0.0;
 
-                byte[] valueBuffer = new byte[8]; // อ่านข้อมูลขนาด 8 Bytes สำหรับ Double
+                byte[] valueBuffer = new byte[8]; // Read data size 8 Bytes for Double
                 IntPtr bytesRead;
                 if (ReadProcessMemory(processHandle, finalAddress, valueBuffer, 8, out bytesRead))
                 {
-                    return BitConverter.ToDouble(valueBuffer, 0); // แปลง Byte เป็น Double
+                    return BitConverter.ToDouble(valueBuffer, 0); // Convert Byte to Double
                 }
 
                 return 0.0;
@@ -802,24 +797,28 @@ namespace FS4_Flight_Tracker
                     Switch_Color_Background.ForeColor = Color.Black;
                     Quit_Volanta.ForeColor = Color.Black;
                     Next_HUD.ForeColor = Color.Black;
+                    Switch_Speed_Button.ForeColor = Color.Black;
                     break;
                 case 1:
                     panelVolantaStyle.BackColor = Color.Blue;
                     Switch_Color_Background.ForeColor = Color.Blue;
                     Quit_Volanta.ForeColor = Color.Blue;
                     Next_HUD.ForeColor = Color.Blue;
+                    Switch_Speed_Button.ForeColor = Color.Blue;
                     break;
                 case 2:
                     panelVolantaStyle.BackColor = Color.Transparent;
                     Switch_Color_Background.ForeColor = Color.Transparent; ;
                     Quit_Volanta.ForeColor = Color.Transparent;
                     Next_HUD.ForeColor = Color.Transparent;
+                    Switch_Speed_Button.ForeColor = Color.Transparent;
                     break;
                 default:
                     panelVolantaStyle.BackColor = Color.Lime;
                     Switch_Color_Background.ForeColor = Color.Lime;
                     Quit_Volanta.ForeColor = Color.Lime;
                     Next_HUD.ForeColor = Color.Lime;
+                    Switch_Speed_Button.ForeColor = Color.Lime;
                     switchColourStep = -1; // Resets cycle
                     break;
             }
@@ -894,16 +893,16 @@ namespace FS4_Flight_Tracker
 
         private void textbox_liveryname_TextChanged(object sender, EventArgs e)
         {
-            // 1. กำหนดรายการคำห้ามใช้ที่ต้องการตรวจจับ
+            // 1. Define the list of prohibited terms to detect.
             string[] badWords = { "fuck", "f***", "fu**", "fuc*", "fucky", "fuckyou", "fuckyous", "gay", "nigga", "nigger", "n1664", "ni664", "nig64", "nigg4", "n1gga", "n16ga", "n166a", "n1gga", "shit", "5h17", "sh1t", "sh*t", "bitch", "b1tch", "b17ch", "ass", "asshole", "assholes", "pussy", "pu55y", "nigg3r", "n1663r", "dick", "d1ck" };
 
             string input = textbox_liveryname.Text;
 
-            // 2. ตรวจหาคำห้ามใช้แบบไม่สนตัวพิมพ์เล็ก-ใหญ่ (Case-Insensitive)
+            // 2. Check for prohibited words (case-insensitive)
             string foundWord = badWords.FirstOrDefault(word =>
                 input.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0);
 
-            // ตัวอย่าง: ตรวจจับว่ามีคำว่า "badword" พิมพ์เข้ามาหรือไม่
+            // Example: Detect whether the word "badword" has been typed.
             if (foundWord != null)
             {
                 label_blocklanguage.Text = "You specified something that was blocked\r\nby the language filter. Please try again.\r\n";
@@ -917,7 +916,7 @@ namespace FS4_Flight_Tracker
             }
         }
 
-        // ฟังก์ชันช่วยหา Base Address ของ DLL
+        // Function to help find the DLL base address
         public static IntPtr GetModuleBaseAddress(Process process, string moduleName)
         {
             foreach (ProcessModule module in process.Modules)
@@ -982,38 +981,52 @@ namespace FS4_Flight_Tracker
 
         }
 
+        private void Switch_Speed_Button_Click(object sender, EventArgs e)
+        {
+            switchSpeedKnots = !switchSpeedKnots;
+
+            if(switchSpeedKnots)
+            {
+                Custom_VLTA2_Speed_Status_Normal.Visible = true;
+            }
+            else
+            {
+                Custom_VLTA2_Speed_Status_Normal.Visible = false;
+            }
+        }
+
         private IntPtr ResolveCheatEnginePointer(IntPtr hProc, Process proc, string modName, int baseOff, int[] chainOffsets, bool is64Bit)
         {
-            // หา Module Base Address
+            // Find Module Base Address
             IntPtr moduleBase = GetModuleBaseAddress(proc, modName);
             if (moduleBase == IntPtr.Zero) return IntPtr.Zero;
 
-            // จุดเริ่มต้น: "Module.dll" + Offset Base
+            // beginning: "Module.dll" + Offset Base
             IntPtr currentAddress = IntPtr.Add(moduleBase, baseOff);
 
             int pointerSize = is64Bit ? 8 : 4;
             byte[] buffer = new byte[pointerSize];
 
-            // วนลูปอ่าน Pointer ตาม Offsets
+            // Read on a loop Pointer follow Offsets
             for (int i = 0; i < chainOffsets.Length; i++)
             {
-                // อ่านค่า Address จาก Pointer ปัจจุบัน
+                // Read the address from the current pointer.
                 if (!ReadProcessMemory(hProc, currentAddress, buffer, buffer.Length, out _))
                 {
-                    return IntPtr.Zero; // Pointer หลุด/Address เสีย
+                    return IntPtr.Zero; // Pointer lost/address broken
                 }
 
-                // ดึงค่า Pointer Address
+                // Retrieve value Pointer Address
                 long dereferencedAddress = is64Bit ? BitConverter.ToInt64(buffer, 0) : BitConverter.ToInt32(buffer, 0);
 
-                // ถ้า Pointer ชี้ไปที่ 0x0 (Null Pointer) แสดงว่ายังไม่พร้อมใช้งาน
+                // If the pointer points to 0x0 (Null Pointer), it indicates that it is not yet ready for use.
                 if (dereferencedAddress == 0) return IntPtr.Zero;
 
-                // บวก Offset ของชั้นนั้นเข้าไปเพื่อรออ่านในรอบถัดไป
+                // Add that layer's offset to prepare for reading in the next cycle.
                 currentAddress = new IntPtr(dereferencedAddress + chainOffsets[i]);
             }
 
-            return currentAddress; // ได้ Address ปลายทางจริงๆ
+            return currentAddress; // Got the actual destination address.
         }
 
         private void StatusUpdateThrottleText()
@@ -1038,17 +1051,17 @@ namespace FS4_Flight_Tracker
                 byte[] buffer = new byte[8];
                 if (ReadProcessMemory(hProcess, targetAddress, buffer, buffer.Length, out _))
                 {
-                    // 1. อ่านค่า Current ดิบจาก RAM (0.00 ถึง 1.00)
+                    // 1. Read raw current value from RAM (0.00 to 1.00)
                     double current = BitConverter.ToDouble(buffer, 0);
 
-                    // 2. กำหนดค่า Min และ Max เป็น double
+                    // 2. Set Min and Max values ​​as double.
                     double min = 0.0;
                     double max = 100.0;
 
                     int minthrottle = 0;
                     int maxthrottle = 152;
 
-                    // 3. คำนวณแปลงค่า Current ดิบให้อยู่ในช่วง Min ถึง Max
+                    // 3. Calculate the conversion of the raw current value to the range between Min and Max.
                     double clampedCurrent = Math.Max(0.0, Math.Min(current, 1.0));
                     double calculatedCurrent = min + (clampedCurrent * (max - min));
 
@@ -1056,10 +1069,10 @@ namespace FS4_Flight_Tracker
                     double calculatedCurrentThrottle = maxthrottle + (clampedCurrent * (minthrottle - maxthrottle));
                     int currentthrottle = (int)Math.Round((calculatedCurrentThrottle / maxthrottle) * maxthrottle);
 
-                    // 4. นำไปแสดงผลบน Label.Text
-                    Custom_VLTA4_Throttle_Status.Text = $"THROTTLE: {calculatedCurrent:F2}%"; // เช่น Current: 75.00%
+                    // 4. Go display Label.Text
+                    Custom_VLTA4_Throttle_Status.Text = $"THROTTLE: {calculatedCurrent:F2} %"; // such as Current: 75.00%
                     ThrottleTest.Text = $"Throttle : {calculatedCurrent:F2}%";
-                    Custom_VLTA7_1_Throttle_Status.Text = $"{calculatedCurrent:F2}%";
+                    Custom_VLTA7_1_Throttle_Status.Text = $"{calculatedCurrent:F2} %";
                     ProgressBarThrottleWhite.Size = new Size(currentthrottle, 10);
                 }
                 else
@@ -1075,7 +1088,7 @@ namespace FS4_Flight_Tracker
             }
             CloseHandle(hProcess);
 
-            string supportAircraftTxt = comboBox_selectaircraft.Text.Trim(); // ดึงข้อความจาก TextBox และตัดช่องว่าง
+            string supportAircraftTxt = comboBox_selectaircraft.Text.Trim(); // Extract text from the TextBox and trim whitespace.
 
             switch (supportAircraftTxt)
             {
@@ -1167,72 +1180,9 @@ namespace FS4_Flight_Tracker
                 Custom_VLTA4_Progress_Status.Visible = true;
             }
         }
-        /*
-        private void StatusUpdateEnginePowerText()
-        {
-            string processName = "aerofly_fs_4";
-
-
-            int baseOffset = 0x016D8A88;
-            int[] offsets = new int[] { 0xD8 , 0x40 , 0x0 , 0x140 , 0x28 , 0x0 , 0x360 };
-
-            Process[] processes = Process.GetProcessesByName(processName);
-            if (processes.Length == 0)
-            {
-                Custom_VLTA7_2_Engine_Status.Text = "Process Not Found";
-                return;
-            }
-
-            Process process = processes[0];
-            IntPtr hProcess = OpenProcess(0x0010, false, process.Id);
-
-            // 1. ดึง Base Address ของ Process หลักโดยตรง (ไม่ต้องใช้ moduleName)
-            IntPtr mainModuleBase = process.MainModule.BaseAddress;
-
-            // 2. Resolve Pointer จาก Base Address + baseOffset
-            IntPtr targetAddress = ResolvePointer(hProcess, mainModuleBase + baseOffset, offsets);
-
-            if (targetAddress != IntPtr.Zero)
-            {
-                byte[] buffer = new byte[8];
-                if (ReadProcessMemory(hProcess, targetAddress, buffer, buffer.Length, out _))
-                {
-                    double current = BitConverter.ToDouble(buffer, 0);
-
-                    double min = 0.0;
-                    double max = 100.0;
-
-                    int minenginepower = 0;
-                    int maxenginepower = 152;
-
-                    double clampedCurrent = Math.Max(0.0, Math.Min(current, 1.0));
-                    double calculatedCurrent = min + (clampedCurrent * (max - min));
-
-                    // คำนวณความกว้างของ ProgressBar (พิกัด 0 ถึง 152)
-                    double calculatedCurrentEnginePower = maxenginepower + (clampedCurrent * (minenginepower - maxenginepower));
-                    int currentEnginePower = (int)Math.Round(calculatedCurrentEnginePower);
-
-                    // แสดงผล
-                    Custom_VLTA7_2_Engine_Status.Text = $"{calculatedCurrent:F2}%";
-                    ProgressBarEngineWhite.Size = new Size(currentEnginePower, 10);
-                }
-                else
-                {
-                    Custom_VLTA7_2_Engine_Status.Text = "Read Error";
-                }
-            }
-            else
-            {
-                Custom_VLTA7_2_Engine_Status.Text = "Bad Pointer";
-            }
-
-            CloseHandle(hProcess);
-        }
-        */
-
         public static IntPtr ResolvePointer(IntPtr hProcess, IntPtr baseAddress, int[] offsets)
         {
-            byte[] buffer = new byte[8]; // รองรับ 64-bit Process
+            byte[] buffer = new byte[8]; // Support 64-bit Process
             IntPtr currentAddress = baseAddress;
 
             for (int i = 0; i < offsets.Length; i++)
