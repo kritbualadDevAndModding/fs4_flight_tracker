@@ -1,4 +1,4 @@
-# FS4 Flight Tracker
+# FS 4 Flight Tracker
 Flight Tracker / Flight Status for Aerofly FS 4 Flight Simulator
 
 ### Required
