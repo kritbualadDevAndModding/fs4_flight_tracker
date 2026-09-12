@@ -34,7 +34,7 @@ namespace FS4_Flight_Tracker
 {
     public partial class Form1 : Form
     {
-        private string fs4flighttrackversion = "0.90";
+        private string fs4flighttrackversion = "1.0";
         private string fs4maingameversion = "4.8.4.1";
         private bool toggleViewChangelog = false;
 
@@ -300,6 +300,7 @@ namespace FS4_Flight_Tracker
 
                 Custom_VLTA2_Speed_Status.Text = "SPEED : " + $"{speedstatus:F0}" + " KNOTS";
                 Custom_VLTA2_Speed_Status_Normal.Text = "SPEED : " + $"{speedstatus:F0}" + " KNOTS";
+                VLTA_SPD_Normal.Text = "SPD: " + $"{speedstatus:F0}" + "kts";
                 Custom_VLTA3_Altitude_Status.Text = "ALTITUDE : " + $"{altitudestatus:F0}" + " FT";
 
             }
@@ -988,10 +989,12 @@ namespace FS4_Flight_Tracker
             if(switchSpeedKnots)
             {
                 Custom_VLTA2_Speed_Status_Normal.Visible = true;
+                VLTA_SPD_Normal.Visible = true;
             }
             else
             {
                 Custom_VLTA2_Speed_Status_Normal.Visible = false;
+                VLTA_SPD_Normal.Visible = false;
             }
         }
 

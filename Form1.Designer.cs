@@ -99,6 +99,7 @@ namespace FS4_Flight_Tracker
             this.ViewChangelogList = new System.Windows.Forms.RichTextBox();
             this.pleaserestart = new System.Windows.Forms.Label();
             this.pleaseopenaerofly = new System.Windows.Forms.Label();
+            this.VLTA_SPD_Normal = new System.Windows.Forms.Label();
             this.ProgressSlider = new CustomSliderApp.ImageSlider();
             this.panel1.SuspendLayout();
             this.panelVolantaEnabled.SuspendLayout();
@@ -496,8 +497,8 @@ namespace FS4_Flight_Tracker
             this.panelVolantaStyle.Controls.Add(this.Quit_Volanta);
             this.panelVolantaStyle.Controls.Add(this.Next_HUD);
             this.panelVolantaStyle.Controls.Add(this.Switch_Speed_Button);
-            this.panelVolantaStyle.Controls.Add(this.ImageCustomHUD1);
             this.panelVolantaStyle.Controls.Add(this.ImageHUDVolantaStyle);
+            this.panelVolantaStyle.Controls.Add(this.ImageCustomHUD1);
             this.panelVolantaStyle.Location = new System.Drawing.Point(0, 0);
             this.panelVolantaStyle.Name = "panelVolantaStyle";
             this.panelVolantaStyle.Size = new System.Drawing.Size(997, 594);
@@ -739,6 +740,7 @@ namespace FS4_Flight_Tracker
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_ALT);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_TIME);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_Name_Aircraft);
+            this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_SPD_Normal);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_SPD);
             this.ImageHUDVolantaStyle.Controls.Add(this.VLTA_SPD_HideNumber);
             this.ImageHUDVolantaStyle.Location = new System.Drawing.Point(12, 12);
@@ -852,7 +854,7 @@ namespace FS4_Flight_Tracker
             this.VLTA_SPD.Name = "VLTA_SPD";
             this.VLTA_SPD.Size = new System.Drawing.Size(125, 42);
             this.VLTA_SPD.TabIndex = 0;
-            this.VLTA_SPD.Text = "SPD: 999kts ";
+            this.VLTA_SPD.Text = "SPD: 999kts";
             this.VLTA_SPD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // VLTA_SPD_HideNumber
@@ -863,7 +865,7 @@ namespace FS4_Flight_Tracker
             this.VLTA_SPD_HideNumber.Name = "VLTA_SPD_HideNumber";
             this.VLTA_SPD_HideNumber.Size = new System.Drawing.Size(125, 42);
             this.VLTA_SPD_HideNumber.TabIndex = 16;
-            this.VLTA_SPD_HideNumber.Text = "SPD: ---kts ";
+            this.VLTA_SPD_HideNumber.Text = "SPD: ---kts";
             this.VLTA_SPD_HideNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.VLTA_SPD_HideNumber.Visible = false;
             // 
@@ -992,6 +994,18 @@ namespace FS4_Flight_Tracker
             this.pleaseopenaerofly.Text = "Please open Aerofly FS 4 first.";
             this.pleaseopenaerofly.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // VLTA_SPD_Normal
+            // 
+            this.VLTA_SPD_Normal.Font = new System.Drawing.Font("NeueHaasGroteskDisp Pro", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VLTA_SPD_Normal.ForeColor = System.Drawing.Color.White;
+            this.VLTA_SPD_Normal.Location = new System.Drawing.Point(12, 0);
+            this.VLTA_SPD_Normal.Name = "VLTA_SPD_Normal";
+            this.VLTA_SPD_Normal.Size = new System.Drawing.Size(125, 42);
+            this.VLTA_SPD_Normal.TabIndex = 17;
+            this.VLTA_SPD_Normal.Text = "SPD: 999kts";
+            this.VLTA_SPD_Normal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VLTA_SPD_Normal.Visible = false;
+            // 
             // ProgressSlider
             // 
             this.ProgressSlider.BackColor = System.Drawing.Color.Transparent;
@@ -1021,6 +1035,7 @@ namespace FS4_Flight_Tracker
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelVolantaEnabled);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -1111,6 +1126,7 @@ namespace FS4_Flight_Tracker
         private System.Windows.Forms.Label Custom_VLTA4_Progress_Status;
         private System.Windows.Forms.Button Switch_Speed_Button;
         private System.Windows.Forms.Label Custom_VLTA2_Speed_Status_Normal;
+        private System.Windows.Forms.Label VLTA_SPD_Normal;
     }
 }
 

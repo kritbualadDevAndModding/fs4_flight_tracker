@@ -1,3 +1,7 @@
+Update 1.0 (Released)
+
+- FS 4 Flight Tracker Released
+-----------------------------------------------------------------------
 Update 0.90
 
 - Change code comment markers from Thai to English.
